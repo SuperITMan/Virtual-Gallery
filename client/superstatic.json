@@ -1,0 +1,13 @@
+{
+    "cleanUrls": [
+    ],
+    "rewrites": [
+        {
+            "source": "**",
+            "destination": "index.html"
+        }
+    ],
+    "redirects": [
+    ],
+    "trailingSlash": false
+}

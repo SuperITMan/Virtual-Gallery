@@ -1,0 +1,4 @@
+# Exclude composer directory (vendor) and composer.lock
+composer.lock
+vendor*
+/config/

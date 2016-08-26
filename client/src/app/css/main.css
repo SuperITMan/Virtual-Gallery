@@ -1,0 +1,31 @@
+/*
+*****
+** Main stylesheet.
+*****
+*** Should import all the other stylesheets
+*****
+*/
+
+/* Variables, functions, mixins and utils */
+@import "base/variables.css";
+@import "base/functions.css";
+@import "base/mixins.css";
+@import "base/utils.css";
+
+/* Base/generic style rules */
+@import "base/reset.css";
+@import "base/responsive.css";
+@import "base/fonts.css";
+@import "base/typography.css";
+@import "base/base.css";
+
+/* Layout */
+@import "layout/layout.css";
+@import "layout/theme.css";
+@import "layout/print.css";
+
+/* Components */
+@import "../modules/modules.css";
+
+/* Tests */
+@import "tests/tests.css";

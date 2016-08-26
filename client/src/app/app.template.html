@@ -1,0 +1,29 @@
+<div class="all-content">
+<virtual-gallery-app-header site-image="{{vm.manifest.icons[0].src}}" site-title="{{vm.manifest.name}}"></virtual-gallery-app-header>
+
+<div class="wrapper">
+
+    <div class="content-wrapper" layout="row">
+        <virtual-gallery-app-sidenav menu-config="vm.menuConfig" site-title="{{vm.manifest.name}}"></virtual-gallery-app-sidenav>
+
+        <div class="main-content">
+            <div ng-show="vm.isCurrentUIState('home')">
+                <div ui-view="home"></div>
+            </div>
+            <div ng-show="vm.isCurrentUIState('test')">
+                <div ui-view="test"></div>
+            </div>
+            <div ng-show="vm.isCurrentUIState('products')">
+                <div ui-view="products"></div>
+            </div>
+            <div ng-show="vm.isCurrentUIState('productDetails')">
+                <div ui-view="productDetails"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<virtual-gallery-app-footer></virtual-gallery-app-footer>
+
+</div>

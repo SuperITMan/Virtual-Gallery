@@ -1,0 +1,33 @@
+{
+  "creation": {
+    "insert": {
+      "addCreation": "INSERT INTO vg_creations (name, short_description, long_description, creation_type, user_id) VALUES (:name, :shortDescription, :longDescription, :creationType, :userId)",
+      "addImageToCreation": "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, :metaKey, :metaValue)"
+    },
+    "select": {
+      "selectLastCreations": "SELECT name, short_description as shortDescription, '' as image, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id",
+      "selectProductInfos": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id",
+      "selectProductInfosWithImages": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId, (SELECT meta_value FROM vg_creations_meta WHERE meta_key='images' and creation_id = c.id) as images FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id"
+    }
+  },
+  "user": {
+    "insert": {
+      "addUser": "INSERT INTO vg_users (username, email, passwd, displayed_name) VALUES (:username,:email,:passwd, :displayed_name)",
+      "addUserWithBirthday": "INSERT INTO vg_users (username, email, birthday_date, passwd) VALUES (:username,:email,:birthdayDate,:passwd)",
+      "firstNameAndLastNameFromId": "INSERT INTO vg_users_meta (user_id, meta_key, meta_value) VALUES (:user_id1, 'firstName', :meta_value1), (:user_id2, 'lastName', :meta_value2)"
+    },
+    "select": {
+      "passwordFromLogin": "SELECT passwd FROM vg_users WHERE username=:username OR email = :email",
+      "passwordFromUsername": "SELECT passwd FROM vg_users WHERE username=:username",
+      "basicInfosFromId": "SELECT id, username, displayed_name as displayedName, (SELECT meta_value FROM vg_users_meta WHERE user_id=u.id and meta_key='isAdmin') as isAdmin, (SELECT meta_value FROM vg_users_meta WHERE user_id=u.id and meta_key='isSuperAdmin') as isSuperAdmin FROM vg_users u WHERE u.id=:id",
+      "allUsersBasicInfos": "SELECT id, username, email FROM vg_users",
+      "idFromLogin": "SELECT id FROM vg_users WHERE username=:username OR email = :email"
+    }
+  },
+  "file": {
+    "select": {
+      "selectImageInfo": "SELECT file_name as fileName, upload_date as uploadDate, server_file_name as serverFileName FROM vg_uploaded_files WHERE id = :id"
+    },
+    "uploadFile": "INSERT INTO vg_uploaded_files (file_name, server_file_name, mime, upload_date, user_id) VALUES (:file_name, :server_file_name, :mime, :upload_date, :user_id)"
+  }
+}

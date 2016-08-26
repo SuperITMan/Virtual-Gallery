@@ -1,0 +1,15 @@
+{
+  "name": "Virtual Gallery API",
+  "version": "1.0.0",
+  "description": "Virtual Gallery Project - API Documentation",
+  "title": "Virtual Gallery API",
+  "url" : "/v1",
+  "template": {
+    "forceLanguage": "en",
+    "withCompare": false
+  },
+  "header": {
+    "title": "General",
+    "filename": "./doc/header.md"
+  }
+}

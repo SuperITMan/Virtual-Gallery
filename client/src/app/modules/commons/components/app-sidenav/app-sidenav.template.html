@@ -1,0 +1,79 @@
+<!--<md-sidenav class="md-sidenav-left md-whiteframe-1dp" md-component-id="virtualGalleryAppSidenav"-->
+            <!--md-is-locked-open="vm.isSidenavLockedOpen()" md-is-open="vm.isSidenavOpen">-->
+
+    <!--<md-toolbar md-scroll-shrink>-->
+        <!--<div class="md-toolbar-tools">-->
+            <!--<h3>My App Title</h3>-->
+        <!--</div>-->
+    <!--</md-toolbar>-->
+
+    <!--<md-content role="navigation">-->
+        <!--<ul class="side-menu" ng-repeat="menuGroup in vm.menuConfig.menuGroups track by $index">-->
+            <!--<h2 id="{{menuGroup.id}}" translate>{{menuGroup.label}}</h2>-->
+            <!--<li ng-repeat="menuEntry in menuGroup.entries track by $index" id="{{menuEntry.id}}">-->
+                <!--<a ui-state="'{{menuEntry.targetState}}'"-->
+                   <!--ui-state-params="{{menuEntry.targetStateParams}}"-->
+                   <!--ui-sref-active="active"-->
+                   <!--ng-click="vm.clickHandler()"-->
+                   <!--href="#"-->
+                   <!--translate>{{menuEntry.label}}</a>-->
+            <!--</li>-->
+            <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li ng-repeat="section in vm.menu.sections" class="parent-list-item"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-class="{'parentActive' : vm.isSectionSelected(section)}">&ndash;&gt;-->
+                <!--&lt;!&ndash;<h2 class="menu-heading" ng-if="section.type === 'heading'"&ndash;&gt;-->
+                    <!--&lt;!&ndash;id="heading_{{ section.name | nospace }}">&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{section}}&ndash;&gt;-->
+                <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+                <!--&lt;!&ndash;<menu-link section="section" ng-if="section.type === 'link'"></menu-link>&ndash;&gt;-->
+                <!--&lt;!&ndash;<menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--</ul>-->
+    <!--</md-content>-->
+<!--</md-sidenav>-->
+
+
+<md-sidenav
+        class="md-sidenav-left"
+        md-component-id="virtualGalleryAppSidenav"
+        md-is-open="vm.isSidenavOpen"
+        md-is-locked-open="vm.isSidenavLockedOpen()"
+        ng-cloak
+        layout="column">
+
+    <md-toolbar>
+        <a class="md-title" ui-sref="home" href="#"><span>{{vm.siteTitle}}</span></a>
+    </md-toolbar>
+
+    <md-content layout="column" flex>
+        <ul>
+            <li ng-repeat="menuGroup in vm.menuConfig.menuGroups track by $index" id="{{menuGroup.id}}">
+                <h2 translate>{{menuGroup.label}}</h2>
+                <ul ng-if="menuGroup.entries">
+                    <li ng-repeat="menuEntry in menuGroup.entries track by $index" id="{{menuEntry.id}}">
+                        <a ui-state="'{{menuEntry.targetState}}'"
+                           ui-state-params="{{menuEntry.targetStateParams}}"
+                           ui-sref-active="active"
+                           ng-click="vm.clickHandler()"
+                           href="#"
+                           translate>{{menuEntry.label}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </md-content>
+
+    <!--<md-content ng-repeat="menuGroup in vm.menuConfig.menuGroups track by $index" id="{{menuGroup.id}}">-->
+        <!--<h2 translate>{{menuGroup.label}}</h2>-->
+        <!--<ul>-->
+            <!--<li ng-repeat="menuEntry in menuGroup.entries track by $index" id="{{menuEntry.id}}">-->
+                <!--<a ui-state="'{{menuEntry.targetState}}'"-->
+                   <!--ui-state-params="{{menuEntry.targetStateParams}}"-->
+                   <!--ui-sref-active="active"-->
+                   <!--ng-click="vm.clickHandler()"-->
+                   <!--href="#"-->
+                   <!--translate>{{menuEntry.label}}</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</md-content>-->
+</md-sidenav>

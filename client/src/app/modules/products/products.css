@@ -1,0 +1,6 @@
+div.products {
+	& .products-header {
+		font-size: 18px;
+		color: #004280;
+	}
+}

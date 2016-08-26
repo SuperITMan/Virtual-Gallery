@@ -1,0 +1,6 @@
+/* import all styles of the foo module */
+@import "components/foo/foo.css";
+
+div.home {
+	width: 100%;
+}

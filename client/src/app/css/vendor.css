@@ -1,0 +1,9 @@
+/*
+*****
+** Includes/imports all third-party stylesheets used throughout the application.
+** Should be loaded before the application stylesheets
+*****
+*/
+
+@import "../../../node_modules/angular/angular-csp.css";
+@import '../../../node_modules/angular-material/angular-material.css';

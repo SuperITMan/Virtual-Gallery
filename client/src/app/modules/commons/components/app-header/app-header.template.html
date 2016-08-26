@@ -1,0 +1,15 @@
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+        <md-button id="app-header-toggle-side-nav-menu" hide show-xs show-sm aria-label="Menu"
+                   class="hamburger"
+                   ng-click="vm.toggleSidenav()">
+            <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+        </md-button>
+
+        <a ui-state="home" href="#" class="logo">
+            <span class="logo-image">NBB</span>
+        </a>
+
+        <div class="md-title">{{vm.siteTitle}}</div>
+    </div>
+</md-toolbar>

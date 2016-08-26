@@ -1,0 +1,44 @@
+virtual-gallery-app-header {
+  /*position:relative;*/
+  /*clear: both;*/
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: var(--header-height);
+  max-height: var(--header-height);
+  display: block;
+  background-color: var(--header-color);
+  /*flex-shrink: 0;*/
+
+  & md-toolbar {
+      background-color: var(--header-color);
+      height: 100%;
+  
+      & .md-title {
+        color: white;
+        font-weight: 300;
+        font-size: 18px;
+        padding: 10px 8px 11px;
+        height: auto;
+        text-decoration: none;
+      }
+  }
+
+  & .logo-image {
+      display: block;
+      text-indent: -10000px;
+      color: transparent;
+      width: 55px;
+      height: 40px;
+      color: transparent;
+      background: transparent var(--logoSite);
+  }
+    
+  
+
+  & .hamburger {
+      min-width: 0;
+  }
+
+}

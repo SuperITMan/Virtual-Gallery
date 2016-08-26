@@ -1,0 +1,77 @@
+virtual-gallery-products-list {
+	& md-card-actions {
+		
+		& .md-button {
+			display: inline-block;
+		}
+
+	}
+
+	& md-card {
+		min-width: 250px;
+		/*width: 50%;*/
+		display: flex;
+    	flex-flow: row wrap;
+	}
+
+	& md-card {
+    	/*margin: 10px 2%;*/
+	}
+
+	/*& md-card:first-of-type{
+	    margin-left: 0;
+	}
+
+	& md-card:last-of-type{
+	    margin-right: 0;
+	}*/
+}
+
+/*@media (--small-mobile-only) {
+	virtual-gallery-products-list {
+		& md-card {
+			width: 100%;
+		}
+
+		& md-card {
+	    	margin: 10px 0;
+		}
+	}
+}
+
+@media (--mobile-only) {
+	virtual-gallery-products-list {
+		& md-card {
+			width: 50%;
+		}
+
+		& md-card {
+	    	margin: 10px 2%;
+		}
+	}
+}
+
+@media (--tablet) {
+	virtual-gallery-products-list {
+		& md-card {
+			width: 30%;
+		}
+
+		& md-card {
+	    	margin: 10px 3%;
+		}
+	}
+}
+
+@media (--desktop) {
+	virtual-gallery-products-list {
+		& md-card {
+			width: 20%;
+		}
+
+		& md-card {
+	    	margin: 10px 3%;
+		}
+	}
+}*/
+

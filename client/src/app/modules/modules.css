@@ -1,0 +1,11 @@
+/* import the styles of all modules */
+@import "commons/css/base-style.css";
+@import "home/home.css";
+@import "test/test.css";
+@import "products/products.css";
+
+/* import the styles of all components */
+@import "commons/components/app-footer/app-footer.css";
+@import "commons/components/app-header/app-header.css";
+@import "commons/components/app-sidenav/app-sidenav.css";
+@import "commons/components/products-list/products-list.css";

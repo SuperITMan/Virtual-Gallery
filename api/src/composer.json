@@ -1,0 +1,33 @@
+{
+  "name": "SuperITMan/Virtual-Gallery",
+  "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+  "authors": [
+    {
+      "name": "Alexis Georges",
+      "email": "alexis@georges.brussels",
+      "role": "Developer"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Neuman Vong",
+      "email": "neuman+pear@twilio.com",
+      "role": "Developer",
+      "homepage": "https://github.com/firebase/php-jwt"
+    }
+  ],
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": ">=5.3.0",
+    "slim/slim": "^3.0",
+    "slim/twig-view": "^2.1.1",
+    "firebase/php-jwt": "^4.0.0",
+    "mailin-api/mailin-api-php": "^1.0.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Firebase\\JWT\\": "src"
+    }
+  },
+  "minimum-stability": "dev"
+}

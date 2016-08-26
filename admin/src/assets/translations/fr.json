@@ -1,0 +1,78 @@
+{
+  "LANGUAGES": {
+    "EN": "en",
+    "FR": "fr",
+    "DE": "de"
+  },
+  "COMMON": {
+    "VERBS": {
+      "ADD": "Ajouter"
+    },
+    "WORDS": {
+
+    }
+  },
+  "ERROR_MESSAGES": {
+    "INVALID_TOKEN_DISCONNECTED": "Une erreur s'est produite, votre session n'est plus valide.\nVeuillez rafraîchir la page."
+  },
+  "FORMS": {
+    "PASSWORD_CONFIRM": "Confirmation du mot de passe"
+  },
+  "LOGIN": {
+    "CONNECTING_TO": "Connexion à %titlesite%",
+    "ERROR_BAD_PWD_OR_USERNAME": "La combinaison <strong>utilisateur/mot de passe</strong> est incorrecte.",
+    "FILL_CONNECTION_DETAILS": "Veuillez entrer les détails de connexion",
+    "LOGIN": "Se connecter",
+    "LOST_PASSWORD": "Mot de passe perdu ?",
+    "REMEMBER_ME": "Se souvenir de moi"
+  },
+  "PRODUCTS": {
+    "ADD_A_PRODUCT": "Ajouter un produit",
+    "ADDING_OF_A_PRODUCT": "Ajout d'un produit sur le site",
+    "ALL_PRODUCTS": "Tous les produits",
+    "LONG_DESCRIPTION": "Longue description",
+    "PRODUCT_NAME": "Nom du produit",
+    "PRODUCT_TYPE": "Type de produits",
+    "PRODUCTS": "Produits",
+    "SHORT_DESCRIPTION": "Courte description",
+    "TYPES": {
+      "BEJEWELED": "Bijou",
+      "PAINT": "Peinture",
+      "SCULPTURE": "Sculpture"
+    }
+  },
+  "CREATIONS": {
+    "ADD_A_CREATION": "Ajouter une création",
+    "ADDING_OF_A_CREATION_ON_YOUR_WEBSITE": "Ajout d'une création sur votre site",
+    "ALL_CREATIONS": "Toutes les créations",
+    "ALL_MY_CREATIONS": "Toutes mes créations",
+    "CREATION_NAME": "Nom de la création",
+    "CREATION_TYPE": "Type de création",
+    "CREATIONS": "Créations",
+    "IMAGES": "Images",
+    "LONG_DESCRIPTION": "Longue description",
+    "SHORT_DESCRIPTION": "Courte description",
+    "TYPES": {
+      "BEJEWELED": "Bijou",
+      "PAINT": "Peinture",
+      "SCULPTURE": "Sculpture"
+    },
+    "UPLOAD_IMAGES": "Envoyer une ou plusieurs images",
+    "USED_MATERIALS": "Matériaux utilisés"
+  },
+  "USERS": {
+    "ADD_A_USER": "Ajouter un utilisateur",
+    "ADDING_OF_A_USER_ON_YOUR_WEBSITE": "Ajout d'un utilisateur sur votre site",
+    "ALL_USERS": "Tous les utilisateurs",
+    "EMAIL": "Email",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom",
+    "MAIL_ADDRESS": "Email",
+    "MY_PROFILE": "Mon profil",
+    "PASSWORD": "Mot de passe",
+    "USER": "Utilisateur",
+    "USERNAME": "Nom d'utilisateur",
+    "USERS": "Utilisateurs",
+    "USER_PROFILE": "Profil utilisateur"
+  }
+}

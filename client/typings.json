@@ -1,0 +1,29 @@
+{
+    "dependencies": {},
+    "devDependencies": {},
+    "globalDependencies": {
+        "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#d55ed5d0f1050b88323b30971bcea0fd644d5454",
+        "angular-animate": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-animate.d.ts#d9e7db3b1068ec56a929624ee25f977fa38f68b7",
+        "angular-material": "github:DefinitelyTyped/DefinitelyTyped/angular-material/angular-material.d.ts#e4933ee6fd02ce5cd53abcb260bb1e6972fb1123",
+        "angular-mocks": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#0a23a2055d6f8f40fd39b5c1368ba6232842a057",
+        "angular-protractor": "github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#f9c44651705f574f6d4258fe5e1c335462bdcc19",
+        "angular-resource": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-resource.d.ts#00c03deeddaf7fe15272e87f2c13456eb01f2f15",
+        "angular-translate": "github:DefinitelyTyped/DefinitelyTyped/angular-translate/angular-translate.d.ts#49b81182471d3e8c72b5b8c10d677e09cf9bd751",
+        "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#b38cd68fe2dacaea0bb4efd6a3c638ceeae4fb25",
+        "core-js": "github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#95e782233e8e203a0b9283c3a7031faee428a530",
+        "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "js-data": "github:DefinitelyTyped/DefinitelyTyped/js-data/js-data.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "js-data-angular": "github:DefinitelyTyped/DefinitelyTyped/js-data-angular/js-data-angular.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "js-data-http": "github:DefinitelyTyped/DefinitelyTyped/js-data-http/js-data-http.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
+        "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "redux": "github:DefinitelyTyped/DefinitelyTyped/redux/redux.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "selenium-webdriver": "github:DefinitelyTyped/DefinitelyTyped/selenium-webdriver/selenium-webdriver.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "sinon": "github:DefinitelyTyped/DefinitelyTyped/sinon/sinon.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "source-map": "github:DefinitelyTyped/DefinitelyTyped/source-map/source-map.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+        "uglify-js": "github:DefinitelyTyped/DefinitelyTyped/uglify-js/uglify-js.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
+        "webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#82e655b668ec2e69ac13baadd79c7b4464e91a56"
+    }
+}

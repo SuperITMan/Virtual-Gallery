@@ -1,0 +1,15 @@
+/*!
+ * Virtual Gallery - Admin (https://github.com/SuperITMan/virtual-gallery)
+ * Copyright 2016 Virtual Gallery
+ * Licensed under MIT
+ */
+
+form.add-user label {
+    text-align: left!important;
+}
+
+.preview-thumbnail-image {
+    height: 150px;
+    width: auto;
+    margin: 10px;
+}

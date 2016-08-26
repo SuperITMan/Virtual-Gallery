@@ -1,0 +1,6 @@
+.content-wrapper {
+  width: 100%;
+  align-self: stretch;
+  /*margin-left: 280px;*/
+  position: relative;
+}

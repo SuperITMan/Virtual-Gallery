@@ -1,0 +1,19 @@
+virtual-gallery-app-footer {
+	display: block;
+	
+
+	& footer {
+		background-color : grey;
+  		width: 100%;
+  		height: var(--footer-height);
+  		/*height: 50px;*/
+  		/*margin-top: -50px;*/
+  		bottom: 0;
+  		/*left:0;*/
+  		position: relative;
+  		clear: both;
+  		/*margin-top: -3em;*/
+
+	}
+  
+}

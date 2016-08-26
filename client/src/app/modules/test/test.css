@@ -1,0 +1,32 @@
+md-grid-list figure {
+	/*width: 90%;
+	height: 50%;*/
+}
+
+md-grid-list img {
+	border-radius: 00%;
+}
+
+md-grid-list md-grid-tile {
+	transition: all 300ms ease-out 50ms;
+	/*margin-bottom: 10px;
+	display: block;*/
+}
+
+md-grid-list md-grid-tile {
+	/*padding-bottom: 32px;*/
+}
+
+md-grid-list md-grid-tile md-grid-tile-footer {
+	background: rgba(0, 0, 0, 0.68);
+  	height: 36px;
+}
+
+md-card img {
+	
+}
+
+md-card {
+	/*display: inline-block;*/
+	/*width: 30%;*/
+}
