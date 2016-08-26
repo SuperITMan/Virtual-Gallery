@@ -1,0 +1,552 @@
+define({ "api": [
+  {
+    "type": "post",
+    "url": "/creations",
+    "title": "Add a new Creation",
+    "name": "AddCreation",
+    "version": "1.0.0",
+    "group": "Creation",
+    "permission": [
+      {
+        "name": "admin",
+        "title": "User access only",
+        "description": "<p>Only an admin user can add a creation on the website.</p>"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the creation.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "shortDescription",
+            "description": "<p>Short description of the Creation.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "longDescription",
+            "description": "<p>Long description of the Creation.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "creationType",
+            "description": "<p>Type of the Creation.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number[]",
+            "optional": true,
+            "field": "images",
+            "description": "<p>List of Creation images (Array of Numbers).</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The new Creations <code>id</code>.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoAccessRight",
+            "description": "<p>Only authenticated Admins can access the data.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MissingName",
+            "description": "<p>Parameter name is not present.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/includes/classes/CreationController.php",
+    "groupTitle": "Creation",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Json Web Token Authentication</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "Authorization: Bearer &lt;your_jwt_token&gt;",
+          "type": "String"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/creations/:id",
+    "title": "Request Creation information",
+    "name": "GetCreation",
+    "version": "1.0.0",
+    "group": "Creation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Creations unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the Creation.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "shortDescription",
+            "description": "<p>Short description of the Creation.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "longDescription",
+            "description": "<p>Long description of the Creation.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "creationType",
+            "description": "<p>Type of the Creation.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the Creation.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "author",
+            "description": "<p>Name of the User.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "authorId",
+            "description": "<p>Id of the Author.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "images",
+            "description": "<p>Information about images linked to the Creation (Array of Objects).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "options.fileName",
+            "description": "<p>Name of the image.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "options.uploadDate",
+            "description": "<p>Upload date of the image.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "options.serverFileName",
+            "description": "<p>Server name of the image.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CreationNotFound",
+            "description": "<p>The <code>id</code> of the Creation was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"CreationNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/includes/classes/CreationController.php",
+    "groupTitle": "Creation"
+  },
+  {
+    "type": "get",
+    "url": "/creations",
+    "title": "Request last Creations",
+    "name": "GetCreations",
+    "version": "1.0.0",
+    "group": "Creation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the creation</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/includes/classes/CreationController.php",
+    "groupTitle": "Creation"
+  },
+  {
+    "type": "get",
+    "url": "/users/:id/creations",
+    "title": "Request user's last Creations",
+    "name": "getAuthorCreations",
+    "version": "1.0.0",
+    "group": "Creation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Users unique ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "limit",
+            "description": "<p>Limit of received creations</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Limit usage example:",
+          "content": "/v1/users/:id/creations?limit=20",
+          "type": "Number"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the creation</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/includes/classes/CreationController.php",
+    "groupTitle": "Creation"
+  },
+  {
+    "type": "get",
+    "url": "/creations/:id/author",
+    "title": "Request author of Creation",
+    "name": "getCreationAuthor",
+    "version": "1.0.0",
+    "group": "Creation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Creations unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Users unique ID.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"userId\": 2\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/includes/classes/CreationController.php",
+    "groupTitle": "Creation"
+  },
+  {
+    "type": "post",
+    "url": "/auth/login",
+    "title": "Authenticate a user",
+    "name": "AuthenticateUser",
+    "version": "1.0.0",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "login",
+            "description": "<p>Username or email of the User.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password of the User.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token for the User.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Id of the User.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Username of the User.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "displayedName",
+            "description": "<p>Displayed name of the User.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"Authorization\": \"Bearer &lt;your_jwt_token&gt;\",\n  \"userId\": 2,\n  \"username\": \"johndoe\",\n  \"displayedName\": \"John Doe\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MissingParameter",
+            "description": "<p>One or more parameter are not present.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/includes/classes/UserController.php",
+    "groupTitle": "User",
+    "groupDescription": "<p>This group contains all request for users...</p>"
+  },
+  {
+    "type": "post",
+    "url": "/users",
+    "title": "Add a new User",
+    "name": "CreateUser",
+    "version": "1.0.0",
+    "group": "UserGroup",
+    "permission": [
+      {
+        "name": "superAdmin"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Username of the User.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email of the User.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password of the User.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "displayedName",
+            "description": "<p>Displayed name of the User.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "birthdayDate",
+            "description": "<p>List of Creation images (Array of Numbers).</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The new Users <code>id</code>.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoAccessRight",
+            "description": "<p>Only authenticated Admins can access the data.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MissingParameter",
+            "description": "<p>One or more parameter are not present.</p>"
+          }
+        ],
+        "Error 403": [
+          {
+            "group": "Error 403",
+            "optional": false,
+            "field": "EmailIncorrect",
+            "description": "<p>Email does not respect email format. &lt;xxx@yyy.zzz&gt;</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/includes/classes/UserController.php",
+    "groupTitle": "User",
+    "groupDescription": "<p>This group contains all request for users...</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Json Web Token Authentication</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "Authorization: Bearer &lt;your_jwt_token&gt;",
+          "type": "String"
+        }
+      ]
+    }
+  }
+] });

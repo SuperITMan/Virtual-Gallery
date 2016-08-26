@@ -1,4 +1,4 @@
-{
+define({
   "name": "",
   "version": "0.0.0",
   "description": "",
@@ -10,4 +10,4 @@
     "url": "http://apidocjs.com",
     "version": "0.16.1"
   }
-}
+});
