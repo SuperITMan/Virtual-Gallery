@@ -10,13 +10,13 @@
   },
   "header": {
     "title": "General",
-    "content": "<p>This is my header !!!! :D</p>\n"
+    "content": "<p>Documentation for API of Virtual-Gallery project.</p>\n<p>More info about the project on <a href=\"https://github.com/SuperITMan/Virtual-Gallery\">GitHub</a>.</p>\n"
   },
   "sampleUrl": false,
   "apidoc": "0.2.0",
   "generator": {
     "name": "apidoc",
-    "time": "2016-08-26T17:38:33.149Z",
+    "time": "2016-08-26T17:58:25.280Z",
     "url": "http://apidocjs.com",
     "version": "0.16.1"
   }
