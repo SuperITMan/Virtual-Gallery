@@ -1,3 +1,5 @@
+#Virtual-Gallery
+
 This is the documentation for Virtual-Gallery API. 
 
 To generate the documentation with ApiDoc, you have to run these commands. 
