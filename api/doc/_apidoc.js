@@ -2,7 +2,7 @@
  * @api {get} /user/:id Get User information
  * @apiVersion 0.1.0
  * @apiName GetUser
- * @apiGroup User
+ * @apiGroup UserGroup
  *
  * @apiParam {Number} id Users unique ID.
  *
