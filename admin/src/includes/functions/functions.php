@@ -23,8 +23,8 @@ function user_connection_admin ($login="", $password="", $rememberMe=false) {
             "data" => [
                 "userId" => $userInfos["id"],
                 "username" => $userInfos["username"],
-                "isAdmin" => $userInfos["isAdmin"],
-                "isSuperAdmin" => $userInfos["isSuperAdmin"],
+                "isAdmin" => $userInfos["isAdmin"]?"true":"false",
+                "isSuperAdmin" => $userInfos["isSuperAdmin"]?"true":"false",
                 "displayedName" => $userInfos["displayedName"]
             ]
         );

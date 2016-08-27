@@ -200,9 +200,13 @@ if (isset($_POST["username"], $_POST["password"])) {
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-
+<form id="test-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = [];
+    var $formHTML = "<form id=\"newForm\" role=\"form\" method=\"POST\"></form>";
+
+    var blob = new Blob([$formHTML], {type:"text/xml"});
+
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {
             e.preventDefault();
@@ -225,64 +229,120 @@ if (isset($_POST["username"], $_POST["password"])) {
 //        });
 
         $("#imageInput").on("change", (function(e) {
-            console.log("Commençons");
+            e.preventDefault();
+            $("message").empty();
+            $("loading").show();
+
+            var $this = $(this);
+            var files = $this[0].files;
+            var $file;
+
             //submit the form here
 //        });
 //        $("#modalUploadImages").on("submit", (function (e) {
-           e.preventDefault();
-           $("message").empty();
-           $("loading").show();
+            console.log("Fichiers ?");
+            console.log(files);
+            console.log("Fichiers ? Ouiiiii");
+//            if (typeof $this.files[0] === 'undefined') { return false; }
 
-            var $this = $(this);
-            if (typeof this.files[count] === 'undefined') { return false; }
-
-            console.log($("#modalUploadImages")[0]);
-
-           $.ajax({
-               type: "POST",
-               url: "/upload.php",
-               data: new FormData($("#modalUploadImages")[0]),
-               contentType: false,
-//               crossDomain: true,
-               cache: false,
-               processData: false,
-               mimeType: "multipart/form-data",
-               headers: {
-                   "Authorization": "Bearer <?php echo $_SESSION["token"];?>"
-               },
-               xhr: function () {
-                   var xhr = $.ajaxSettings.xhr();
-                   if (xhr.upload) {
-                       xhr.upload.addEventListener("progress", function (event) {
-                           var percent = 0;
-                           var position = event.loaded || event.position;
-                           var total = event.total;
-                           if (event.lengthComputable) {
-                               percent = Math.ceil(position / total * 100);
-                           }
-                           console.log("Ca semble progresser");
-                           console.log(percent);
-                           //update progressbar
-                           $("#progress-wrp .progress-bar").attr('aria-valuenow', percent).text(percent + "%").css("width", percent + "%");
-                       }, true);
+//            console.log($("#modalUploadImages")[0]);
+//            var $formHTML = "<form id=\"newForm\" role=\"form\" method=\"POST\"></form>";
+           for (i=0; i<files.length; i++) {
+               console.log("Upload du fichier "+i+" sur "+files.length);
+               $file = new FormData($formHTML);
+               $file.append("imageInput", files[0]);
+               console.log("Ce que je vais envoyer :)");
+               console.log($file);
+               $.ajax({
+                    type: "POST",
+                    url: "/upload.php",
+                    data: $file,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    headers: {
+                        "Authorization": "Bearer <?php echo $_SESSION["token"];?>"
+                    },
+                    xhr: function () {
+                        var xhr = $.ajaxSettings.xhr();
+                        if (xhr.upload) {
+                            xhr.upload.addEventListener("progress", function (event) {
+                                var percent = 0;
+                                var position = event.loaded || event.position;
+                                var total = event.total;
+                                if (event.lengthComputable) {
+                                    percent = Math.ceil(position / total * 100);
+                                }
+                                console.log("Ca semble progresser");
+                                console.log(percent);
+                                //update progressbar
+                                $("#progress-wrp .progress-bar").attr('aria-valuenow', percent).text(percent + "%").css("width", percent + "%");
+                            }, true);
+                        }
+                        return xhr;
+                    },
+                    success: function (data, textStatus) {
+                        setTimeout(function () {
+                            $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
+                            data = jQuery.parseJSON(data);
+                            uploadedImages.push(data["id"]);
+                            $("#modalUploadImages")[0].reset();
+                            $("#imagePreview").append("<img class='preview-thumbnail-image' src='" + data["link"] + "'/>");
+                        }, 500);
+                    },
+                   error: function(data) {
+                        console.log("Errrreeeeurr");
+                       console.log(data);
                    }
-                   return xhr;
-               },
-               success: function(data, textStatus) {
-                   setTimeout(function(){
-                       $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
-                       data = jQuery.parseJSON(data);
-                       uploadedImages.push(data["id"]);
-//                       $("#modalUploadImages")[0].reset();
-                       $("#imagePreview").append("<img class='preview-thumbnail-image' src='"+data["link"]+"'/>");
-                   }, 500);
-               }
-               error: function(result, textStatus, errorThrown) {
-                   console.log(result);
-                   console.log(textStatus);
-                   console.log(errorThrown);
-               }
-           }).trigger('ajax').done(function (data) {
+                });
+           }
+//            $.ajax({
+//                type: "POST",
+//                url: "/upload.php",
+//                data: new FormData($("#modalUploadImages")[0]),
+//                contentType: false,
+////               crossDomain: true,
+//                cache: false,
+//                processData: false,
+//                mimeType: "multipart/form-data",
+//                headers: {
+//                    "Authorization": "Bearer <?php //echo $_SESSION["token"];?>//"
+//                },
+//                xhr: function () {
+//                    var xhr = $.ajaxSettings.xhr();
+//                    if (xhr.upload) {
+//                        xhr.upload.addEventListener("progress", function (event) {
+//                            var percent = 0;
+//                            var position = event.loaded || event.position;
+//                            var total = event.total;
+//                            if (event.lengthComputable) {
+//                                percent = Math.ceil(position / total * 100);
+//                            }
+//                            console.log("Ca semble progresser");
+//                            console.log(percent);
+//                            //update progressbar
+//                            $("#progress-wrp .progress-bar").attr('aria-valuenow', percent).text(percent + "%").css("width", percent + "%");
+//                        }, true);
+//                    }
+//                    return xhr;
+//                },
+//                success: function (data, textStatus) {
+//                    setTimeout(function () {
+//                        $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
+//                        data = jQuery.parseJSON(data);
+//                        uploadedImages.push(data["id"]);
+////                       $("#modalUploadImages")[0].reset();
+//                        $("#imagePreview").append("<img class='preview-thumbnail-image' src='" + data["link"] + "'/>");
+//                    }, 500);
+//                }
+////                error: function (result, textStatus, errorThrown) {
+////                    console.log(result);
+////                    console.log(textStatus);
+////                    console.log(errorThrown);
+////                }
+//            });
+//           }).trigger('ajax').done(function (data) {
 //               $("#progress-wrp .progress-bar").attr('aria-valuenow', 100).text(100 + "%").css("width", +100 + "%");
 //               setTimeout(function(){
 //                   $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
@@ -291,13 +351,13 @@ if (isset($_POST["username"], $_POST["password"])) {
 //                   $("#modalUploadImages")[0].reset();
 //                   $("#imagePreview").append("<img class='preview-thumbnail-image' src='"+data["link"]+"'/>");
 //               }, 500);
-                $("#modalUploadImages")[0].reset();
+//                $("#modalUploadImages")[0].reset();
 
 //               $("#progress-wrp .progress-bar").css("width", + 0 + "%");
 //               $("#progress-wrp .status").text("");
 
 
-           });
+//           });
         }));
     });
 </script>
