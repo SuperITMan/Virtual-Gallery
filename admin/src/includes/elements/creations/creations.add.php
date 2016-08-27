@@ -8,7 +8,7 @@
     </div>
 
 <?php
-if (isset($_POST["username"], $_POST["password"])) {
+if (isset($_POST["creationName"], $_POST["creationType"])) {
     if($creationId = addCreation($_POST))
         displaySuccessMessage("L'ajout s'est passé avec succès !! id:".$creationId);
 //        echo "<script>window.location = \"index.php?p=creations&c=all&id=".$creationId."\";</script>";
@@ -25,7 +25,7 @@ if (isset($_POST["username"], $_POST["password"])) {
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <!--                    <div class="container"-->
-                    <form id="newCreationForm" class="form-horizontal add-user" role="form" method="POST" action="index.php?p=users&c=add">
+                    <form id="newCreationForm" class="form-horizontal add-creation" role="form" method="POST" action="index.php?p=creations&c=add">
                         <div class="form-group">
                             <label for="creationName" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
                                 <?php echo $iniLang["CREATIONS"]["CREATION_NAME"];?> *
@@ -112,7 +112,7 @@ if (isset($_POST["username"], $_POST["password"])) {
                                        class="form-control"
                                        autofocus
                                        value="<?php echo empty($_POST["usedMaterials"])?"":htmlspecialchars($_POST["usedMaterials"]);?>"
-                                       required>
+                                       >
                             </div>
                         </div>
 
@@ -121,11 +121,6 @@ if (isset($_POST["username"], $_POST["password"])) {
                                 <?php echo $iniLang["CREATIONS"]["IMAGES"];?>
                             </label>
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
-<!--                                <input id="imageInput" type="file" class="file[]" data-preview-file-type="text" multiple>-->
-<!--                                <button id="buttonUpload">Envoyer mes fichiers</button>-->
-<!--                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
-<!--                                    --><?php //echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?>
-<!--                                </button>-->
                                 <button type="button" class="btn btn-primary" id="buttonUpload">
                                     <?php echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?>
                                 </button>
@@ -139,67 +134,22 @@ if (isset($_POST["username"], $_POST["password"])) {
                             <input type="hidden" name="imagesIds" id="imagesIds">
                         </div>
 
-<!--                        <div class="form-group">-->
-<!--                            <label for="images" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">-->
-<!--                                --><?php //echo $iniLang["CREATIONS"]["IMAGES"];?>
-<!--                            </label>-->
-<!--                            <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">-->
-<!--                                <div id="images_thumbnails"></div>-->
-<!--                                <input id="input-fr" name="inputfr[]" type="file" multiple class="file-loading">-->
-<!--                                <!-- Button trigger modal -->-->
-<!--<!--                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->-->
-<!--<!--                                    -->--><?php ////echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?>
-<!--<!--                                </button>-->-->
-<!--                            </div>-->
-<!--<!--                            <input type="hidden" name="imagesIds" id="imagesIds">-->-->
-<!--                        </div>-->
-
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9">
                                 <button type="submit" class="btn btn-primary btn-block"><?php echo $iniLang["COMMON"]["VERBS"]["ADD"];?></button>
                             </div>
                         </div>
                     </form>
+
                     <form id="modalUploadImages" class="hidden" action="" method="POST" enctype="multipart/form-data">
                         <input hidden="true" type="file" name="imageInput[]" id="imageInput" class="hidden" multiple>
-
-
-                        <!--                    <button type="submit" name="submit" class="btn btn-primary submit">-->
-                        <!--                        Envoyer votre fichier-->
-                        <!--                    </button>-->
-                        <!--                    <input type="submit" value="Upload" class="submit" />-->
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal-->
-<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
-<!--    <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-<!--                <h4 class="modal-title" id="myModalLabel">--><?php //echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?><!--</h4>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                -->
-<!--                <div id="progress-wrp" class="progress">-->
-<!--                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">-->
-<!--                        0%-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div id="imagePreview"></div>-->
-<!--            </div>-->
-<!--            <h4 id='loading' class="hide">Loading..</h4>-->
-<!--            <div id="message"></div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="apply-changes btn btn-primary">Save changes</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
 <form id="test-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = [];
@@ -287,6 +237,10 @@ if (isset($_POST["username"], $_POST["password"])) {
                             $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
                             data = jQuery.parseJSON(data);
                             uploadedImages.push(data["id"]);
+                            console.log("Uploaded images ??");
+                            console.log(uploadedImages);
+                            console.log(uploadedImages);
+                            $("#imagesIds").val(uploadedImages);
                             $("#modalUploadImages")[0].reset();
                             $("#imagePreview").append("<img class='preview-thumbnail-image' src='" + data["link"] + "'/>");
                         }, 500);
@@ -296,6 +250,13 @@ if (isset($_POST["username"], $_POST["password"])) {
                        console.log(data);
                    }
                 });
+           }
+            console.log("Serialuiié ???");
+            console.log(uploadedImages.length);
+           if (uploadedImages.length > 0) {
+               console.log("Serialuiié ???");
+               console.log(uploadedImages.serializeArray());
+               $("#imagesIds").val(uploadedImages.serializeArray());
            }
 //            $.ajax({
 //                type: "POST",

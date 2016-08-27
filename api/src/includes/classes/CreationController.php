@@ -165,6 +165,18 @@ class CreationController {
             $stmt = $this->db->prepare($sqlReq);
             $stmt->execute();
             $result = $stmt->fetchAll();
+
+            $i = 0;
+            foreach ($result as $content) {
+                $data[$i]["name"] = $content["name"];
+                $data[$i]["shortDescription"] = $content["shortDescription"];
+                $data[$i]["author"] = $content["author"];
+                $data[$i]["id"] = $content["id"];
+                $data[$i]["authorId"] = $content["authorId"];
+                $imageId = json_decode($content["images"])[0];
+                $data[$i]["image"] = fetchSQLReq($this-db, $this->sql["creation"]["select"]["selectImageInfo"],
+                                                    array(":id"=>$imageId), false,true);
+            }
             $data = array("data"=>$result);
             $response->getBody()->write(json_encode($data));
             $response = $response->withStatus(200);

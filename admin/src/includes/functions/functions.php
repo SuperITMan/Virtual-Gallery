@@ -94,6 +94,58 @@ function verifyJWT ($jwt="") {
     }
 }
 
+function addCreation($postData = []) {
+    global $db;
+    global $sql;
+
+    print_r($postData);
+
+    $longDescription = empty($postData["longDescription"]) ? "" : htmlspecialchars($postData["longDescription"]);
+    $shortDescription = empty($postData["shortDescription"]) ? "" : htmlspecialchars($postData["shortDescription"]);
+    $usedMaterials = empty($postData["usedMaterials"]) ? "" : htmlspecialchars($postData["usedMaterials"]);
+
+    $creationName = htmlspecialchars($postData["creationName"]);
+    $creationType = htmlspecialchars($postData["creationType"]);
+    $imagesIds = htmlspecialchars($postData["imagesIds"]);
+
+    //TODO Check value of creationType
+    if (!empty($creationName) && !empty($creationType) && !empty($imagesIds)) {
+        echo "On est dans le vif";
+
+        $params = array(":name"=>$creationName,":shortDescription"=>$shortDescription,":longDescription"=>$longDescription,
+            ":creationType"=>$creationType,":userId"=>USER_USERID);
+
+        if (substr_count($sql["creation"]["insert"]["addCreation"], ":") == count($params)) {
+            $stmt = $db -> prepare($sql["creation"]["insert"]["addCreation"]);
+
+            echo "On a vérifié la validité des paramètres";
+
+            try {
+                if ($stmt->execute($params)) {
+                    $creationId = $db -> lastInsertId();
+                    $params = array(":creationId"=>$creationId,":metaKey"=>"images",":metaValue"=>$imagesIds);
+                    if (sendSQLReq($db,$sql["creation"]["insert"]["addImageToCreation"],$params)) {
+                        return $creationId;
+                    } else return false;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+
+//        if (sendSQLReq($db,$sql["creation"]["insert"]["addCreation"],$params)) {
+//            $creationId = $db -> lastInsertId();
+//            $params = array(":creationId"=>$creationId,":metaValue"=>$imagesIds);
+//            if (sendSQLReq($db,$sql["creation"]["insert"]["addCreation"],$params)) {
+//                return $creationId;
+//            } else return false;
+//        } else return false;
+    } else { return false;}
+}
+
 function addUser ($postData = []) {
     global $db;
     global $sql;

@@ -2,10 +2,10 @@
   "creation": {
     "insert": {
       "addCreation": "INSERT INTO vg_creations (name, short_description, long_description, creation_type, user_id) VALUES (:name, :shortDescription, :longDescription, :creationType, :userId)",
-      "addImageToCreation": "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, :metaKey, :metaValue)"
+      "addImageToCreation": "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, `images`, :metaValue)"
     },
     "select": {
-      "selectLastCreations": "SELECT name, short_description as shortDescription, '' as image, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id",
+      "selectLastCreations": "SELECT name, short_description as shortDescription, '' as image, c.id as id, displayed_name as author, u.id as authorId, (SELECT meta_value FROM vg_creations_meta WHERE meta_key='images' and creation_id = c.id) as images FROM vg_creations c JOIN vg_users u ON c.user_id=u.id",
       "selectProductInfos": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id",
       "selectProductInfosWithImages": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId, (SELECT meta_value FROM vg_creations_meta WHERE meta_key='images' and creation_id = c.id) as images FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id"
     }
