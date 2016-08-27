@@ -173,11 +173,13 @@ class CreationController {
                 $data[$i]["author"] = $content["author"];
                 $data[$i]["id"] = $content["id"];
                 $data[$i]["authorId"] = $content["authorId"];
-                $imageId = json_decode($content["images"])[0];
-                $data[$i]["image"] = fetchSQLReq($this-db, $this->sql["creation"]["select"]["selectImageInfo"],
+                $imageId = $content["images"][0];
+                $data[$i]["image"] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
                                                     array(":id"=>$imageId), false,true);
+
+                $i++;
             }
-            $data = array("data"=>$result);
+//            $data = array("data"=>$result);
             $response->getBody()->write(json_encode($data));
             $response = $response->withStatus(200);
         } catch (Exception $e) {

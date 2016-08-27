@@ -98,8 +98,6 @@ function addCreation($postData = []) {
     global $db;
     global $sql;
 
-    print_r($postData);
-
     $longDescription = empty($postData["longDescription"]) ? "" : htmlspecialchars($postData["longDescription"]);
     $shortDescription = empty($postData["shortDescription"]) ? "" : htmlspecialchars($postData["shortDescription"]);
     $usedMaterials = empty($postData["usedMaterials"]) ? "" : htmlspecialchars($postData["usedMaterials"]);
@@ -110,15 +108,11 @@ function addCreation($postData = []) {
 
     //TODO Check value of creationType
     if (!empty($creationName) && !empty($creationType) && !empty($imagesIds)) {
-        echo "On est dans le vif";
-
         $params = array(":name"=>$creationName,":shortDescription"=>$shortDescription,":longDescription"=>$longDescription,
             ":creationType"=>$creationType,":userId"=>USER_USERID);
 
         if (substr_count($sql["creation"]["insert"]["addCreation"], ":") == count($params)) {
             $stmt = $db -> prepare($sql["creation"]["insert"]["addCreation"]);
-
-            echo "On a vérifié la validité des paramètres";
 
             try {
                 if ($stmt->execute($params)) {
