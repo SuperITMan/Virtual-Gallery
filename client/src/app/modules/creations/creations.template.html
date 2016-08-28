@@ -1,4 +1,5 @@
-<div class="creations">
-    <h1 class="creations-header md-display-1" md-colors="{color:'primary'}">Créations récentes</h1>
+<div class="creations page-content">
+    <h1 class="creations-header md-display-1" md-colors="{color:'primary'}" translate>CREATIONS.RECENT_CREATIONS</h1>
+    <md-progress-linear ng-hide="vm.creationsListConfig" md-mode="indeterminate"></md-progress-linear>
     <virtual-gallery-creations-list creations-list-config="vm.creationsListConfig"></virtual-gallery-creations-list>
 </div>

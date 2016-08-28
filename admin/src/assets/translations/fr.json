@@ -60,6 +60,10 @@
     "UPLOAD_IMAGES": "Envoyer une ou plusieurs images",
     "USED_MATERIALS": "Matériaux utilisés"
   },
+  "SETTINGS": {
+    "SITE_SETTINGS": "Paramètres du site",
+    "TITLE": "Paramètres"
+  },
   "USERS": {
     "ADD_A_USER": "Ajouter un utilisateur",
     "ADDING_OF_A_USER_ON_YOUR_WEBSITE": "Ajout d'un utilisateur sur votre site",

@@ -1,11 +1,11 @@
 "use strict";
 
-const API_URL:string = "http://192.168.0.15:8086/v1";
-
 import ILogService = angular.ILogService;
 import IResourceService = angular.resource.IResourceService;
 import IResource = angular.resource.IResource;
 import ITimeoutService = angular.ITimeoutService;
+
+import {manifest} from "../../../app";
 
 export interface IUsersApiService {
     getUsers():IResource<any>;
@@ -31,16 +31,16 @@ export class UsersApiService {
     public getUser(id:number):IResource<any> {
         id = id || 0;
 
-        return this.$resource(API_URL + "/users/"+id).get();
+        return this.$resource(manifest.api_url + "/users/"+id).get();
     }
 
     public getUsers(limit:number):any {
         limit = limit || 0;
 
         if (limit > 0) {
-            return this.$resource(API_URL + "/users?limit="+limit).get();
+            return this.$resource(manifest.api_url + "/users?limit="+limit).get();
         } else {
-            return this.$resource(API_URL + "/users").get();
+            return this.$resource(manifest.api_url + "/users").get();
         }
     }
 

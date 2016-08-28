@@ -145,7 +145,7 @@
         "start:hmr:livereload": "npm run server:dev:hmr:livereload",
         "start:dev": "npm run server",
         "start:prod": "npm run server:prod",
-        "superstatic": "cd dist && superstatic --config ../superstatic.json --port 443 --host 0.0.0.0",
+        "superstatic": "cd dist && superstatic --config ../superstatic.json --port 8095 --host 0.0.0.0",
         "test": "node --max-old-space-size=4096 ./node_modules/karma/bin/karma start",
         "test-subset": "npm run test -- --path--",
         "tsc": "tsc",

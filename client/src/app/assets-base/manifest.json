@@ -24,6 +24,7 @@
         }
     ],
     "start_url": "/index.html",
+    "api_url": "http://localhost:8086/v1",
     "display": "standalone",
     "background_color": "#70DBA2",
     "theme_color": "#656970"

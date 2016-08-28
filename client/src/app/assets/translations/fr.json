@@ -4,16 +4,40 @@
         "FR": "fr",
         "DE": "de"
     },
+    "COMMONS": {
+        "CONTACT": "Contacter",
+        "DESCRIPTION": "Description",
+        "FIRST_NAME": "Prénom",
+        "INFORMATION": "Information",
+        "LAST_NAME": "Nom de famille",
+        "NAME": "Nom"
+    },
     "MENU": {
+        "ARTISTS": {
+            "TITLE": "Artistes",
+            "ALL_ARTISTS": "Tous les artistes",
+            "ABOUT_US": "A propos de nous"
+        },
         "CREATIONS": {
             "ALL_CREATIONS": "Toutes les créations",
             "TITLE": "Créations"
+        },
+        "HOME": {
+            "TITLE": "Accueil"
         },
         "USERS": {
             "TITLE": "Utilisateurs"
         }
     },
+    "ARTISTS": {
+        "ARTIST": "Artiste",
+        "SEE_THE_ARTIST": "Voir l'artiste"
+    },
     "CREATIONS": {
-        "SEE_THE_CREATION": "Voir la création"
+        "SEE_THE_CREATION": "Voir la création",
+        "CREATION_DETAILS": "Détails de la création",
+        "CREATION_TYPE": "Type de création",
+        "CREATION_DATE": "Date de création",
+        "RECENT_CREATIONS": "Créations récentes"
     }
 }

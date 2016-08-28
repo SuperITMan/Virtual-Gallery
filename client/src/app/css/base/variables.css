@@ -5,9 +5,9 @@
 */
 
 :root {
-  --logoSite: url("/assets/images/touch/logo-white.svg") no-repeat;
+  --logoSite: /*url("/assets/images/touch/logo-white.svg")*/ no-repeat;
   --header-height: 70px;
-  --footer-height: 100px;
+  --footer-height: 50px;
   --sidenav-width-px: 270px;
   --header-color: rgb(0,118,200);
 }

@@ -1,6 +1,17 @@
-div.products {
-	& .products-header {
+div.creations {
+	& .creations-header {
 		font-size: 18px;
-		color: #004280;
+		/*color: #004280;*/
 	}
+
+	& md-progress-linear {
+		& ._md-container {
+		  	background-color: white !important;
+	  	}
+	}
+	
+	& .card-info {
+	  	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+		margin: 8px;
+  	}
 }

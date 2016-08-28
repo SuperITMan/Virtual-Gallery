@@ -4,16 +4,41 @@
         "FR": "fr",
         "DE": "de"
     },
+    "COMMONS": {
+        "CONTACT": "Contact",
+        "DESCRIPTION": "Description",
+        "FIRST_NAME": "First name",
+        "INFORMATION": "Information",
+        "LAST_NAME": "Last name",
+        "NAME": "Name"
+    },
     "MENU": {
+        "ARTISTS": {
+            "TITLE": "Artists",
+            "ALL_ARTISTS": "All artists",
+            "ABOUT_US": "About us"
+        },
         "CREATIONS": {
             "ALL_CREATIONS": "All creations",
             "TITLE": "Creations"
+        },
+        "HOME": {
+            "TITLE": "Home"
         },
         "USERS": {
             "TITLE": "Users"
         }
     },
+    "ARTISTS": {
+        "ARTIST": "Artist",
+        "SEE_THE_ARTIST": "See the artist"
+    },
     "CREATIONS": {
-        "SEE_THE_CREATION": "See the creation"
+        "SEE_THE_CREATION": "See the creation",
+        "CREATION_DETAILS": "Details of the creation",
+        "CREATION_TYPE": "Type of creation",
+        "CREATION_DATE": "Date of creation",
+        "RECENT_CREATIONS": "Recent creations"
+
     }
 }

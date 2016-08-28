@@ -6,7 +6,8 @@ import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import {IMenuConfig} from "./modules/commons/components/app-sidenav/app-sidenav";
 
-const manifest:any = require("./assets-base/manifest.json");
+import {manifest} from "./app";
+// const manifest:any = require("./assets-base/manifest.json");
 
 // controller
 export class AppController extends AbstractController {
@@ -26,7 +27,19 @@ export class AppController extends AbstractController {
         this.menuConfig = {
             menuGroups: [
                 {
-                    entries: [],
+                    entries: [{
+                            id: "all-artists",
+                            label: "MENU.ARTISTS.ALL_ARTISTS",
+                            targetState: "artists",
+                            targetStateParams: ""
+                        },
+                        {
+                            id: "about-us",
+                            label: "MENU.ARTISTS.ABOUT_US",
+                            targetState: "about-us",
+                            targetStateParams: ""
+                        }
+                    ],
                     id:"all-users",
                     label: "MENU.USERS.TITLE"
                 },

@@ -17,6 +17,8 @@ import IStateService = ng.ui.IStateService;
 // location provider
 import ILocationProvider = angular.ILocationProvider;
 
+export const manifest:any = require("./assets-base/manifest.json");
+
 // i18n
 import ITranslateProvider = angular.translate.ITranslateProvider;
 import {ModuleRegistry} from "./modules/commons/modules/module.registry";

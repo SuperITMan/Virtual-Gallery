@@ -1,28 +1,58 @@
-<div>
+<div class="page-content creations">
     <div flex layout="row" layout-wrap>
-        <md-content>
-            <h1 class="creations-header md-display-1" md-colors="{color:'primary'}">Créations récentes</h1>
-            <p>Bordel de caca</p>
-        </md-content>
-    </div>
-    <div flex layout="row" layout-wrap>
-        <md-card flex="20" flex-sm="33" flex-xs="100">
-            <!--<md-card ng-repeat="product in vm.productsListConfig.products">-->
-            <md-card-header>
-                <img ng-if="vm.product.images != false" ng-src="http://localhost:8083/uploads/{{vm.product.images[0].serverFileName}}" class="md-card-image" alt="Washed Out"/>
-            </md-card-header>
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">{{vm.product.name}}</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-                <h3>Auteur : {{vm.product.author}}</h3>
-            </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ui-state="'productDetails'" ui-state-params="({productId: '{{vm.product.id}}'})" translate="PRODUCTS.SEE_THE_PRODUCT"></md-button>
-                <md-button>Action 2</md-button>
-            </md-card-actions>
-        </md-card>
+        <h1 class="creations-header md-display-1" md-colors="{color:'primary'}" flex="100" translate>CREATIONS.CREATION_DETAILS</h1>
+        <div layout="row" layout-xs="column" flex="100">
+            <div flex="40" flex-sm="50" flex-xs="100">
+                <img ng-if="vm.product.images != false" ng-src="http://localhost:8083/uploads/{{vm.product.images[0].serverFileName}}" alt="{{vm.product.images[0].fileName}}"/>
+                <md-divider></md-divider>
+                <md-content flex="100">
+                    <img ng-if="vm.product.images != false"
+                         ng-repeat="image in vm.product.images"
+                         ng-src="http://localhost:8083/uploads/{{image.serverFileName}}"
+                         alt="{{image.fileName}}"
+                         flex="20">
+                </md-content>
+            </div>
+            <div flex="10" flex-sm="0" flex-xs="0"></div>
+            <div flex="40" flex-sm="50" flex-xs="100">
+                <md-card flex="100">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate>COMMONS.INFORMATION</span>
+                            <span class="md-subhead">
+                                <strong translate>COMMONS.NAME</strong> : {{vm.product.name}}
+                                <br/>
+                                <strong translate>COMMONS.DESCRIPTION</strong> : {{vm.product.longDescription}}
+                                <br/>
+                                <strong translate>CREATIONS.CREATION_TYPE</strong> : {{vm.product.creationType}}
+                                <br/>
+                                <strong translate>CREATIONS.CREATION_DATE</strong> : 1000
+
+                                <md-chips ng-model="vm.product.creationType" readonly="true" md-removable="false"></md-chips>
+                            </span>
+                        </md-card-title-text>
+                    </md-card-title>
+                </md-card>
+                <md-card flex="100">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate>ARTISTS.ARTIST</span>
+                            <span class="md-subhead">
+                                <strong translate>COMMONS.NAME</strong>{{vm.product.author}}
+                                <br/>
+                                <strong translate>COMMONS.NAME</strong>{{vm.product.author}}
+                            </span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button><span translate>ARTISTS.SEE_THE_ARTIST</span></md-button>
+                        <md-button><span translate>COMMONS.CONTACT</span></md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </div>
     </div>
 </div>

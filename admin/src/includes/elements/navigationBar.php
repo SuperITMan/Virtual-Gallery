@@ -62,6 +62,9 @@
                         </li>
                     </ul>
                 </li>
+                <li class="<?php echo isPage("settings")?"active":"";?>">
+                    <a href="index.php?p=settings"><i class="fa fa-cog fa-fw"></i> <?php echo $iniLang["SETTINGS"]["TITLE"];?></a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

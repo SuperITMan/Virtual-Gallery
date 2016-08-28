@@ -58,7 +58,13 @@ app {
 	/*min-height: 100%;*/
 	padding: 8px 12px;
 	height: auto;
+	width: 100%;
 	/*margin-left: var(--sidenav-width-px);*/
+}
+
+.page-content {
+	padding: 5px;
+	box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
 }
 
 body {

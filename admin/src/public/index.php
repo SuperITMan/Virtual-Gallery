@@ -160,6 +160,9 @@ if (empty($_SESSION["token"])) {
                 case strcasecmp(htmlspecialchars($_GET["p"]), "creations") == 0:
                     include $ini["path"]["creations"];
                     break;
+                case strcasecmp(htmlspecialchars($_GET["p"]), "settings") == 0:
+                    include $ini["path"]["settings"];
+                    break;
             }
         } else
             include $ini["path"]["dashboard"];
