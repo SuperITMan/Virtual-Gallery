@@ -1,29 +1,31 @@
 "use strict";
 
-import {AbstractController} from "./modules/commons/controllers/abstract.controller";
 import ILogService = angular.ILogService;
 import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import {IMenuConfig} from "./modules/commons/components/app-sidenav/app-sidenav";
 
 import {manifest} from "./app";
+import IRootScopeService = angular.IRootScopeService;
+import {AbstractStateController} from "./modules/commons/controllers/abstract.state.controller";
 // const manifest:any = require("./assets-base/manifest.json");
 
 // controller
-export class AppController extends AbstractController {
+export class AppController extends AbstractStateController {
     public menuConfig:IMenuConfig;
-    public manifest:any = manifest;
+    public siteTitle:String;
 
     // necessary to help AngularJS know about what to inject and in which order
-    public static $inject:Array<string> = ["$log", "$state", "$scope"];
+    public static $inject:Array<string> = ["$log", "$state", "$scope", "$rootScope"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService) {
+        super(logger, $state, $scope, $rootScope);
     }
 
     private $onInit():void {
         this.logger.debug("Application bootstrapped!");
-
+        this.siteTitle = manifest.name;
+        this.$rootScope["title"] = manifest.name;
         this.menuConfig = {
             menuGroups: [
                 {

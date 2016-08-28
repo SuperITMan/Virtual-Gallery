@@ -3,7 +3,7 @@
         <md-card ng-repeat="creation in vm.creationsListConfig.creations" flex-gt-md="20" flex-md="30" flex-sm="45" flex-xs="100">
         <!--<md-card ng-repeat="product in vm.productsListConfig.products">-->
             <md-card-header>
-                <img ng-if="creation.image != false" ng-src="http://localhost:8083/uploads/{{creation.image.serverFileName}}" class="md-card-image" alt="Washed Out"/>
+                <img ng-if="creation.image != false" ng-src="/uploads/{{creation.image.serverFileName}}" class="md-card-image" alt="Washed Out"/>
             </md-card-header>
             <md-card-title>
                 <md-card-title-text>

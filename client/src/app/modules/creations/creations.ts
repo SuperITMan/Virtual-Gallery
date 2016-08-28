@@ -17,6 +17,7 @@ creationsModule.config(["$stateProvider", ($stateProvider:IStateProvider) => {
     $stateProvider
         .state("creations", {
             parent: "appMain",
+            title: "Créations",
             url: "/creations",
             views: {
                 "creations@": {
@@ -28,6 +29,7 @@ creationsModule.config(["$stateProvider", ($stateProvider:IStateProvider) => {
         })
         .state("creationDetails", {
             parent: "appMain",
+            title: "Détails",
             url: "/creations/:creationId",
             views: {
                 "creationDetails@": {

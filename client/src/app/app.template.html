@@ -1,5 +1,5 @@
 <div class="all-content">
-<virtual-gallery-app-header site-image="{{vm.manifest.icons[0].src}}" site-title="{{vm.manifest.name}}"></virtual-gallery-app-header>
+<virtual-gallery-app-header site-image="{{vm.manifest.icons[0].src}}" site-title="{{vm.siteTitle}}"></virtual-gallery-app-header>
 
 <div class="wrapper">
 
@@ -19,7 +19,12 @@
             <div ng-show="vm.isCurrentUIState('creationDetails')">
                 <div ui-view="creationDetails"></div>
             </div>
-
+            <div ng-show="vm.isCurrentUIState('artists')">
+                <div ui-view="artists"></div>
+            </div>
+            <div ng-show="vm.isCurrentUIState('artistDetails')">
+                <div ui-view="artistDetails"></div>
+            </div>
         </div>
     </div>
 </div>

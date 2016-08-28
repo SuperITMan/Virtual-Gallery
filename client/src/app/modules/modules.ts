@@ -5,6 +5,7 @@ import {commonsModule} from "./commons/commons";
 import {homeModule} from "./home/home";
 import {creationsModule} from "./creations/creations";
 import {testModule} from "./test/test";
+import {artistsModule} from "./artists/artists";
 
 const moduleRegistry:ModuleRegistry = new ModuleRegistry();
 
@@ -13,6 +14,7 @@ moduleRegistry.registerModule(apiModule);
 moduleRegistry.registerModule(commonsModule);
 moduleRegistry.registerModule(homeModule);
 moduleRegistry.registerModule(creationsModule);
+moduleRegistry.registerModule(artistsModule);
 moduleRegistry.registerModule(testModule);
 
 exports.moduleRegistry = moduleRegistry;

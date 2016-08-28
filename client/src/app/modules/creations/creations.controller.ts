@@ -5,12 +5,13 @@ import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import IResourceService = angular.resource.IResourceService;
 
-import {AbstractController} from "../commons/controllers/abstract.controller";
+import {AbstractStateController} from "../commons/controllers/abstract.state.controller";
 import ITimeoutService = angular.ITimeoutService;
 import {ICreationsListConfig, ICreationList} from "../commons/components/creations-list/creations-list";
 import {ICreationsApiService} from "../api/services/creations-api.service";
+import IRootScopeService = angular.IRootScopeService;
 
-export class CreationsController extends AbstractController {
+export class CreationsController extends AbstractStateController {
     public $resource:IResourceService;
     public $timeout:ITimeoutService;
     public creationsApiService:ICreationsApiService;
@@ -18,11 +19,11 @@ export class CreationsController extends AbstractController {
     public creationsListConfig:ICreationsListConfig;
     public loadProgressTask:any;
 
-    public static $inject: Array<string> = ["$log", "$state", "$scope", "$timeout", "creationsApiService"];
+    public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "creationsApiService"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $timeout:ITimeoutService,
-                       productsApiService:ICreationsApiService) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService,
+                       $timeout:ITimeoutService, productsApiService:ICreationsApiService) {
+        super(logger, $state, $scope, $rootScope);
 
         this.creationsApiService = productsApiService;
         this.$timeout = $timeout;

@@ -4,11 +4,12 @@ import ILogService = angular.ILogService;
 import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 
-import {AbstractController} from "../commons/controllers/abstract.controller";
+import {AbstractStateController} from "../commons/controllers/abstract.state.controller";
 import ITimeoutService = angular.ITimeoutService;
 import {ICreationsApiService} from "../api/services/creations-api.service";
+import IRootScopeService = angular.IRootScopeService;
 
-export class CreationDetailsController extends AbstractController {
+export class CreationDetailsController extends AbstractStateController {
     public $timeout:ITimeoutService;
     public creationsApiService:ICreationsApiService;
 
@@ -17,11 +18,11 @@ export class CreationDetailsController extends AbstractController {
     public id:string;
     public product:any;
 
-    public static $inject: Array<string> = ["$log", "$state", "$scope", "$timeout", "creationsApiService"];
+    public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "creationsApiService"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $timeout:ITimeoutService,
-                       creationsApiService:ICreationsApiService) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService,
+                       $timeout:ITimeoutService, creationsApiService:ICreationsApiService) {
+        super(logger, $state, $scope, $rootScope);
         this.$timeout = $timeout;
 
         this.creationsApiService = creationsApiService;

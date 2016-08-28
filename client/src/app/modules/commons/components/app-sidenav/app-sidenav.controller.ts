@@ -3,7 +3,6 @@
 import {AbstractController} from "../../controllers/abstract.controller";
 
 import IScope = angular.IScope;
-import IStateService = angular.ui.IStateService;
 import ILogService = angular.ILogService;
 import ITimeoutService = angular.ITimeoutService;
 import ISidenavService = angular.material.ISidenavService;
@@ -25,12 +24,11 @@ export class AppSidenavController extends AbstractController {
     public isLockedOpen:boolean;
     public $rootElement:IRootElementService;
 
-    public static $inject:Array<string> = ["$log", "$state", "$scope", "$timeout", "$mdSidenav", "$mdMedia",
-        "$rootElement"];
+    public static $inject:Array<string> = ["$log", "$scope", "$timeout", "$mdSidenav", "$mdMedia", "$rootElement"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $timeout:ITimeoutService,
+    public constructor(logger:ILogService, $scope:IScope, $timeout:ITimeoutService,
                        $mdSidenav:ISidenavService, $mdMedia:IMedia, $rootElement:IRootElementService) {
-        super(logger, $state, $scope);
+        super(logger, $scope);
 
         this.$timeout = $timeout;
         this.$mdSidenav = $mdSidenav;

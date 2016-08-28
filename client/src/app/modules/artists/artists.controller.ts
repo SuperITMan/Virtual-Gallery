@@ -5,26 +5,27 @@ import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import IResourceService = angular.resource.IResourceService;
 
-import {IUsersApiService} from "../api/services/users-api.service";
-import {IUser} from "../api/models/user.model";
-
 import {AbstractStateController} from "../commons/controllers/abstract.state.controller";
 import ITimeoutService = angular.ITimeoutService;
+import {ICreationsListConfig, ICreationList} from "../commons/components/creations-list/creations-list";
+
+import {IUsersApiService} from "../api/services/users-api.service";
 import IRootScopeService = angular.IRootScopeService;
 
-export class HomeController extends AbstractStateController {
+export class ArtistsController extends AbstractStateController {
     public $resource:IResourceService;
     public $timeout:ITimeoutService;
-    public users:Array<IUser>;
     public usersApiService:IUsersApiService;
 
-    public loadProgressTask:Promise<any>;
+    public creationsListConfig:ICreationsListConfig;
+    public loadProgressTask:any;
 
     public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "usersApiService"];
 
     public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService,
                        $timeout:ITimeoutService, usersApiService:IUsersApiService) {
         super(logger, $state, $scope, $rootScope);
+
         this.usersApiService = usersApiService;
         this.$timeout = $timeout;
     }
@@ -33,19 +34,22 @@ export class HomeController extends AbstractStateController {
      * Component lifecycle hook
      */
     private $onInit():void {
-        this.logger.debug("Home controller loaded...");
+        this.logger.debug("Products controller loaded...");
 
-        this.getUsers();
+        this.getArtists();
     }
 
-    public getUsers ():any {
-        let getUsersCallback:any = () => {
+    public getArtists ():any {
+        let getArtistsCallback:any = () => {
             this.usersApiService.getUsers().$promise.then((response:any) => {
-                this.logger.debug("getUsers() -> Users loaded");
-                this.users = response.data as Array<IUser>;
+                this.logger.debug("getProducts() -> Products loaded");
+                this.creationsListConfig = {
+                    creations: response as Array<ICreationList>
+                };
             });
         };
 
-        this.loadProgressTask = this.$timeout(getUsersCallback) as Promise<any>;
+        this.loadProgressTask = this.$timeout(getArtistsCallback) as Promise<any>;
     }
+
 }

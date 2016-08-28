@@ -3,7 +3,6 @@
 import {AbstractController} from "../../controllers/abstract.controller";
 
 import IScope = angular.IScope;
-import IStateService = angular.ui.IStateService;
 import ILogService = angular.ILogService;
 
 // controller
@@ -11,10 +10,10 @@ export class AppFooterController extends AbstractController {
     public legalInfoUrl:string;
     public helpPageUrl:string;
 
-    public static $inject:Array<string> = ["$log", "$state", "$scope"];
+    public static $inject:Array<string> = ["$log", "$scope"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $scope:IScope) {
+        super(logger, $scope);
     }
 
     /**

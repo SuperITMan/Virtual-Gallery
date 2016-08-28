@@ -4,16 +4,17 @@ import ILogService = angular.ILogService;
 import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 
-import {AbstractController} from "../commons/controllers/abstract.controller";
+import IRootScopeService = angular.IRootScopeService;
+import {AbstractStateController} from "../commons/controllers/abstract.state.controller";
 
-export class TestController extends AbstractController {
+export class TestController extends AbstractStateController {
 
     public productsConfig:any;
 
-    public static $inject: Array<string> = ["$log", "$state", "$scope"];
+    public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService) {
+        super(logger, $state, $scope, $rootScope);
         logger.debug("Test controller loaded...");
     }
 

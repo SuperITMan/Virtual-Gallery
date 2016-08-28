@@ -3,7 +3,6 @@
 import {AbstractController} from "../../controllers/abstract.controller";
 
 import IScope = angular.IScope;
-import IStateService = angular.ui.IStateService;
 import ILogService = angular.ILogService;
 import ISidenavService = angular.material.ISidenavService;
 
@@ -13,10 +12,10 @@ export class AppHeaderController extends AbstractController {
     public siteImage:string;
     public $mdSidenav:ISidenavService;
 
-    public static $inject:Array<string> = ["$log", "$state", "$scope", "$mdSidenav"];
+    public static $inject:Array<string> = ["$log", "$scope", "$mdSidenav"];
 
-    public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $mdSidenav:ISidenavService) {
-        super(logger, $state, $scope);
+    public constructor(logger:ILogService, $scope:IScope, $mdSidenav:ISidenavService) {
+        super(logger, $scope);
 
         this.$mdSidenav = $mdSidenav;
     }
