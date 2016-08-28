@@ -118,6 +118,29 @@ while [ "${isGoodConfig}" != "o" ] && [ "${isGoodConfig}" != "O" ]; do
 		fi
 	done
 
+	# phpMyAdmin domain
+	defaultphpmyadminDomain="phpmyadmin."${websiteDomain}
+	phpmyadminDomainOK=false
+
+	while [ ${phpmyadminDomainOK} = false ]; do
+		if [ -z "${phpmyadminDomain}" ]; then
+			tmpphpmyadminDomain=${defaultphpmyadminDomain}
+		else
+			tmpphpmyadminDomain=${phpmyadminDomain}
+		fi
+
+		echo -n "Veuillez entrer le domaine lié à l'API de votre site ["${tmpphpmyadminDomain}"] : "
+		read phpmyadminDomain
+		if [ -z "${phpmyadminDomain}" ]; then
+			phpmyadminDomain=${tmpphpmyadminDomain}
+		fi
+		if [ -z "${phpmyadminDomain}" ]; then
+			echo -e "Une "${RED}"erreur"${NORMAL}" s'est produite. Veuillez recommencer."
+		else
+			phpmyadminDomainOK=true
+		fi
+	done
+
     # Mail address to generate certificate HTTPS with Let's Encrypt
     # For more informations on Let's Encrypt, go on https://letsencrypt.org/
     emailAddressOK=false
@@ -341,6 +364,7 @@ while [ "${isGoodConfig}" != "o" ] && [ "${isGoodConfig}" != "O" ]; do
 	echo -e "Nom de domaine de votre site : "${BOLD}${websiteDomain}${NORMAL}
 	echo -e "Nom de domaine de votre API : "${BOLD}${APIDomain}${NORMAL}
 	echo -e "Nom de domaine de votre administration : "${BOLD}${adminDomain}${NORMAL}
+	echo -e "Nom de domaine de phpMyAdmin : "${BOLD}${phpmyadminDomain}${NORMAL}
 	echo ""
 	echo "Informations nécessaires pour le certificat HTTPS (Let's Encrypt) :"
 	echo -e "    - Adresse email : "${BOLD}${emailAddress}${NORMAL}
@@ -388,6 +412,7 @@ cat <<-EOF > ${installConfigFilePath}
 websiteDomain=${websiteDomain}
 APIDomain=${APIDomain}
 adminDomain=${adminDomain}
+phpmyadminDomain=${phpmyadminDomain}
 
 # Variables pour le certificat HTTPS
 websiteName="${websiteName}"

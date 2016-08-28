@@ -91,6 +91,19 @@ done
 printf "\rTéléchargement de superitman/virtual-gallery:admin... "${GREEN}"fait"${NORMAL}
 echo ""
 
+printf "\rTéléchargement de phpmyadmin/phpmyadmin..."
+docker pull phpmyadmin/phpmyadmin > /dev/null &
+pid=$! # Process Id of the previous running command
+i=0
+while kill -0 $pid 2>/dev/null
+do
+  i=$(( (i+1) %4 ))
+  printf "\rTéléchargement de phpmyadmin/phpmyadmin... "${spin:$i:1}
+  sleep .1
+done
+printf "\rTéléchargement de phpmyadmin/phpmyadmin... "${GREEN}"fait"${NORMAL}
+echo ""
+
 ###############################################################################
 ################################ Docker MySQL #################################
 ###############################################################################
@@ -227,6 +240,31 @@ superitman/virtual-gallery:admin > /dev/null
 
 printf "\rDémarrage du container \"Administration\"... "${GREEN}"fait"${NORMAL}
 echo ""
+
+###############################################################################
+############################# Docker phpMyAdmin ###############################
+###############################################################################
+
+printf "\rDémarrage du container \"phpMyAdmin\"..."
+
+isRunningDocker=$(/usr/bin/docker ps -q -a -f name=${containerNamePrefix}-phpmyadmin)
+if [ ${#isRunningDocker} -gt 0 ]; then
+    docker rm -f ${containerNamePrefix}-phpmyadmin > /dev/null
+fi
+
+docker run -it -d \
+--name ${containerNamePrefix}-phpmyadmin \
+--link ${containerNamePrefix}-database:db \
+-e "VIRTUAL_HOST="${phpmyadminDomain} \
+-e "LETSENCRYPT_TEST="${developmentProject} \
+-e "LETSENCRYPT_HOST="${phpmyadminDomain} \
+-e "LETSENCRYPT_EMAIL="${emailAddress} \
+--restart="always" \
+phpmyadmin/phpmyadmin > /dev/null
+
+printf "\rDémarrage du container \"phpMyAdmin\"... "${GREEN}"fait"${NORMAL}
+echo ""
+
 
 sleep 2
 projectInstall=1
