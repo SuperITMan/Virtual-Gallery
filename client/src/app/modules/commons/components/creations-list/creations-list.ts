@@ -1,9 +1,9 @@
 "use strict";
 
 import {commonsModule} from "../../commons";
-import {ProductsListController} from "./products-list.controller";
+import {CreationsListController} from "./creations-list.controller";
 
-export interface IProductList {
+export interface ICreationList {
     author: string;
     authorId: number;
     id: number;
@@ -12,12 +12,12 @@ export interface IProductList {
     shortDescription: string;
 }
 
-export interface IProductsListConfig {
-    products: Array<IProductList>;
+export interface ICreationsListConfig {
+    creations: Array<ICreationList>;
 }
 
 // Pre-loading the html templates into the Angular's $templateCache
-let templateUrl:string = require("./products-list.template.html");
+let templateUrl:string = require("./creations-list.template.html");
 
 /**
  * @ngdoc component
@@ -29,11 +29,11 @@ let templateUrl:string = require("./products-list.template.html");
  *
  * @param ?
  */
-commonsModule.component("virtualGalleryProductsList", {
+commonsModule.component("virtualGalleryCreationsList", {
     bindings: {
-        productsListConfig: "<"
+        creationsListConfig: "<"
     },
-    controller: ProductsListController,
+    controller: CreationsListController,
     controllerAs: "vm",
     templateUrl: templateUrl
 });

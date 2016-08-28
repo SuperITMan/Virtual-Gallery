@@ -5,15 +5,15 @@
         "DE": "de"
     },
     "MENU": {
-        "PRODUCTS": {
-            "ALL_PRODUCTS": "Tous les produits",
-            "TITLE": "Produits"
+        "CREATIONS": {
+            "ALL_CREATIONS": "Toutes les créations",
+            "TITLE": "Créations"
         },
         "USERS": {
             "TITLE": "Utilisateurs"
         }
     },
-    "PRODUCTS": {
-        "SEE_THE_PRODUCT": "Voir le produit"
+    "CREATIONS": {
+        "SEE_THE_CREATION": "Voir la création"
     }
 }

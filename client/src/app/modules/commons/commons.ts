@@ -23,7 +23,7 @@ export const commonsModule:IModule = angular.module("commonsModule", [
 import "./components/app-footer/app-footer";
 import "./components/app-header/app-header";
 import "./components/app-sidenav/app-sidenav";
-import "./components/products-list/products-list";
+import "./components/creations-list/creations-list";
 
 commonsModule.config(["$mdIconProvider", "$mdThemingProvider", ($mdIconProvider:IIconProvider, $mdThemingProvider:IThemingProvider) => {
     $mdThemingProvider.definePalette("virtualGalleryDefaultTheme", virtualGalleryDefaultTheme);

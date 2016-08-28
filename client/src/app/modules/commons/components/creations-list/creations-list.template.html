@@ -1,20 +1,20 @@
 <!--<md-content class="md-padding" layout-xs="column" layout="row" flex>-->
     <div flex layout="row" layout-wrap>
-        <md-card ng-repeat="product in vm.productsListConfig.products" flex="20" flex-sm="33" flex-xs="100">
+        <md-card ng-repeat="creation in vm.creationsListConfig.creations" flex="20" flex-sm="33" flex-xs="100">
         <!--<md-card ng-repeat="product in vm.productsListConfig.products">-->
             <md-card-header>
-                <img ng-src="{{product.image}}" class="md-card-image" alt="Washed Out"/>
+                <img ng-if="creation.image != false" ng-src="http://localhost:8083/uploads/{{creation.image.serverFileName}}" class="md-card-image" alt="Washed Out"/>
             </md-card-header>
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">{{product.name}}</span>
+                    <span class="md-headline">{{creation.name}}</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <h3>Auteur : {{product.author}}</h3>
+                <h3>Auteur : {{creation.author}}</h3>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ui-state="'productDetails'" ui-state-params="({productId: '{{product.id}}'})" translate="PRODUCTS.SEE_THE_PRODUCT"></md-button>
+                <md-button ui-state="'creationDetails'" ui-state-params="({creationId: '{{creation.id}}'})" translate="CREATIONS.SEE_THE_CREATION"></md-button>
                 <md-button>Action 2</md-button>
             </md-card-actions>
         </md-card>

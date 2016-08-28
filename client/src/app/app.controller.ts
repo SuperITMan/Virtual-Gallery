@@ -32,13 +32,13 @@ export class AppController extends AbstractController {
                 },
                 {
                     entries: [{
-                        id: "all-products",
-                        label: "MENU.PRODUCTS.ALL_PRODUCTS",
-                        targetState: "products",
+                        id: "all-creations",
+                        label: "MENU.CREATIONS.ALL_CREATIONS",
+                        targetState: "creations",
                         targetStateParams: ""
                     }],
-                    id:"products",
-                    label: "MENU.PRODUCTS.TITLE"
+                    id:"creations",
+                    label: "MENU.CREATIONS.TITLE"
                 }
             ]
         };

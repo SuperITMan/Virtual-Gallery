@@ -31,12 +31,12 @@ const cspDirectives = [
     "default-src 'none'",
     "child-src 'self'",
     // "connect-src 'self' http://my.awesome.api ws://localhost:3000",  // http://my.awesome.api is due to the mock REST api mock baseUrl and ws://localhost:3000" is due to FakeRest
-    "connect-src 'self' ws://localhost:3000 http://192.168.0.15:8086 http://localhost:3000 http://localhost:8086",  // http://my.awesome.api is due to the mock REST api mock baseUrl and ws://localhost:3000" is due to FakeRest
+    "connect-src 'self' ws://localhost:3000 localhost:8083 http://192.168.0.15:8086 http://localhost:3000 http://localhost:8086",  // http://my.awesome.api is due to the mock REST api mock baseUrl and ws://localhost:3000" is due to FakeRest
     "font-src 'self'",
     "form-action 'self'",
     "frame-src 'self'",   // TODO: deprecated. Use child-src instead. Used here because child-src is not yet supported by Firefox. Remove as soon as it is fully supported
     "frame-ancestors 'none'",  // the app will not be allowed to be embedded in an iframe (roughly equivalent to X-Frame-Options: DENY)
-    "img-src 'self' data: image/png",  // data: image/png" is due to Angular Material loading PNG images in base64 encoding
+    "img-src 'self' localhost localhost:8083",  // data: image/png" is due to Angular Material loading PNG images in base64 encoding
     "media-src 'self'",
     "object-src 'self'",
     "plugin-types application/pdf",  // valid mime-types for plugins invoked via <object> and <embed>  // TODO: not yet supported by Firefox

@@ -124,12 +124,13 @@ class CreationController {
             if ($creationInfos = fetchSQLReq($this->db, $this->sql["creation"]["select"]["selectProductInfosWithImages"],
                 array(":id"=> $creationId), false, true)) {
 
-                $images = json_decode($creationInfos["images"]);
+                $images = $creationInfos["images"];
+
                 $creationInfos["images"] = [];
 
                 for ($i=0; $i < sizeof($images); $i++) {
                     $creationInfos["images"][$i] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
-                        array(":id" => $images[$i]), false, true);
+                        array(":id"=>$images[$i]), false,true);
                 }
                 $response = $response->withStatus(200);
                 $response->getBody()->write(json_encode($creationInfos));

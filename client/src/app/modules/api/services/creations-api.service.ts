@@ -7,13 +7,13 @@ import IResourceService = angular.resource.IResourceService;
 import IResource = angular.resource.IResource;
 import ITimeoutService = angular.ITimeoutService;
 
-export interface IProductsApiService {
-    getProducts():IResource<any>;
-    getProducts(limit:number):IResource<any>;
-    getProduct(id:number):IResource<any>;
+export interface ICreationsApiService {
+    getCreations():IResource<any>;
+    getCreations(limit:number):IResource<any>;
+    getCreation(id:number):IResource<any>;
 }
 
-export class ProductsApiService {
+export class CreationsApiService {
     private $resource: IResourceService;
     private logger: ILogService;
     private $timeout: ITimeoutService;
@@ -28,19 +28,19 @@ export class ProductsApiService {
         logger.debug("Rest Resource Service loaded...");
     }
 
-    public getProduct(id: number): IResource<any> {
+    public getCreation(id: number): IResource<any> {
         id = id || 0;
 
-        return this.$resource(API_URL + "/products/" + id).get();
+        return this.$resource(API_URL + "/creations/" + id).get();
     }
 
-    public getProducts(limit: number): any {
+    public getCreations(limit: number): any {
         limit = limit || 0;
 
         if (limit > 0) {
-            return this.$resource(API_URL + "/products?limit=" + limit).get();
+            return this.$resource(API_URL + "/creations?limit=" + limit).query();
         } else {
-            return this.$resource(API_URL + "/products").get();
+            return this.$resource(API_URL + "/creations").query();
         }
     }
 }

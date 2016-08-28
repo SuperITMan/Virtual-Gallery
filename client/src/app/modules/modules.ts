@@ -3,7 +3,7 @@ import {ModuleRegistry} from "./commons/modules/module.registry";
 import {apiModule} from "./api/api";
 import {commonsModule} from "./commons/commons";
 import {homeModule} from "./home/home";
-import {productsModule} from "./products/products";
+import {creationsModule} from "./creations/creations";
 import {testModule} from "./test/test";
 
 const moduleRegistry:ModuleRegistry = new ModuleRegistry();
@@ -12,7 +12,7 @@ const moduleRegistry:ModuleRegistry = new ModuleRegistry();
 moduleRegistry.registerModule(apiModule);
 moduleRegistry.registerModule(commonsModule);
 moduleRegistry.registerModule(homeModule);
-moduleRegistry.registerModule(productsModule);
+moduleRegistry.registerModule(creationsModule);
 moduleRegistry.registerModule(testModule);
 
 exports.moduleRegistry = moduleRegistry;

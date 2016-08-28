@@ -7,24 +7,24 @@ import IResourceService = angular.resource.IResourceService;
 
 import {AbstractController} from "../commons/controllers/abstract.controller";
 import ITimeoutService = angular.ITimeoutService;
-import {IProductsListConfig, IProductList} from "../commons/components/products-list/products-list";
-import {IProductsApiService} from "../api/services/products-api.service";
+import {ICreationsListConfig, ICreationList} from "../commons/components/creations-list/creations-list";
+import {ICreationsApiService} from "../api/services/creations-api.service";
 
-export class ProductsController extends AbstractController {
+export class CreationsController extends AbstractController {
     public $resource:IResourceService;
     public $timeout:ITimeoutService;
-    public productsApiService:IProductsApiService;
+    public creationsApiService:ICreationsApiService;
 
-    public productsListConfig:IProductsListConfig;
+    public creationsListConfig:ICreationsListConfig;
     public loadProgressTask:any;
 
-    public static $inject: Array<string> = ["$log", "$state", "$scope", "$timeout", "productsApiService"];
+    public static $inject: Array<string> = ["$log", "$state", "$scope", "$timeout", "creationsApiService"];
 
     public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $timeout:ITimeoutService,
-                       productsApiService:IProductsApiService) {
+                       productsApiService:ICreationsApiService) {
         super(logger, $state, $scope);
 
-        this.productsApiService = productsApiService;
+        this.creationsApiService = productsApiService;
         this.$timeout = $timeout;
     }
 
@@ -95,20 +95,20 @@ export class ProductsController extends AbstractController {
         //     ]
         // };
 
-        this.getProducts();
+        this.getCreations();
     }
 
-    public getProducts ():any {
-        let getProductsCallback:any = () => {
-            this.productsApiService.getProducts().$promise.then((response:any) => {
+    public getCreations ():any {
+        let getCreationsCallback:any = () => {
+            this.creationsApiService.getCreations().$promise.then((response:any) => {
                 this.logger.debug("getProducts() -> Products loaded");
-                this.productsListConfig = {
-                    products: response.data as Array<IProductList>
+                this.creationsListConfig = {
+                    creations: response as Array<ICreationList>
                 };
             });
         };
 
-        this.loadProgressTask = this.$timeout(getProductsCallback) as Promise<any>;
+        this.loadProgressTask = this.$timeout(getCreationsCallback) as Promise<any>;
     }
 
 }

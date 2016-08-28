@@ -5,11 +5,11 @@ import {AbstractController} from "../../controllers/abstract.controller";
 import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import ILogService = angular.ILogService;
-import {IProductsListConfig} from "./products-list";
+import {ICreationsListConfig} from "./creations-list";
 
 // controller
-export class ProductsListController extends AbstractController {
-    public productsListConfig:IProductsListConfig;
+export class CreationsListController extends AbstractController {
+    public creationsListConfig:ICreationsListConfig;
 
     public static $inject:Array<string> = ["$log", "$state", "$scope"];
 
@@ -23,6 +23,6 @@ export class ProductsListController extends AbstractController {
     private $onInit():void {
         this.logger.debug("This is the Products List controller!");
 
-        this.logger.debug(this.productsListConfig);
+        this.logger.debug(this.creationsListConfig);
     };
 }
