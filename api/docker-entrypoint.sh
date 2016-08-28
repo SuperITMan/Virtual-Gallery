@@ -1,7 +1,7 @@
 #!/bin/bash
 certName="jwt"
 
-if [ -d "/var/www/config/ssl" ]; then
+if [ ! -d "/var/www/config/ssl" ]; then
     mkdir -p /var/www/config/ssl
 fi
 
