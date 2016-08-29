@@ -441,15 +441,11 @@ echo ""
 # Creation of client site manifest
 echo -ne "Création du manifest pour le site client dans $manifestClientPath...\r"
 
-if [ ! -d "${manifestClientPath}" ];then
-    mkdir -p ${manifestClientPath}
-else
-    if [ -f "${manifestClientPath}" ]; then
-        rm ${manifestClientPath}
-    fi
+if [ -f "${manifestClientPath}" ]; then
+    rm ${manifestClientPath}
 fi
+
 touch ${manifestClientPath}
-chmod +x ${manifestClientPath}
 
 cat <<-EOF > ${manifestClientPath}
 {

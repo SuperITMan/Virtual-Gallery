@@ -9,7 +9,7 @@ BOLD="\\033[1m"
 RED="\\033[1;31m"
 spin="-\|/"
 
-developmentProject=true
+developmentProject=false
 logLocation="/var/log"
 
 clear
