@@ -6,23 +6,23 @@ Used to upload images, create products, etc.
 ### Run the Docker machine
 > docker run -it -d \
 
-> --name <container_name_prefix>-admin \
+> --name &lt;container_name_prefix&gt;-admin \
   
-> -v <volume_upload_location>:/var/www/public/uploads \
+> -v &lt;volume_upload_location&gt;:/var/www/public/uploads \
   
-> -v <volume_config_location>:/var/www/config \
+> -v &lt;volume_config_location&gt;:/var/www/config \
   
-> -v <log_location>/<container_name_prefix>-admin:/var/log/apache2 \
+> -v &lt;log_location&gt;/&lt;container_name_prefix&gt;-admin:/var/log/apache2 \
   
-> --link <container_name_prefix>-database:db \
+> --link &lt;container_name_prefix&gt;-database:db \
   
-> -e "VIRTUAL_HOST="<domain_name_admin> \
+> -e "VIRTUAL_HOST="&lt;domain_name_admin&gt; \
   
-> -e "LETSENCRYPT_TEST="<is_development_project>(true/false) \
+> -e "LETSENCRYPT_TEST="&lt;is_development_project&gt;(true/false) \
   
-> -e "LETSENCRYPT_HOST="<domain_name_admin> \
+> -e "LETSENCRYPT_HOST="&lt;domain_name_admin&gt; \
   
-> -e "LETSENCRYPT_EMAIL="<your_email_address> \
+> -e "LETSENCRYPT_EMAIL="&lt;your_email_address&gt; \
   
 > --restart="always" \
   
