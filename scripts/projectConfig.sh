@@ -425,6 +425,7 @@ city="${city}"
 volumeUploadsLocation=${volumeUploadsLocation}
 volumeConfigLocation=${volumeConfigLocation}
 volumeMySQLLocation=${volumeMySQLLocation}
+volumeFileManifestClient=${manifestClientPath}
 
 # Préfixe du nom des containers
 containerNamePrefix=${containerNamePrefix}

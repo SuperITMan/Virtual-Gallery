@@ -197,6 +197,7 @@ fi
 docker run -it -d \
 --name ${containerNamePrefix}-client \
 -v ${volumeUploadsLocation}:/usr/src/app/dist/uploads:ro \
+-v ${volumeFileManifestClient}:/tmp/manifest.json \
 -e "VIRTUAL_HOST=$websiteDomain" \
 -e "LETSENCRYPT_TEST="${developmentProject} \
 -e "LETSENCRYPT_HOST="${websiteDomain} \
