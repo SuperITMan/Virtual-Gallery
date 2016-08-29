@@ -124,7 +124,6 @@ fi
 docker run -it -d \
 --name ${containerNamePrefix}-database \
 -v ${volumeMySQLLocation}:/var/lib/mysql \
-#-v ${logLocation}/${containerNamePrefix}-database:/var/log/mysql \
 -e MYSQL_ROOT_PASSWORD="${passwordMySQL}" \
 --restart="always" \
 superitman/virtual-gallery:mysql  > /dev/null
