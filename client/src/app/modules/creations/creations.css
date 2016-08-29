@@ -5,7 +5,7 @@ div.creations {
 	}
 
 	& md-progress-linear {
-		& ._md-container {
+		& .md-container {
 		  	background-color: white !important;
 	  	}
 	}
