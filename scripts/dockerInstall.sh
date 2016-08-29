@@ -75,39 +75,39 @@ fi
 touch ${dockerSourceListPath}
 chmod +x ${dockerSourceListPath}
 if [ "${OS}" == "Debian" ]; then
-    if [ "${VERSION}" == "7.*" ]; then
+    if [[ "${VERSION}" == "7."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Debian Wheezy
 deb https://apt.dockerproject.org/repo debian-wheezy main
 EOF
-    elif [ "${VERSION}" == "8.*" ]; then
+    elif [[ "$VERSION" == "8."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Debian Jessie
 deb https://apt.dockerproject.org/repo debian-jessie main
 EOF
-    elif [ "${VERSION}" == "9.*" ]; then
+    elif [[ "${VERSION}" == "9."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Debian Stretch/Sid
 deb https://apt.dockerproject.org/repo debian-stretch main
 EOF
     fi;
 elif [ "${OS}" == "Ubuntu" ]; then
-    if [ "${VERSION}" == "12.*" ]; then
+    if [[ "${VERSION}" == "12."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Ubuntu Precise
 deb https://apt.dockerproject.org/repo ubuntu-precise main
 EOF
-    elif [ "${VERSION}" == "14.*" ]; then
+    elif [[ "${VERSION}" == "14."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Ubuntu Trusty
 deb https://apt.dockerproject.org/repo ubuntu-trusty main
 EOF
-    elif [ "${VERSION}" == "15.*" ]; then
+    elif [[ "${VERSION}" == "15."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Ubuntu Wily
 deb https://apt.dockerproject.org/repo ubuntu-Wily main
 EOF
-    elif [ "${VERSION}" == "16.*" ]; then
+    elif [[ "${VERSION}" == "16."* ]]; then
 cat <<-EOF > ${dockerSourceListPath}
 # Repo of docker for Ubuntu Xenial
 deb https://apt.dockerproject.org/repo ubuntu-xenial main
