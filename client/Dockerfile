@@ -15,23 +15,14 @@ RUN npm run setup
 RUN typings install
 RUN npm install -g superstatic
 
-# Build website
-RUN npm run build:prod
-
-# Delete unused files
-RUN mv dist/* ../dist && mv superstatic.json ../
-WORKDIR /usr/src/app
-RUN rm -R client
-
 # Expose port
 EXPOSE 443
 
 # Create script to launch
-WORKDIR /usr/local/bin
-RUN touch docker-entrypoint.sh && chmod +x docker-entrypoint.sh
-RUN printf "#!/bin/bash\n" > docker-entrypoint.sh && printf "superstatic --config /usr/src/app/superstatic.json --port 443 --host 0.0.0.0" >> docker-entrypoint.sh
-RUN ln -s /usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Launch superstatic server when container runs
-WORKDIR /usr/src/app/dist
-ENTRYPOINT ["docker-entrypoint.sh"]
+RUN ln -s /usr/local/bin/entrypoint.sh /entrypoint.sh
+
+# Launch entrypoint on start
+ENTRYPOINT ["entrypoint.sh"]
