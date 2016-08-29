@@ -10,6 +10,7 @@ RED="\\033[1;31m"
 userHomeDir=$(eval echo "~$different_user")
 installDirPath="$userHomeDir/Virtual-Gallery/install"
 installConfigFilePath="$installDirPath/virtual-gallery-config.sh"
+manifestClientPath="$installDirPath/client-manifest.json"
 defaultContainerNamePrefix="virtual-gallery"
 defaultVolumeLocation="$userHomeDir/Virtual-Gallery"
 defaultWebsiteName="Virtual Gallery"
@@ -434,6 +435,56 @@ passwordMySQL=${passwordMySQL}
 EOF
 
 echo -ne "Sauvegarde de vos choix dans $installConfigFilePath... "${GREEN}"fait"${NORMAL}"\r"
+echo ""
+
+# Creation of client site manifest
+echo -ne "Création du manifest pour le site client dans $manifestClientPath...\r"
+
+if [ ! -d "${manifestClientPath}" ];then
+    mkdir -p ${manifestClientPath}
+else
+    if [ -f "${manifestClientPath}" ]; then
+        rm ${manifestClientPath}
+    fi
+fi
+touch ${manifestClientPath}
+chmod +x ${manifestClientPath}
+
+cat <<-EOF > ${manifestClientPath}
+{
+    "name": "${websiteName}",
+    "short_name": "template",
+    "icons": [
+        {
+            "src": "assets/images/touch/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/touch/apple-touch-icon.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/touch/ms-touch-icon-144x144-precomposed.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/touch/chrome-touch-icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/index.html",
+    "api_url": "${APIDomain}/v1",
+    "display": "standalone",
+    "background_color": "#70DBA2",
+    "theme_color": "#656970"
+}
+EOF
+
+echo -ne "Création du manifest pour le site client dans $manifestClientPath... "${GREEN}"fait"${NORMAL}"\r"
 echo ""
 
 # Backup of the configuration to generate certificate for JWT tokens
