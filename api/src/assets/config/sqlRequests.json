@@ -32,7 +32,7 @@
     "select": {
       "passwordFromLogin": "SELECT passwd FROM vg_users WHERE username=:username OR email = :email",
       "passwordFromUsername": "SELECT passwd FROM vg_users WHERE username=:username",
-      "basicInfosFromId": "SELECT id, username, displayed_name as displayedName, (SELECT meta_value FROM vg_users_meta WHERE user_id=u.id and meta_key='isAdmin') as isAdmin, (SELECT meta_value FROM vg_users_meta WHERE user_id=u.id and meta_key='isSuperAdmin') as isSuperAdmin FROM vg_users u WHERE u.id=:id",
+      "basicInfosFromId": "SELECT id, username, displayed_name as displayedName, is_admin as isAdmin, is_super_admin as isSuperAdmin FROM vg_users u WHERE u.id=:id",
       "allUsersBasicInfos": "SELECT id, username, email FROM vg_users",
       "idFromLogin": "SELECT id FROM vg_users WHERE username=:username OR email = :email"
     }

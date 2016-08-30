@@ -474,7 +474,7 @@ cat <<-EOF > ${manifestClientPath}
         }
     ],
     "start_url": "/index.html",
-    "api_url": "${APIDomain}/v1",
+    "api_url": "https://${APIDomain}/v1",
     "display": "standalone",
     "background_color": "#70DBA2",
     "theme_color": "#656970"

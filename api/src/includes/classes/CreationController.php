@@ -169,6 +169,8 @@ class CreationController {
             $stmt->execute();
             $result = $stmt->fetchAll();
 
+            $data = array();
+
             if (!empty($result)) {
                 $i = 0;
                 foreach ($result as $content) {
@@ -191,7 +193,7 @@ class CreationController {
                 $response->getBody()->write(json_encode($data));
                 $response = $response->withStatus(200);
             } else {
-                $response->getBody()->write(json_encode([]));
+                $response->getBody()->write(json_encode(array()));
                 $response = $response->withStatus(200);
             }
         } catch (Exception $e) {

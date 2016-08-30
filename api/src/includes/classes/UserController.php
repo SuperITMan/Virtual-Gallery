@@ -187,8 +187,9 @@ class UserController {
     public function authenticateUser (Request $request, Response $response, Array $args) {
         $post = $request->getParsedBody();
 
-        if (!empty($post['login']) && !empty($post['password'])) {
+        print_r($post);
 
+        if (!empty($post['login']) && !empty($post['password'])) {
 
             if ($userId = $this->userPasswordVerify($post['login'], $post['password'])) {
 

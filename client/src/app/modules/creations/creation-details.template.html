@@ -3,12 +3,12 @@
         <h1 class="creations-header md-display-1" md-colors="{color:'primary'}" flex="100" translate>CREATIONS.CREATION_DETAILS</h1>
         <div layout="row" layout-xs="column" flex="100">
             <div flex="40" flex-sm="50" flex-xs="100">
-                <img ng-if="vm.product.images != false" ng-src="http://localhost:8083/uploads/{{vm.product.images[0].serverFileName}}" alt="{{vm.product.images[0].fileName}}"/>
+                <img ng-if="vm.product.images != false" ng-src="/uploads/{{vm.product.images[0].serverFileName}}" alt="{{vm.product.images[0].fileName}}"/>
                 <md-divider></md-divider>
                 <md-content flex="100">
                     <img ng-if="vm.product.images != false"
                          ng-repeat="image in vm.product.images"
-                         ng-src="http://localhost:8083/uploads/{{image.serverFileName}}"
+                         ng-src="/uploads/{{image.serverFileName}}"
                          alt="{{image.fileName}}"
                          flex="20">
                 </md-content>

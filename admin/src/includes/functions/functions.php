@@ -92,7 +92,7 @@ function getCreation($id) {
 
     if (isAdmin()) {
         $data = fetchSQLReq($db, $sql["creation"]["select"]["creationInfo"], array(":id"=>$id), false, true);
-        if ($data["userId"] == USER_USERID) {
+        if ($data["authorId"] == USER_USERID) {
             $imageIds = json_decode(htmlspecialchars_decode($data["imageIds"]));
             if (!empty($imageIds)) {
                 $data["imageIds"] = implode(",",$imageIds);
