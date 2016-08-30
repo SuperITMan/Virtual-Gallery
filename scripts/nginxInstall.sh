@@ -6,6 +6,10 @@ NORMAL="\\033[0m"
 BOLD="\\033[1m"
 spin="-\|/"
 
+userHomeDir=$(eval echo "~$different_user")
+installDirPath=${userHomeDir}"/Virtual-Gallery/install"
+nginxProxyConfUpload=${installDirPath}"/nginx-proxy-conf-upload.conf"
+
 clear
 if [ -n ${dockerInstall+x} ]; then
     if [ "${dockerInstall}" = "1" ]; then echo -e "Exécution du script d'installation de Docker... "${GREEN}"fait"${NORMAL};
@@ -51,6 +55,25 @@ done
 printf "\rTéléchargement de jrcs/letsencrypt-nginx-proxy-companion... "${GREEN}"fait"${NORMAL}
 echo ""
 
+printf "\rCréation du fichier de configuration pour nginx-proxy..."
+
+if [ ! -d "${installDirPath}" ];then
+    mkdir -p ${installDirPath}
+else
+    if [ -f "${nginxProxyConfUpload}" ]; then
+        rm ${nginxProxyConfUpload}
+    fi
+fi
+touch ${nginxProxyConfUpload}
+
+cat <<-EOF > ${nginxProxyConfUpload}
+server_tokens off;
+client_max_body_size 100m;
+EOF
+
+printf "\rCréation du fichier de configuration pour nginx-proxy... "${GREEN}"fait"${NORMAL}
+echo ""
+
 printf "\rDémarrage de nginx-proxy..."
 
 isRunningDocker=$(/usr/bin/docker ps -q -a -f name=nginx-proxy)
@@ -66,6 +89,7 @@ docker run -it -d \
        -v /etc/nginx/certs:/etc/nginx/certs:ro \
        -v /usr/share/nginx/html \
        -v /var/log/nginx-proxy:/var/log/nginx \
+       -v ${nginxProxyConfUpload}:/etc/nginx/conf.d/upload_config.conf \
        --restart="always" \
        jwilder/nginx-proxy > /dev/null
 

@@ -3,8 +3,8 @@
 --
 
 CREATE DATABASE IF NOT EXISTS virtual_gallery
-  DEFAULT CHARACTER SET utf8
-  DEFAULT COLLATE utf8_general_ci;
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
 USE virtual_gallery;
 
 -- --------------------------------------------------------
@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS vg_users (
   email VARCHAR(255) NOT NULL,
   passwd VARCHAR(255) NOT NULL,
   displayed_name VARCHAR(255) NOT NULL,
+  is_admin VARCHAR(6) NOT NULL,
+  is_super_admin VARCHAR(6) NOT NULL,
   UNIQUE (username),
   UNIQUE (email),
   PRIMARY KEY (id)
@@ -106,8 +108,11 @@ CREATE TABLE IF NOT EXISTS vg_comments (
   id INTEGER AUTO_INCREMENT NOT NULL,
   creation_id INTEGER NOT NULL,
   comment TEXT NOT NULL,
-  user_displayed_name VARCHAR(255),
-  user_email VARCHAR(255)
+  user_displayed_name VARCHAR(255) NOT NULL,
+  user_email VARCHAR(255) NOT NULL,
+  date_added DATETIME NOT NULL,
+  FOREIGN KEY (creation_id) REFERENCES vg_creations(id),
+  PRIMARY KEY (id)
 );
 
 -- --------------------------------------------------------
@@ -200,4 +205,4 @@ CREATE TABLE IF NOT EXISTS vg_uploaded_files_meta (
   UNIQUE (file_id, meta_key),
   FOREIGN KEY (file_id) REFERENCES vg_uploaded_files(id),
   PRIMARY KEY (id)
-)
+);

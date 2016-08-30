@@ -83,6 +83,9 @@ $db = null;
         <title><?php echo str_replace("%titlesite%", SITE_TITLE, $iniLang["LOGIN"]["CONNECTING_TO"]);?></title>
     </head>
     <body>
+        <!-- jQuery -->
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
         <section id="connection">
             <div class="container">
                 <div class="row text-center ">
@@ -162,7 +165,8 @@ $db = null;
 
         <!-- Bootstrap Core JavaScript -->
         <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="../dist/js/sb-admin-2.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
     </body>
 </html>

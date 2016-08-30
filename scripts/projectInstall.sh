@@ -12,6 +12,16 @@ spin="-\|/"
 developmentProject=false
 logLocation="/var/log"
 
+if [ ! -d ${volumeUploadsLocation} ]; then
+    mkdir -p ${volumeUploadsLocation}
+fi;
+
+if [ ! -z "$(getent passwd www-data)" ]; then
+    useradd -u 33 -g 33 www-data
+fi;
+
+chown www-data:www-data ${volumeUploadsLocation};
+
 clear
 if [ -n ${dockerInstall+x} ]; then
     if [ "${dockerInstall}" = "1" ]; then echo -e "Exécution du script d'installation de Docker... "${GREEN}"fait"${NORMAL};
@@ -227,7 +237,7 @@ fi
 
 docker run -it -d \
 --name ${containerNamePrefix}-admin \
--v ${volumeUploadsLocation}:/var/www/public/uploads \
+-v ${volumeUploadsLocation}:/var/www/public/uploads:rw \
 -v ${volumeConfigLocation}:/var/www/config \
 -v ${logLocation}/${containerNamePrefix}-admin:/var/log/apache2 \
 --link ${containerNamePrefix}-database:db \
