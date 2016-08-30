@@ -228,7 +228,7 @@
 <form id="upload-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = <?php echo empty($creation)?"[]":json_encode(explode(",",$creation["imageIds"]));?>;
-    var $formHTML = ("#upload-form");
+    var $formHTML = document.getElementById("upload-form")[0];
 
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {

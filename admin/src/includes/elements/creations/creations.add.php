@@ -154,7 +154,7 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
 <form id="upload-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = [];
-    var $formHTML = $("#upload-form");
+    var $formHTML = document.getElementById("upload-form")[0];
 
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {
