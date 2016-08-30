@@ -27,7 +27,7 @@ ENV PATH "$PATH:/nodejs/bin"
 RUN npm install -g bower
 
 # php extensions
-RUN docker-php-ext-install pdo pdo_mysql mcrypt
+RUN docker-php-ext-install gd pdo pdo_mysql mcrypt
 
 # php ini file
 COPY config/php.ini /usr/local/etc/php/

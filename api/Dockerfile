@@ -15,7 +15,7 @@ RUN mkdir -p /var/www/config
 RUN mkdir -p /var/www/public/uploads
 
 # php extensions
-RUN docker-php-ext-install pdo pdo_mysql mcrypt
+RUN docker-php-ext-install pdo gd pdo_mysql mcrypt
 
 # php ini file
 COPY config/php.ini /usr/local/etc/php/

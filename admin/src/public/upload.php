@@ -80,6 +80,29 @@ if (!empty($_SESSION["token"])) {
                             )) {
                                 throw new RuntimeException('Error during upload. Please retry.');
                             }
+
+                            // Copy and resize image for thumb
+                            $tempCpFilename = sprintf('uploads/%s.%s', $tempName, $ext);
+
+                            list($width, $height) = getimagesize($tempCpFilename);
+                            $percent = 400/$width;
+                            $newWidth = $width * $percent;
+                            $newHeight = $height * $percent;
+
+                            $tmpThumb = imagecreatetruecolor($newWidth, $newHeight);
+                            $tmpSource = imagecreatefromjpeg($tempCpFilename);
+
+                            imagecopyresized($tmpThumb, $tmpSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                            switch($ext) {
+                                case "jpg": imagejpeg($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                    break;
+                                case "png": imagepng($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                    break;
+                                case "gif": imagegif($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                    break;
+                            }
+
                             // Upload bdd
                             if (sendSQLReq($db, $sql['file']['uploadFile'],
                                 array(":file_name"=> $_FILES['imageInput']['name'][$i],
@@ -98,9 +121,6 @@ if (!empty($_SESSION["token"])) {
                                 header("HTTP/1.1 400 Bad Request");
                                 echo json_encode(array("msg"=>"Un problème est survenu."));
                             }
-
-
-
 
                         } catch (RuntimeException $e) {
                             header("HTTP/1.1 400 Bad Request");
@@ -151,6 +171,29 @@ if (!empty($_SESSION["token"])) {
                         )) {
                             throw new RuntimeException('Error during upload. Please retry.');
                         }
+
+                        // Copy and resize image for thumb
+                        $tempCpFilename = sprintf('uploads/%s.%s', $tempName, $ext);
+
+                        list($width, $height) = getimagesize($tempCpFilename);
+                        $percent = 400/$width;
+                        $newWidth = $width * $percent;
+                        $newHeight = $height * $percent;
+
+                        $tmpThumb = imagecreatetruecolor($newWidth, $newHeight);
+                        $tmpSource = imagecreatefromjpeg($tempCpFilename);
+
+                        imagecopyresized($tmpThumb, $tmpSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+                        switch($ext) {
+                            case "jpg": imagejpeg($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                break;
+                            case "png": imagepng($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                break;
+                            case "gif": imagegif($tmpThumb, sprintf('uploads/thumb.%s.%s', $tempName, $ext));
+                                break;
+                        }
+
                         // Upload bdd
                         if (sendSQLReq($db, $sql['file']['uploadFile'],
                             array(":file_name"=> $_FILES['imageInput']['name'],
