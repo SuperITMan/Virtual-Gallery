@@ -227,7 +227,7 @@
 
 <form id="upload-form" class="hidden" method="post"></form>
 <script>
-    var uploadedImages = <?php echo empty($creation)?"[]":json_encode(explode(",",$creation["imageIds"]));?>;
+    var uploadedImages = <?php echo empty($creation)?"[]":json_encode(explode(",",htmlspecialchars_decode($creation["imageIds"])));?>;
     var $formHTML = document.getElementById("upload-form")[0];
 
     $(document).ready(function() {
@@ -294,7 +294,7 @@
                 });
             }
             if (uploadedImages.length > 0) {
-                $("#imagesIds").val(uploadedImages.serializeArray());
+                $("#imagesIds").val(uploadedImages);
             }
         }));
     });

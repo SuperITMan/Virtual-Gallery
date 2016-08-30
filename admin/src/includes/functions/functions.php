@@ -95,7 +95,11 @@ function getCreation($id) {
         if ($data["authorId"] == USER_USERID) {
             $imageIds = json_decode(htmlspecialchars_decode($data["imageIds"]));
             if (!empty($imageIds)) {
-                $data["imageIds"] = implode(",",$imageIds);
+                if (sizeof($imageIds) > 1) {
+                    $data["imageIds"] = implode(",",$imageIds);
+                } else {
+                    $data["imageIds"] = $imageIds[0];
+                }
 
                 $id = 0;
                 foreach ($imageIds as $imageId) {
@@ -187,57 +191,57 @@ function editCreation ($postData = [], $creationId) {
     $creationId = htmlspecialchars($creationId);
     $creation = getCreation($creationId);
 //TODO afficher message succès pour chaque update...
-    if ($isEdited) {
-        if (isAdmin()) {
-            if ($userId = fetchSQLReq($db, $sql["creation"]["select"]["creationAuthorId"], array(":id"=>$creationId), true)) {
-                if ($userId == USER_USERID || isSuperAdmin()) {
-                    $creationName = htmlspecialchars($postData["creationName"]);
-                    if (strcmp($creation["creationName"], $creationName) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["name"], array(":name"=>$creationName,":id"=>$creationId));
-                        $isEdited = true;
-                    }
+//    print_r()
+    if (isAdmin()) {
+        if ($userId = fetchSQLReq($db, $sql["creation"]["select"]["creationAuthorId"], array(":id"=>$creationId), true)) {
+            if ($userId == USER_USERID || isSuperAdmin()) {
+                $creationName = htmlspecialchars($postData["creationName"]);
+                if (strcmp($creation["name"], $creationName) != 0) {
+                    sendSQLReq($db, $sql["creation"]["update"]["name"], array(":name"=>$creationName,":id"=>$creationId));
+                    $isEdited = true;
+                }
 
-                    $creationType = htmlspecialchars($postData["creationType"]);
-                    if (strcmp($creation["creationType"], $creationType) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["creationType"], array(":creationType"=>$creationType,":id"=>$creationId));
-                        $isEdited = true;
-                    }
+                $creationType = htmlspecialchars($postData["creationType"]);
+                if (strcmp($creation["creationType"], $creationType) != 0) {
+                    sendSQLReq($db, $sql["creation"]["update"]["creationType"], array(":creationType"=>$creationType,":id"=>$creationId));
+                    $isEdited = true;
+                }
 
-                    $imagesIds = htmlspecialchars($postData["imagesIds"]);
-                    if (strcmp($creation["imagesIds"], $imagesIds) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["imagesIds"], array(":imagesIds"=>$imagesIds,":id"=>$creationId));
-                        $isEdited = true;
-                    }
+                $imagesIds = htmlspecialchars($postData["imagesIds"]);
+                if (strcmp($creation["imageIds"], $imagesIds) != 0) {
+                    $imagesIds = json_encode(explode(",", $imagesIds));
+                    sendSQLReq($db, $sql["creation"]["update"]["imagesIds"], array(":imagesIds"=>$imagesIds,":id"=>$creationId));
+                    $isEdited = true;
+                }
 
-                    $shortDescription = empty($postData["shortDescription"])?$creation["shortDescription"]:htmlspecialchars($postData["shortDescription"]);
-                    if (strcmp($creation["shortDescription"], $shortDescription) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["shortDescription"], array(":shortDescription"=>$shortDescription,":id"=>$creationId));
-                        $isEdited = true;
-                    }
+                $shortDescription = empty($postData["shortDescription"])?$creation["shortDescription"]:htmlspecialchars($postData["shortDescription"]);
+                if (strcmp($creation["shortDescription"], $shortDescription) != 0) {
+                    sendSQLReq($db, $sql["creation"]["update"]["shortDescription"], array(":shortDescription"=>$shortDescription,":id"=>$creationId));
+                    $isEdited = true;
+                }
 
-                    $longDescription = empty($postData["longDescription"])?$creation["longDescription"]:htmlspecialchars($postData["longDescription"]);
-                    if (strcmp($creation["longDescription"], $longDescription) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["longDescription"], array(":longDescription"=>$shortDescription,":id"=>$creationId));
-                        $isEdited = true;
-                    }
+                $longDescription = empty($postData["longDescription"])?$creation["longDescription"]:htmlspecialchars($postData["longDescription"]);
+                if (strcmp($creation["longDescription"], $longDescription) != 0) {
+                    sendSQLReq($db, $sql["creation"]["update"]["longDescription"], array(":longDescription"=>$shortDescription,":id"=>$creationId));
+                    $isEdited = true;
+                }
 
-                    $usedMaterials = empty($postData["usedMaterials"])?$creation["usedMaterials"]:htmlspecialchars($postData["usedMaterials"]);
-                    if (strcmp($creation["usedMaterials"], $usedMaterials) != 0) {
-                        sendSQLReq($db, $sql["creation"]["update"]["usedMaterials"], array(":imagesIds"=>$usedMaterials,":id"=>$creationId));
-                        $isEdited = true;
-                    }
-                } else {
-                    displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
-                    return false;
+                $usedMaterials = empty($postData["usedMaterials"])?$creation["usedMaterials"]:htmlspecialchars($postData["usedMaterials"]);
+                if (strcmp($creation["usedMaterials"], $usedMaterials) != 0) {
+                    sendSQLReq($db, $sql["creation"]["update"]["usedMaterials"], array(":imagesIds"=>$usedMaterials,":id"=>$creationId));
+                    $isEdited = true;
                 }
             } else {
-                displayErrorMessage($iniLang["ERROR_MESSAGES"]["CREATION_TO_DELETE_NOT_EXISTS"]);
+                displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
                 return false;
             }
         } else {
-            displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+            displayErrorMessage($iniLang["ERROR_MESSAGES"]["CREATION_TO_DELETE_NOT_EXISTS"]);
             return false;
         }
+    } else {
+        displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+        return false;
     }
 }
 
