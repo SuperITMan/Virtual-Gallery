@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
@@ -15,8 +15,10 @@ include($ini["path"]["functions"]);
 include($ini["path"]["functionsSQL"]);
 require "../vendor/autoload.php";
 
-if (!empty($_SERVER["HTTP_AUTHORIZATION"])) {
-    list($jwt) = sscanf(htmlspecialchars($_SERVER["HTTP_AUTHORIZATION"]), 'Bearer %s');
+//if (!empty($_SERVER["HTTP_AUTHORIZATION"])) {
+//    list($jwt) = sscanf(htmlspecialchars($_SERVER["HTTP_AUTHORIZATION"]), 'Bearer %s');
+if (!empty($_SESSION["token"])) {
+    $jwt = htmlspecialchars($_SESSION["token"]);
     if($userInfos = verifyJWT($jwt)) {
         if (!empty($userInfos->data->userId) && !empty($userInfos->data->username) && !empty($userInfos->data->displayedName)
             && !empty($userInfos->data->isAdmin) && isset($userInfos->data->isSuperAdmin)) {

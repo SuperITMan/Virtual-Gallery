@@ -151,12 +151,10 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
     </div>
 </div>
 
-<form id="test-form" class="hidden" method="post"></form>
+<form id="upload-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = [];
-    var $formHTML = "<form id=\"newForm\" role=\"form\" method=\"POST\"></form>";
-
-    var blob = new Blob([$formHTML], {type:"text/xml"});
+    var $formHTML = $("#upload-form");
 
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {

@@ -225,10 +225,10 @@
     <?php endif; ?>
 </div>
 
-<form id="test-form" class="hidden" method="post"></form>
+<form id="upload-form" class="hidden" method="post"></form>
 <script>
     var uploadedImages = <?php echo empty($creation)?"[]":json_encode(explode(",",$creation["imageIds"]));?>;
-    var $formHTML = "<form id=\"newForm\" role=\"form\" method=\"POST\"></form>";
+    var $formHTML = ("#upload-form");
 
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {
