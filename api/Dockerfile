@@ -17,6 +17,10 @@ RUN mkdir -p /var/www/public/uploads
 # php extensions
 RUN docker-php-ext-install pdo pdo_mysql mcrypt
 
+# php file sizes
+RUN sed -i -e "s/^upload_max_filesize\s*=\s*2M/upload_max_filesize = 64M/" /etc/php/php.ini
+RUN sed -i -e "s/^post_max_size\s*=\s*8M/post_max_size = 64M/" /etc/php/php.ini
+
 # Chown www folder by www-data user
 RUN chown www-data:www-data -R /var/www
 USER www-data

@@ -31,16 +31,13 @@ function sendSQLReq ($db, $req, $params){
                     return true;
             }
             catch (PDOException $e) {
-                echo "<br>" . $e->getMessage() . "<br>";
+                echo $e->getMessage();
                 return false;
             }
-            echo "second";
             return false;
         }
-        echo "third";
         return false;
     }
-    echo "fourth";
     return false;
 }
 
@@ -89,6 +86,7 @@ function fetchSQLReq ($db, $req, $params=NULL, $isOneArg=false, $isOneRow=false)
                 return false;
             }
             catch (PDOException $e) {
+                echo $e->getMessage();
                 return false;
             }
             return false;

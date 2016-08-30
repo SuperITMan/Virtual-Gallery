@@ -1,20 +1,33 @@
 {
   "creation": {
+    "delete": {
+      "creationsMeta": "DELETE FROM vg_creations_meta WHERE creation_id = :creationId",
+      "creation": "DELETE FROM vg_creations WHERE id = :id"
+    },
     "insert": {
-      "addCreation": "INSERT INTO vg_creations (name, short_description, long_description, creation_type, user_id) VALUES (:name, :shortDescription, :longDescription, :creationType, :userId)",
-      "addImageToCreation": "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, `images`, :metaValue)"
+      "addCreation": "INSERT INTO vg_creations (name, short_description, long_description, creation_type, user_id, date_added, used_materials, image_ids) VALUES (:name, :shortDescription, :longDescription, :creationType, :userId, :dateAdded, :usedMaterials, :imageIds)",
+      "addMetaToCreation" : "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, :metaKey, :metaValue)"
     },
     "select": {
-      "selectLastCreations": "SELECT name, short_description as shortDescription, '' as image, c.id as id, displayed_name as author, u.id as authorId, (SELECT meta_value FROM vg_creations_meta WHERE meta_key='images' and creation_id = c.id) as images FROM vg_creations c JOIN vg_users u ON c.user_id=u.id",
-      "selectProductInfos": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id",
-      "selectProductInfosWithImages": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, c.id as id, displayed_name as author, u.id as authorId, (SELECT meta_value FROM vg_creations_meta WHERE meta_key='images' and creation_id = c.id) as images FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id"
+      "lastCreations": "SELECT name, short_description as shortDescription, c.id as id, displayed_name as author, u.id as authorId, used_materials as usedMaterials, image_ids as imageIds FROM vg_creations c JOIN vg_users u ON c.user_id=u.id ",
+      "lastUserCreations": "SELECT name, short_description as shortDescription, used_materials as usedMaterials, image_ids as imageIds, c.id as id FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ",
+      "allUserCreationsNameShortDescDateTypeId": "SELECT name, short_description as shortDescription, date_added as dateAdded, creation_type as creationType, used_materials as usedMaterials, image_ids as imageIds, c.id as id FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ",
+      "creationInfo": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, used_materials as usedMaterials, image_ids as imageIds, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id",
+      "creationAuthorId": "SELECT user_id FROM vg_creations WHERE id = :id"
+    },
+    "update": {
+      "name": "UPDATE vg_creations SET name = :name WHERE id = :id",
+      "shortDescription": "UPDATE vg_creations SET short_description = :shortDescription WHERE id = :id",
+      "longDescription": "UPDATE vg_creations SET long_description = :longDescription WHERE id = :id",
+      "creationType": "UPDATE vg_creations SET creation_type = :creationType WHERE id = :id",
+      "imagesIds": "UPDATE vg_creations SET image_ids = :imagesIds WHERE id = :id",
+      "usedMaterials": "UPDATE vg_creations SET used_materials = :usedMaterials WHERE id = :id"
     }
   },
   "user": {
     "insert": {
       "addUser": "INSERT INTO vg_users (username, email, passwd, displayed_name) VALUES (:username,:email,:passwd, :displayed_name)",
-      "addUserWithBirthday": "INSERT INTO vg_users (username, email, birthday_date, passwd) VALUES (:username,:email,:birthdayDate,:passwd)",
-      "firstNameAndLastNameFromId": "INSERT INTO vg_users_meta (user_id, meta_key, meta_value) VALUES (:user_id1, 'firstName', :meta_value1), (:user_id2, 'lastName', :meta_value2)"
+      "personalUserInfo": "INSERT INTO vg_users_personal_info (user_id, first_name, last_name, birthday_date, city, country) VALUES (:userId, :firstName, :lastName, :birthdayDate, :city, :country)"
     },
     "select": {
       "passwordFromLogin": "SELECT passwd FROM vg_users WHERE username=:username OR email = :email",

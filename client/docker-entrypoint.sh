@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Copy manifest.json for user preferences
-ls /tmp
 if [ -f /tmp/manifest.json ]; then
         cp /tmp/manifest.json /usr/src/app/client/src/app/assets-base/manifest.json
 fi;

@@ -2,30 +2,41 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?php echo $iniLang["CREATIONS"]["ADD_A_CREATION"];?></h1>
+            <h1 class="page-header"><?php echo $iniLang["CREATIONS"]["EDIT_A_CREATION"];?></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
 
-<?php
-if (isset($_POST["creationName"], $_POST["creationType"])) {
-    if($creationId = addCreation($_POST))
-        displaySuccessMessage("L'ajout s'est passé avec succès !! id:".$creationId);
-//        echo "<script>window.location = \"index.php?p=creations&c=all&id=".$creationId."\";</script>";
-    else
-        displayErrorMessage("Il y a eu un problème...");
-}
-?>
+    <?php
+    if (!empty($_POST["creationName"]) && !empty($_POST["creationType"]) && !empty($_POST["imagesIds"])){
+        editCreation($_POST, $_GET["id"]);
+    } elseif (!empty($_POST["action"]) && !empty($_POST["creationId"])) {
+        if (strcasecmp(htmlspecialchars($_POST["action"]),"delete") == 0) {
+            $deleteStatus = deleteCreation($_POST["creationId"]);
+        }
+    }
+
+    if (empty($deleteStatus)):?>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo $iniLang["CREATIONS"]["ADDING_OF_A_CREATION_ON_YOUR_WEBSITE"];?>
+                    <?php echo $iniLang["CREATIONS"]["EDITING_OF_A_CREATION_OF_YOUR_WEBSITE"];?>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
+                    <?php
+                    if (!empty($_GET["id"])) :
+                        $creation = getCreation($_GET["id"]);
+                        if (!empty($creation)) :
+                            $creationId = htmlspecialchars($_GET["id"]);
+                    ?>
                     <!--                    <div class="container"-->
-                    <form id="newCreationForm" class="form-horizontal add-creation" role="form" method="POST" action="index.php?p=creations&c=add">
+                    <form id="newCreationForm"
+                          class="form-horizontal add-creation"
+                          role="form"
+                          method="POST"
+                          action="index.php?p=creations&c=edit&id=<?php echo $creationId;?>">
                         <div class="form-group">
                             <label for="creationName" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
                                 <?php echo $iniLang["CREATIONS"]["CREATION_NAME"];?> *
@@ -37,7 +48,7 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                                        placeholder="<?php echo $iniLang["CREATIONS"]["CREATION_NAME"];?>"
                                        class="form-control"
                                        autofocus
-                                       value="<?php echo empty($_POST["creationName"])?"":htmlspecialchars($_POST["creationName"]);?>"
+                                       value="<?php echo empty($_POST["creationName"])?$creation["name"]:htmlspecialchars($_POST["creationName"]);?>"
                                        required>
                             </div>
                         </div>
@@ -53,8 +64,8 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                                           placeholder="<?php echo $iniLang["CREATIONS"]["SHORT_DESCRIPTION"];?>"
                                           class="form-control"
                                           autofocus><?php
-                                    echo empty($_POST["shortDescription"])?"":htmlspecialchars($_POST["shortDescription"]);
-                                ?></textarea>
+                                    echo empty($_POST["shortDescription"])?$creation["shortDescription"]:htmlspecialchars($_POST["shortDescription"]);
+                                    ?></textarea>
                             </div>
                         </div>
 
@@ -69,7 +80,7 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                                           placeholder="<?php echo $iniLang["CREATIONS"]["LONG_DESCRIPTION"];?>"
                                           class="form-control"
                                           autofocus><?php
-                                    echo empty($_POST["longDescription"])?"":htmlspecialchars($_POST["longDescription"]);
+                                    echo empty($_POST["longDescription"])?$creation["longDescription"]:htmlspecialchars($_POST["longDescription"]);
                                     ?></textarea>
                             </div>
                         </div>
@@ -81,19 +92,25 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <div class="radio">
                                     <label>
-                                        <input value="BEJEWELD" type="radio" name="creationType" required>
+                                        <input value="BEJEWELED" type="radio" name="creationType"
+                                            <?php echo strcmp("BEJEWELED",$creation["creationType"])==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["BEJEWELED"];?>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input value="PAINT" type="radio" name="creationType" required>
+                                        <input value="PAINT" type="radio" name="creationType"
+                                            <?php echo strcmp("PAINT",$creation["creationType"])==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["PAINT"];?>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input value="SCULPTURE" type="radio" name="creationType" required>
+                                        <input value="SCULPTURE" type="radio" name="creationType"
+                                            <?php echo strcmp("SCULPTURE",$creation["creationType"])==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["SCULPTURE"];?>
                                     </label>
                                 </div>
@@ -111,8 +128,8 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                                        placeholder="<?php echo $iniLang["CREATIONS"]["USED_MATERIALS"];?>"
                                        class="form-control"
                                        autofocus
-                                       value="<?php echo empty($_POST["usedMaterials"])?"":htmlspecialchars($_POST["usedMaterials"]);?>"
-                                       >
+                                       value="<?php echo empty($_POST["usedMaterials"])?$creation["usedMaterials"]:htmlspecialchars($_POST["usedMaterials"]);?>"
+                                >
                                 <span class="help-block"><?php echo $iniLang["FORMS"]["PUT_COMMA_TO_SEPARATE"];?></span>
                             </div>
                         </div>
@@ -130,14 +147,35 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                                         0%
                                     </div>
                                 </div>
-                                <div id="imagePreview"></div>
+                                <div id="imagePreview">
+                                    <?php if (!empty($creation["images"])):
+                                        foreach ($creation["images"] as $image):?>
+                                            <img class="preview-thumbnail-image"
+                                                 src="/uploads/<?php echo $image["serverFileName"];?>"
+                                                 alt="<?php echo $image["fileName"];?>"/>
+                                    <?php
+                                        endforeach;
+                                    endif;?>
+                                </div>
                             </div>
-                            <input type="hidden" name="imagesIds" id="imagesIds">
+                            <input type="hidden"
+                                   value="<?php echo $creation["imageIds"];?>"
+                                   name="imagesIds" id="imagesIds" required>
                         </div>
 
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9">
-                                <button type="submit" class="btn btn-primary btn-block"><?php echo $iniLang["COMMON"]["VERBS"]["ADD"];?></button>
+                                <button type="submit" class="btn btn-primary btn-block"><?php echo $iniLang["COMMON"]["VERBS"]["EDIT"];?></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9">
+                                <a href="#" onclick="this.preventDefault()"
+                                   data-target="#myModal"
+                                   data-toggle="modal"
+                                   class="btn btn-danger btn-block">
+                                    <?php echo $iniLang["COMMON"]["VERBS"]["REMOVE"];?>
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -145,18 +183,52 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                     <form id="modalUploadImages" class="hidden" action="" method="POST" enctype="multipart/form-data">
                         <input hidden type="file" name="imageInput[]" id="imageInput" class="hidden" multiple>
                     </form>
+
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title"><?php echo $iniLang["FORMS"]["ASK_CONFIRMATION"];?></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p><?php echo $iniLang["FORMS"]["ASK_CONFIRMATION_DELETE"];?></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form id="modalForm"
+                                          method="post"
+                                          action="index.php?p=creations&c=edit&id=<?php echo $creationId;?>">
+                                        <input hidden type="text" name="action" value="delete">
+                                        <input hidden type="text" name="creationId" value="<?php echo $creationId;?>">
+                                        <button type="submit" class="btn btn-danger">
+                                            <?php echo $iniLang["FORMS"]["YES_I_CONFIRM"]; ?>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <?php
+                        else :
+                            displayErrorMessage($iniLang["ERROR_MESSAGES"]["PASSED_ID_INCORRECT"]);
+                        endif;
+                    else :
+                        displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_ID_IN_URL"]);
+                    endif;?>
                 </div>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 
 <form id="test-form" class="hidden" method="post"></form>
 <script>
-    var uploadedImages = [];
+    var uploadedImages = <?php echo empty($creation)?"[]":json_encode(explode(",",$creation["imageIds"]));?>;
     var $formHTML = "<form id=\"newForm\" role=\"form\" method=\"POST\"></form>";
-
-    var blob = new Blob([$formHTML], {type:"text/xml"});
 
     $(document).ready(function() {
         $("#buttonUpload").on("click", function(e) {
@@ -173,12 +245,12 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
             var files = $this[0].files;
             var $file;
 
-           for (i=0; i<files.length; i++) {
+            for (i=0; i<files.length; i++) {
 
-               $file = new FormData($formHTML);
-               $file.append("imageInput", files[i]);
+                $file = new FormData($formHTML);
+                $file.append("imageInput", files[i]);
 
-               $.ajax({
+                $.ajax({
                     type: "POST",
                     url: "upload.php",
                     data: $file,
@@ -208,7 +280,6 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                     success: function (data, textStatus) {
                         setTimeout(function () {
                             $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
-                            console.log(data);
                             data = jQuery.parseJSON(data);
                             uploadedImages.push(data["id"]);
                             $("#imagesIds").val(uploadedImages);
@@ -216,75 +287,15 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                             $("#imagePreview").append("<img class='preview-thumbnail-image' src='" + data["link"] + "'/>");
                         }, 500);
                     },
-                   error: function(data) {
-                       console.log(data);
-                   }
+                    error: function(data, eee) {
+                        console.log(data);
+                        console.log(eee);
+                    }
                 });
-           }
-           if (uploadedImages.length > 0) {
-               $("#imagesIds").val(uploadedImages.serializeArray());
-           }
-//            $.ajax({
-//                type: "POST",
-//                url: "/upload.php",
-//                data: new FormData($("#modalUploadImages")[0]),
-//                contentType: false,
-////               crossDomain: true,
-//                cache: false,
-//                processData: false,
-//                mimeType: "multipart/form-data",
-//                headers: {
-//                    "Authorization": "Bearer <?php //echo $_SESSION["token"];?>//"
-//                },
-//                xhr: function () {
-//                    var xhr = $.ajaxSettings.xhr();
-//                    if (xhr.upload) {
-//                        xhr.upload.addEventListener("progress", function (event) {
-//                            var percent = 0;
-//                            var position = event.loaded || event.position;
-//                            var total = event.total;
-//                            if (event.lengthComputable) {
-//                                percent = Math.ceil(position / total * 100);
-//                            }
-//                            console.log("Ca semble progresser");
-//                            console.log(percent);
-//                            //update progressbar
-//                            $("#progress-wrp .progress-bar").attr('aria-valuenow', percent).text(percent + "%").css("width", percent + "%");
-//                        }, true);
-//                    }
-//                    return xhr;
-//                },
-//                success: function (data, textStatus) {
-//                    setTimeout(function () {
-//                        $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
-//                        data = jQuery.parseJSON(data);
-//                        uploadedImages.push(data["id"]);
-////                       $("#modalUploadImages")[0].reset();
-//                        $("#imagePreview").append("<img class='preview-thumbnail-image' src='" + data["link"] + "'/>");
-//                    }, 500);
-//                }
-////                error: function (result, textStatus, errorThrown) {
-////                    console.log(result);
-////                    console.log(textStatus);
-////                    console.log(errorThrown);
-////                }
-//            });
-//           }).trigger('ajax').done(function (data) {
-//               $("#progress-wrp .progress-bar").attr('aria-valuenow', 100).text(100 + "%").css("width", +100 + "%");
-//               setTimeout(function(){
-//                   $("#progress-wrp .progress-bar").attr('aria-valuenow', 0).text(0 + "%").css("width", +0 + "%");
-//                   data = jQuery.parseJSON(data);
-//                   uploadedImages.push(data["id"]);
-//                   $("#modalUploadImages")[0].reset();
-//                   $("#imagePreview").append("<img class='preview-thumbnail-image' src='"+data["link"]+"'/>");
-//               }, 500);
-//                $("#modalUploadImages")[0].reset();
-
-//               $("#progress-wrp .progress-bar").css("width", + 0 + "%");
-//               $("#progress-wrp .status").text("");
-
-
-//           });
+            }
+            if (uploadedImages.length > 0) {
+                $("#imagesIds").val(uploadedImages.serializeArray());
+            }
         }));
     });
 </script>

@@ -6,17 +6,28 @@
   },
   "COMMON": {
     "VERBS": {
-      "ADD": "Ajouter"
+      "ADD": "Ajouter",
+      "EDIT": "Modifier",
+      "REMOVE": "Supprimer"
     },
     "WORDS": {
 
     }
   },
   "ERROR_MESSAGES": {
-    "INVALID_TOKEN_DISCONNECTED": "Une erreur s'est produite, votre session n'est plus valide.\nVeuillez rafraîchir la page."
+    "ERROR_DURING_DELETING": "Erreur lors de suppression. Veuillez contacter l'administrateur du site.",
+    "INVALID_TOKEN_DISCONNECTED": "Une erreur s'est produite, votre session n'est plus valide.\nVeuillez rafraîchir la page.",
+    "CREATION_TO_DELETE_NOT_EXISTS": "Erreur: La création que vous désirez supprimer n'existe pas.",
+    "NO_RIGHT_TO_DELETE_CREATION": "Vous n'avez pas les droits nécessaires pour supprimer cette création.",
+    "NO_ID_IN_URL": "Aucun id présent. Veuillez préciser un identifiant pour éditer un élément.",
+    "PASSED_ID_INCORRECT": "L'id fourni dans l'url n'existe pas. Veuillez le vérifier."
   },
   "FORMS": {
-    "PASSWORD_CONFIRM": "Confirmation du mot de passe"
+    "ASK_CONFIRMATION": "Demande de confirmation",
+    "ASK_CONFIRMATION_DELETE": "Etes-vous certain de vouloir effectuer la suppression ?",
+    "PASSWORD_CONFIRM": "Confirmation du mot de passe",
+    "PUT_COMMA_TO_SEPARATE": "Placez une \",\" pour séparer les éléments",
+    "YES_I_CONFIRM": "Oui, je confirme"
   },
   "LOGIN": {
     "CONNECTING_TO": "Connexion à %titlesite%",
@@ -49,20 +60,30 @@
     "CREATION_NAME": "Nom de la création",
     "CREATION_TYPE": "Type de création",
     "CREATIONS": "Créations",
+    "DATE_ADDED": "Date d'ajout",
+    "EDIT_A_CREATION": "Editer une création",
+    "EDITING_OF_A_CREATION_OF_YOUR_WEBSITE": "Edition d'une création de votre site",
     "IMAGES": "Images",
     "LONG_DESCRIPTION": "Longue description",
     "SHORT_DESCRIPTION": "Courte description",
     "TYPES": {
       "BEJEWELED": "Bijou",
       "PAINT": "Peinture",
-      "SCULPTURE": "Sculpture"
+      "SCULPTURE": "Sculpture",
+      "UNKNOWN": "Inconnu"
     },
     "UPLOAD_IMAGES": "Envoyer une ou plusieurs images",
     "USED_MATERIALS": "Matériaux utilisés"
   },
+  "SUCCESS_MESSAGES": {
+    "DELETED_OK": "La suppression s'est effectuée avec succès !\nCliquer <a href=\"%href%\">ici</a> pour voir %all_things%"
+  },
   "SETTINGS": {
     "SITE_SETTINGS": "Paramètres du site",
     "TITLE": "Paramètres"
+  },
+  "WARNING_MESSAGES": {
+    "NO_OWN_CREATIONS_USER": "Vous n'avez pas encore de créations."
   },
   "USERS": {
     "ADD_A_USER": "Ajouter un utilisateur",

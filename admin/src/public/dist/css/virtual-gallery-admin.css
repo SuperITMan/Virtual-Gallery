@@ -13,3 +13,7 @@ form.add-user label {
     width: auto;
     margin: 10px;
 }
+
+#modalForm {
+    display: inline-block;
+}

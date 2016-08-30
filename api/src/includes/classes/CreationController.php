@@ -34,6 +34,8 @@ class CreationController {
      * @apiError NoAccessRight Only authenticated Admins can access the data.
      * @apiError MissingName Parameter name is not present.
      */
+
+    //TODO Ne risque pas de fonctionner actuellement....
     public function addCreation(Request $request, Response $response, Array $args) {
         $post = $request->getParsedBody();
         $authorization = $request->getHeader("HTTP_AUTHORIZATION");
@@ -121,16 +123,16 @@ class CreationController {
         if (!empty($args["id"])) {
             $creationId = htmlspecialchars($args["id"]);
 
-            if ($creationInfos = fetchSQLReq($this->db, $this->sql["creation"]["select"]["selectProductInfosWithImages"],
+            if ($creationInfos = fetchSQLReq($this->db, $this->sql["creation"]["select"]["creationInfo"],
                 array(":id"=> $creationId), false, true)) {
 
-                $images = $creationInfos["images"];
+                $imageIds = json_decode(htmlspecialchars_decode($creationInfos["imageIds"]));
 
                 $creationInfos["images"] = [];
 
-                for ($i=0; $i < sizeof($images); $i++) {
+                for ($i=0; $i < sizeof($imageIds); $i++) {
                     $creationInfos["images"][$i] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
-                        array(":id"=>$images[$i]), false,true);
+                        array(":id"=>$imageIds[$i]), false,true);
                 }
                 $response = $response->withStatus(200);
                 $response->getBody()->write(json_encode($creationInfos));
@@ -157,7 +159,7 @@ class CreationController {
      */
 
     public function getCreations(Request $request, Response $response, Array $args) {
-        $sqlReq = $this->sql["creation"]["select"]["selectLastCreations"];
+        $sqlReq = $this->sql["creation"]["select"]["lastCreations"];
         $reqParams = $request->getQueryParams();
         if (array_key_exists ("limit",$reqParams))
             $sqlReq = $sqlReq . " LIMIT " . htmlspecialchars($reqParams["limit"]);
@@ -167,22 +169,31 @@ class CreationController {
             $stmt->execute();
             $result = $stmt->fetchAll();
 
-            $i = 0;
-            foreach ($result as $content) {
-                $data[$i]["name"] = $content["name"];
-                $data[$i]["shortDescription"] = $content["shortDescription"];
-                $data[$i]["author"] = $content["author"];
-                $data[$i]["id"] = $content["id"];
-                $data[$i]["authorId"] = $content["authorId"];
-                $imageId = $content["images"][0];
-                $data[$i]["image"] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
-                                                    array(":id"=>$imageId), false,true);
+            if (!empty($result)) {
+                $i = 0;
+                foreach ($result as $content) {
+                    $data[$i]["name"] = $content["name"];
+                    $data[$i]["shortDescription"] = $content["shortDescription"];
+                    $data[$i]["author"] = $content["author"];
+                    $data[$i]["id"] = $content["id"];
+                    $data[$i]["authorId"] = $content["authorId"];
+                    $data[$i]["usedMaterials"] = $content["usedMaterials"];
 
-                $i++;
-            }
+                    if (!empty($content["imageIds"][0])) {
+                        $imageId = json_decode(htmlspecialchars_decode($content["imageIds"]))[0];
+                        $data[$i]["image"] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
+                            array(":id"=>$imageId), false,true);
+                    }
+
+                    $i++;
+                }
 //            $data = array("data"=>$result);
-            $response->getBody()->write(json_encode($data));
-            $response = $response->withStatus(200);
+                $response->getBody()->write(json_encode($data));
+                $response = $response->withStatus(200);
+            } else {
+                $response->getBody()->write(json_encode([]));
+                $response = $response->withStatus(200);
+            }
         } catch (Exception $e) {
             $response = $response->withStatus(409);
             $response->getBody()->write("");

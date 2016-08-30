@@ -79,7 +79,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="col-sm-3 col-md-3 col-lg-2 control-label">Password</label>
+                            <label for="password" class="col-sm-3 col-md-3 col-lg-2 control-label">
+                                <?php echo $iniLang["USERS"]["PASSWORD"];?>
+                            </label>
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <input type="password"
                                        id="password"
@@ -91,7 +93,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="col-sm-3 col-md-3 col-lg-2 control-label">Password</label>
+                            <label for="password" class="col-sm-3 col-md-3 col-lg-2 control-label">
+                                <?php echo $iniLang["FORMS"]["PASSWORD_CONFIRM"];?>
+                            </label>
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <input type="password"
                                        id="passwordConf"

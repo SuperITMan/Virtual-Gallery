@@ -111,8 +111,8 @@ if (empty($_SESSION["token"])) {
                 define("USER_USERID", htmlspecialchars($userInfos->data->userId));
                 define("USER_USERNAME", htmlspecialchars($userInfos->data->username));
                 define("USER_DISPLAYED_NAME", htmlspecialchars($userInfos->data->displayedName));
-                define("USER_IS_ADMIN", empty(htmlspecialchars($userInfos->data->isAdmin))?false:htmlspecialchars($userInfos->data->isAdmin));
-                define("USER_IS_SUPER_ADMIN", empty(htmlspecialchars($userInfos->data->isSuperAdmin))?false:htmlspecialchars($userInfos->data->isSuperAdmin));
+                define("USER_IS_ADMIN", empty(htmlspecialchars($userInfos->data->isAdmin))?"false":htmlspecialchars($userInfos->data->isAdmin));
+                define("USER_IS_SUPER_ADMIN", empty(htmlspecialchars($userInfos->data->isSuperAdmin))?"false":htmlspecialchars($userInfos->data->isSuperAdmin));
             } else {
                 session_destroy();
                 define("USER_USERID", 0);

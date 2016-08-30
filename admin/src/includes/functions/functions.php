@@ -73,10 +73,93 @@ function getAllUsers() {
     return false;
 }
 
+function getAllCreations() {
+    global $db;
+    global $sql;
+
+    if (isAdmin()) {
+        return fetchSQLReq($db,$sql["creation"]["select"]["allUserCreationsNameShortDescDateTypeId"],
+            array(":userId"=>USER_USERID));
+    }
+    return false;
+}
+
+function getCreation($id) {
+    global $db;
+    global $sql;
+
+    $id = htmlspecialchars($id);
+
+    if (isAdmin()) {
+        $data = fetchSQLReq($db, $sql["creation"]["select"]["creationInfo"], array(":id"=>$id), false, true);
+        if ($data["userId"] == USER_USERID) {
+            $imageIds = json_decode(htmlspecialchars_decode($data["imageIds"]));
+            if (!empty($imageIds)) {
+                $data["imageIds"] = implode(",",$imageIds);
+
+                $id = 0;
+                foreach ($imageIds as $imageId) {
+                    $data["images"][$id] = fetchSQLReq($db, $sql["file"]["select"]["selectImageInfo"], array(":id"=>$imageId), false, true);
+                    $id++;
+                }
+            } else
+                $data["imageIds"] = "";
+
+            if (!empty($data["usedMaterials"]))
+                $data["usedMaterials"] = implode(",",json_decode(htmlspecialchars_decode($data["usedMaterials"])));
+            else
+                $data["usedMaterials"] = "";
+
+            return $data;
+        }
+        return false;
+    } return false;
+}
+
+function deleteCreation($id) {
+    global $db;
+    global $sql;
+    global $iniLang;
+
+    $id = htmlspecialchars($id);
+
+    if (isAdmin()) {
+        if ($userId = fetchSQLReq($db, $sql["creation"]["select"]["creationAuthorId"], array(":id"=>$id), true)) {
+            if ($userId == USER_USERID || isSuperAdmin()) {
+                if (sendSQLReq($db, $sql["creation"]["delete"]["creationsMeta"], array(":creationId"=>$id))) {
+                    if (sendSQLReq($db, $sql["creation"]["delete"]["creation"], array(":id"=>$id))) {
+                        displaySuccessMessage(str_replace(array("%href%","%all_things%"),
+                            array("index.php?p=creations&c=all", $iniLang["CREATIONS"]["ALL_CREATIONS"]),
+                            $iniLang["SUCCESS_MESSAGES"]["DELETED_OK"]));
+                        return true;
+                    } else {
+                        displayErrorMessage($iniLang["ERROR_MESSAGES"]["ERROR_DURING_DELETING"]);
+                        return false;
+                    }
+                } else {
+                    displayErrorMessage($iniLang["ERROR_MESSAGES"]["ERROR_DURING_DELETING"]);
+                    return false;
+                }
+            } else {
+                displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+                return false;
+            }
+        } else {
+            displayErrorMessage($iniLang["ERROR_MESSAGES"]["CREATION_TO_DELETE_NOT_EXISTS"]);
+            return false;
+        }
+    } else {
+        displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+        return false;
+    }
+}
+
 function isAdmin() {
-    $infos = verifyJWT(htmlspecialchars($_SESSION["token"]));
-    return true;
-    return isset($infos["isAdmin"]) ? $infos["isAdmin"] : false;
+    return (strcmp(USER_IS_ADMIN,"true")==0);
+}
+
+function isSuperAdmin() {
+    return (strcmp(USER_IS_SUPER_ADMIN,"true")==0);
 }
 
 function verifyJWT ($jwt="") {
@@ -94,52 +177,135 @@ function verifyJWT ($jwt="") {
     }
 }
 
+function editCreation ($postData = [], $creationId) {
+    global $db;
+    global $sql;
+    global $iniLang;
+
+    $isEdited = false;
+
+    $creationId = htmlspecialchars($creationId);
+    $creation = getCreation($creationId);
+//TODO afficher message succès pour chaque update...
+    if ($isEdited) {
+        if (isAdmin()) {
+            if ($userId = fetchSQLReq($db, $sql["creation"]["select"]["creationAuthorId"], array(":id"=>$creationId), true)) {
+                if ($userId == USER_USERID || isSuperAdmin()) {
+                    $creationName = htmlspecialchars($postData["creationName"]);
+                    if (strcmp($creation["creationName"], $creationName) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["name"], array(":name"=>$creationName,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+
+                    $creationType = htmlspecialchars($postData["creationType"]);
+                    if (strcmp($creation["creationType"], $creationType) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["creationType"], array(":creationType"=>$creationType,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+
+                    $imagesIds = htmlspecialchars($postData["imagesIds"]);
+                    if (strcmp($creation["imagesIds"], $imagesIds) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["imagesIds"], array(":imagesIds"=>$imagesIds,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+
+                    $shortDescription = empty($postData["shortDescription"])?$creation["shortDescription"]:htmlspecialchars($postData["shortDescription"]);
+                    if (strcmp($creation["shortDescription"], $shortDescription) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["shortDescription"], array(":shortDescription"=>$shortDescription,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+
+                    $longDescription = empty($postData["longDescription"])?$creation["longDescription"]:htmlspecialchars($postData["longDescription"]);
+                    if (strcmp($creation["longDescription"], $longDescription) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["longDescription"], array(":longDescription"=>$shortDescription,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+
+                    $usedMaterials = empty($postData["usedMaterials"])?$creation["usedMaterials"]:htmlspecialchars($postData["usedMaterials"]);
+                    if (strcmp($creation["usedMaterials"], $usedMaterials) != 0) {
+                        sendSQLReq($db, $sql["creation"]["update"]["usedMaterials"], array(":imagesIds"=>$usedMaterials,":id"=>$creationId));
+                        $isEdited = true;
+                    }
+                } else {
+                    displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+                    return false;
+                }
+            } else {
+                displayErrorMessage($iniLang["ERROR_MESSAGES"]["CREATION_TO_DELETE_NOT_EXISTS"]);
+                return false;
+            }
+        } else {
+            displayErrorMessage($iniLang["ERROR_MESSAGES"]["NO_RIGHT_TO_DELETE_CREATION"]);
+            return false;
+        }
+    }
+}
+
 function addCreation($postData = []) {
     global $db;
     global $sql;
 
     $longDescription = empty($postData["longDescription"]) ? "" : htmlspecialchars($postData["longDescription"]);
     $shortDescription = empty($postData["shortDescription"]) ? "" : htmlspecialchars($postData["shortDescription"]);
-    $usedMaterials = empty($postData["usedMaterials"]) ? "" : htmlspecialchars($postData["usedMaterials"]);
+
+    $usedMaterials = empty($postData["usedMaterials"]) ? "" : json_encode(explode(",", htmlspecialchars($postData["usedMaterials"])));
 
     $creationName = htmlspecialchars($postData["creationName"]);
     $creationType = htmlspecialchars($postData["creationType"]);
-    $imagesIds = htmlspecialchars($postData["imagesIds"]);
+
+    if (!(strcmp($creationType, "BEJEWELED") == 0 || strcmp($creationType, "PAINT") == 0 || strcmp($creationType, "SCULPTURE") == 0)) {
+        $creationType = "UNKNOWN";
+    }
+
+    $imagesIds = empty($postData["imagesIds"])?"":json_encode(explode(",", htmlspecialchars($postData["imagesIds"])));
 
     //TODO Check value of creationType
+    //TODO Afficher les messages erreur ou non...
     if (!empty($creationName) && !empty($creationType) && !empty($imagesIds)) {
         $params = array(":name"=>$creationName,":shortDescription"=>$shortDescription,":longDescription"=>$longDescription,
-            ":creationType"=>$creationType,":userId"=>USER_USERID);
+            ":creationType"=>$creationType,":userId"=>USER_USERID, ":dateAdded"=>date("Y-m-d h:i:s"),
+            ":imageIds"=>$imagesIds, ":usedMaterials"=>$usedMaterials);
 
-        if (substr_count($sql["creation"]["insert"]["addCreation"], ":") == count($params)) {
-            $stmt = $db -> prepare($sql["creation"]["insert"]["addCreation"]);
-
-            try {
-                if ($stmt->execute($params)) {
-                    $creationId = $db -> lastInsertId();
-                    $params = array(":creationId"=>$creationId,":metaKey"=>"images",":metaValue"=>$imagesIds);
-                    if (sendSQLReq($db,$sql["creation"]["insert"]["addImageToCreation"],$params)) {
-                        return $creationId;
-                    } else return false;
-                } else {
-                    return false;
-                }
-            } catch (PDOException $e) {
-                echo $e->getMessage();
+//        if (substr_count($sql["creation"]["insert"]["addCreation"], ":") == count($params)) {
+            if (sendSQLReq($db, $sql["creation"]["insert"]["addCreation"], $params)) {
+                return $db -> lastInsertId();
+            } else {
                 return false;
             }
-        }
-
-//        if (sendSQLReq($db,$sql["creation"]["insert"]["addCreation"],$params)) {
-//            $creationId = $db -> lastInsertId();
-//            $params = array(":creationId"=>$creationId,":metaValue"=>$imagesIds);
-//            if (sendSQLReq($db,$sql["creation"]["insert"]["addCreation"],$params)) {
-//                return $creationId;
-//            } else return false;
-//        } else return false;
-    } else { return false;}
+//            $stmt = $db -> prepare($sql["creation"]["insert"]["addCreation"]);
+//
+//            try {
+//                if ($stmt->execute($params)) {
+//                    $creationId = $db -> lastInsertId();
+//
+//                    $imagesIds = empty($imagesIds)?"":json_encode(explode(",", $imagesIds));
+//                    $params = array(":creationId"=>$creationId,":metaKey"=>"images",":metaValue"=>$imagesIds);
+//                    if (sendSQLReq($db,$sql["creation"]["insert"]["addMetaToCreation"],$params)) {
+//
+//                        $usedMaterials = empty($usedMaterials)?"":json_encode(explode(",", $usedMaterials));
+//                        $params = array(":creationId"=>$creationId,":metaKey"=>"used_materials",":metaValue"=>$usedMaterials);
+//                        if (sendSQLReq($db,$sql["creation"]["insert"]["addMetaToCreation"],$params)) {
+//                            return $creationId;
+//                        } else {
+//                            return false;
+//                        }
+//                    } else return false;
+//                } else {
+//                    return false;
+//                }
+//            } catch (PDOException $e) {
+//                echo $e->getMessage();
+//                return false;
+//            }
+//        } else {
+//            return false;
+//        }
+    } else {
+        return false;
+    }
 }
 
+//TODO Ajouter les messages en conséquence
 function addUser ($postData = []) {
     global $db;
     global $sql;
@@ -152,41 +318,31 @@ function addUser ($postData = []) {
     $password = htmlspecialchars($postData["password"]);
     $passwordConf = htmlspecialchars($postData["passwordConf"]);
 
+    $birthDate = htmlspecialchars($postData["birthDate"]);
+
     if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConf)) {
         if (strcmp($password, $passwordConf) == 0) {
-            //Prepare and check request and params
             $params = array(":username" => strtolower($username), ":email" => $email, ":passwd" => $password, ":displayed_name"=>$username);
-            if (substr_count($sql["user"]["insert"]["addUser"], ":") == count($params)) {
-                $stmt = $db -> prepare($sql["user"]["insert"]["addUser"]);
-                try {
-                    if ($stmt->execute($params)) {
 
-                    } else {
-                        return false;
-                    }
-                } catch (PDOException $e) {
-                    echo $e->getMessage();
+            if (sendSQLReq($db, $sql["user"]["insert"]["addUser"], $params)) {
+                $userId = $db -> lastInsertId();
+                $params = array(":userId" => $userId, ":firstName"=>$firstName, ":lastName"=>$lastName,
+                    ":birthdayDate"=>$birthDate, ":city"=>NULL, ":country"=>NULL);
+
+                if (sendSQLReq($db, $sql["user"]["insert"]["personalUserInfo"], $params)) {
+                    return $userId;
+                } else {
                     return false;
                 }
-
-                $userId = $db -> lastInsertId();
-                $params = array(":meta_value1" => $firstName, ":user_id1" => $userId, ":meta_value2" => $lastName, ":user_id2" => $userId);
-                if (substr_count($sql["user"]["insert"]["firstNameAndLastNameFromId"], ":") == count($params)) {
-                    $stmt = $db -> prepare($sql["user"]["insert"]["firstNameAndLastNameFromId"]);
-                    try {
-                        if ($stmt->execute($params)) {
-                            return $userId;
-                        } else {
-                            return false;
-                        }
-                    } catch (PDOException $e) {
-                        echo $e->getMessage();
-                        return false;
-                    }
-                } else { return false;}
-            } else { return false;}
-        } else { return false;}
-    } else { return false;}
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 function isPage ($pageName) {

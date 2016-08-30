@@ -7,6 +7,9 @@ if (isset($_GET["c"])){
         case strcasecmp(htmlspecialchars($_GET["c"]), "add") == 0:
             include $ini["path"]["creations.add"];
             break;
+        case strcasecmp(htmlspecialchars($_GET["c"]), "edit") == 0:
+            include $ini["path"]["creations.edit"];
+            break;
         default:
             include $ini["path"]["creations.all"];
             break;

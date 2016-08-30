@@ -22,6 +22,7 @@ users.me = "../includes/elements/users/users.me.php"
 creations = "../includes/elements/creations/creations.php"
 creations.all = "../includes/elements/creations/creations.all.php"
 creations.add = "../includes/elements/creations/creations.add.php"
+creations.edit = "../includes/elements/creations/creations.edit.php"
 
 [cookies]
 usernameLife = "31"

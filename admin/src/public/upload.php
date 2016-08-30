@@ -23,8 +23,8 @@ if (!empty($_SERVER["HTTP_AUTHORIZATION"])) {
             define("USER_USERID", htmlspecialchars($userInfos->data->userId));
             define("USER_USERNAME", htmlspecialchars($userInfos->data->username));
             define("USER_DISPLAYED_NAME", htmlspecialchars($userInfos->data->displayedName));
-            define("USER_IS_ADMIN", htmlspecialchars($userInfos->data->isAdmin));
-            define("USER_IS_SUPER_ADMIN", htmlspecialchars($userInfos->data->isSuperAdmin));
+            define("USER_IS_ADMIN", empty(htmlspecialchars($userInfos->data->isAdmin))?"false":htmlspecialchars($userInfos->data->isAdmin));
+            define("USER_IS_SUPER_ADMIN", empty(htmlspecialchars($userInfos->data->isSuperAdmin))?"false":htmlspecialchars($userInfos->data->isSuperAdmin));
 
             $db = connectDB(DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD);
 
@@ -79,19 +79,25 @@ if (!empty($_SERVER["HTTP_AUTHORIZATION"])) {
                                 throw new RuntimeException('Error during upload. Please retry.');
                             }
                             // Upload bdd
-                            sendSQLReq($db, $sql['file']['uploadFile'],
+                            if (sendSQLReq($db, $sql['file']['uploadFile'],
                                 array(":file_name"=> $_FILES['imageInput']['name'][$i],
                                     ":server_file_name" => $tempName.".".$ext,
                                     ":mime" => $ext,
                                     ":upload_date" => date('Y-m-d H:i:s'),
-                                    ":user_id" => USER_USERID));
+                                    ":user_id" => USER_USERID))) {
 
-                            header("HTTP/1.1 200 OK");
-                            echo json_encode(
-                                array("msg"=>"Votre fichier a bien été uploadé sur le serveur.",
-                                    "link"=>"/uploads/".$tempName.".".$ext,
-                                    "id"=>$db -> lastInsertId())
-                            );
+                                header("HTTP/1.1 200 OK");
+                                echo json_encode(
+                                    array("msg"=>"Votre fichier a bien été uploadé sur le serveur.",
+                                        "link"=>"/uploads/".$tempName.".".$ext,
+                                        "id"=>$db -> lastInsertId())
+                                );
+                            } else {
+                                header("HTTP/1.1 400 Bad Request");
+                                echo json_encode(array("msg"=>"Un problème est survenu."));
+                            }
+
+
 
 
                         } catch (RuntimeException $e) {
@@ -144,20 +150,26 @@ if (!empty($_SERVER["HTTP_AUTHORIZATION"])) {
                             throw new RuntimeException('Error during upload. Please retry.');
                         }
                         // Upload bdd
-                        sendSQLReq($db, $sql['file']['uploadFile'],
+                        if (sendSQLReq($db, $sql['file']['uploadFile'],
                             array(":file_name"=> $_FILES['imageInput']['name'],
                                 ":server_file_name" => $tempName.".".$ext,
                                 ":mime" => $ext,
                                 ":upload_date" => date('Y-m-d H:i:s'),
-                                ":user_id" => USER_USERID));
+                                ":user_id" => USER_USERID))) {
 
-                        header("HTTP/1.1 200 OK");
+                            header("HTTP/1.1 200 OK");
 
-                        echo json_encode(
-                            array("msg"=>"Votre fichier a bien été uploadé sur le serveur.",
-                                "link"=>"/uploads/".$tempName.".".$ext,
-                                "id"=>$db -> lastInsertId())
-                        );
+                            echo json_encode(
+                                array("msg"=>"Votre fichier a bien été uploadé sur le serveur.",
+                                    "link"=>"/uploads/".$tempName.".".$ext,
+                                    "id"=>$db -> lastInsertId())
+                            );
+                        } else {
+                            header("HTTP/1.1 400 Bad Request");
+                            echo json_encode(array("msg"=>"Un problème est survenu."));
+                        }
+
+
                     } catch (RuntimeException $e) {
                         header("HTTP/1.1 400 Bad Request");
                         echo json_encode("Erreur : " . $e->getMessage());
