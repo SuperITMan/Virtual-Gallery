@@ -5,27 +5,34 @@ import IScope = angular.IScope;
 import IStateService = angular.ui.IStateService;
 import IResourceService = angular.resource.IResourceService;
 
-import {IUsersApiService} from "../api/services/users-api.service";
-import {IUser} from "../api/models/user.model";
-
 import {AbstractStateController} from "../commons/controllers/abstract.state.controller";
 import ITimeoutService = angular.ITimeoutService;
 import IRootScopeService = angular.IRootScopeService;
+import {INewsApiService} from "../api/services/news-api.service";
+import {INews} from "../api/models/news.model";
+import {ICreationsApiService} from "../api/services/creations-api.service";
+import {ICreationsListConfig, ICreationList} from "../commons/components/creations-list/creations-list";
 
 export class HomeController extends AbstractStateController {
     public $resource:IResourceService;
     public $timeout:ITimeoutService;
-    public users:Array<IUser>;
-    public usersApiService:IUsersApiService;
+    public news:Array<INews>;
+
+    public newsApiService:INewsApiService;
+    public creationsApiService:ICreationsApiService;
+
+    public creationsListConfig:ICreationsListConfig;
 
     public loadProgressTask:Promise<any>;
 
-    public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "usersApiService"];
+    public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "newsApiService",
+        "creationsApiService"];
 
     public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService,
-                       $timeout:ITimeoutService, usersApiService:IUsersApiService) {
+                       $timeout:ITimeoutService, newsApiService:INewsApiService, creationsApiService:ICreationsApiService) {
         super(logger, $state, $scope, $rootScope);
-        this.usersApiService = usersApiService;
+        this.newsApiService = newsApiService;
+        this.creationsApiService = creationsApiService;
         this.$timeout = $timeout;
     }
 
@@ -35,17 +42,33 @@ export class HomeController extends AbstractStateController {
     private $onInit():void {
         this.logger.debug("Home controller loaded...");
 
-        this.getUsers();
+        this.getNews();
+
+        this.getCreations();
     }
 
-    public getUsers ():any {
-        let getUsersCallback:any = () => {
-            this.usersApiService.getUsers().$promise.then((response:any) => {
-                this.logger.debug("getUsers() -> Users loaded");
-                this.users = response.data as Array<IUser>;
+    public getNews():void {
+        let getNewsCallback:any = () => {
+            this.newsApiService.getLastNews().$promise.then((response:any) => {
+                this.logger.debug("getNews() -> Users loaded");
+                this.news = response as Array<INews>;
+                this.logger.debug(response);
             });
         };
 
-        this.loadProgressTask = this.$timeout(getUsersCallback) as Promise<any>;
+        this.loadProgressTask = this.$timeout(getNewsCallback) as Promise<any>;
+    }
+
+    public getCreations ():any {
+        let getCreationsCallback:any = () => {
+            this.creationsApiService.getCreations(6).$promise.then((response:any) => {
+                this.logger.debug("getCreations() -> Creations loaded");
+                this.creationsListConfig = {
+                    creations: response as Array<ICreationList>
+                };
+            });
+        };
+
+        this.loadProgressTask = this.$timeout(getCreationsCallback) as Promise<any>;
     }
 }

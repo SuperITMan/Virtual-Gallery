@@ -1,12 +1,18 @@
 <div class="home page-content">
     <md-content layout-padding>
-        <h1>Dernières oeuvres</h1>
-
+        <h1>Dernières actualités</h1>
+        <div ng-repeat="news in vm.news track by $index">
+            <h2>{{news.title}}</h2><em>{{news.creationDate}}</em>
+            <div>{{news.content}}</div>
+        </div>
     </md-content>
-    <label>Hi, I'm the home module!</label>
-    <br />
-    Mon email : {{vm.users[0].username}}<br>
 
-    <foo></foo>
+    <md-divider></md-divider>
+
+    <md-content layout-padding>
+        <h1>Dernières oeuvres</h1>
+        <virtual-gallery-creations-list creations-list-config="vm.creationsListConfig"></virtual-gallery-creations-list>
+    </md-content>
+
 </div>
 

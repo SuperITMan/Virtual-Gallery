@@ -9,9 +9,9 @@
       "addMetaToCreation" : "INSERT INTO vg_creations_meta (creation_id, meta_key, meta_value) VALUES (:creationId, :metaKey, :metaValue)"
     },
     "select": {
-      "lastCreations": "SELECT name, short_description as shortDescription, c.id as id, displayed_name as author, u.id as authorId, used_materials as usedMaterials, image_ids as imageIds FROM vg_creations c JOIN vg_users u ON c.user_id=u.id ",
-      "lastUserCreations": "SELECT name, short_description as shortDescription, used_materials as usedMaterials, image_ids as imageIds, c.id as id FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ",
-      "allUserCreationsNameShortDescDateTypeId": "SELECT name, short_description as shortDescription, date_added as dateAdded, creation_type as creationType, used_materials as usedMaterials, image_ids as imageIds, c.id as id FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ",
+      "lastCreations": "SELECT name, short_description as shortDescription, c.id as id, displayed_name as author, u.id as authorId, used_materials as usedMaterials, image_ids as imageIds FROM vg_creations c JOIN vg_users u ON c.user_id=u.id ORDER BY c.date_added DESC ",
+      "lastUserCreations": "SELECT name, short_description as shortDescription, c.id as id, displayed_name as author, u.id as authorId, used_materials as usedMaterials, image_ids as imageIds FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ORDER BY c.date_added DESC ",
+      "allUserCreationsNameShortDescDateTypeId": "SELECT name, short_description as shortDescription, date_added as dateAdded, creation_type as creationType, used_materials as usedMaterials, image_ids as imageIds, c.id as id FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE u.id = :userId ORDER BY c.date_added DESC ",
       "creationInfo": "SELECT name, short_description as shortDescription, long_description as longDescription, creation_type as creationType, used_materials as usedMaterials, image_ids as imageIds, c.id as id, displayed_name as author, u.id as authorId FROM vg_creations c JOIN vg_users u ON c.user_id=u.id WHERE c.id = :id",
       "creationAuthorId": "SELECT user_id FROM vg_creations WHERE id = :id"
     },
@@ -33,14 +33,49 @@
       "passwordFromLogin": "SELECT passwd FROM vg_users WHERE username=:username OR email = :email",
       "passwordFromUsername": "SELECT passwd FROM vg_users WHERE username=:username",
       "basicInfosFromId": "SELECT id, username, displayed_name as displayedName, is_admin as isAdmin, is_super_admin as isSuperAdmin FROM vg_users u WHERE u.id=:id",
+      "userStandardInfos": "SELECT u.id as id, u.displayed_name as displayedName, upi.first_name as firstName, upi.last_name as lastName, upi.city as city, upi.country as country FROM vg_users u JOIN vg_users_personal_info upi ON upi.user_id = u.id WHERE u.id=:userId",
       "allUsersBasicInfos": "SELECT id, username, email FROM vg_users",
-      "idFromLogin": "SELECT id FROM vg_users WHERE username=:username OR email = :email"
+      "idFromLogin": "SELECT id FROM vg_users WHERE username=:username OR email = :email",
+      "firstUser": "SELECT id FROM vg_users ORDER BY id ASC LIMIT 1"
     }
   },
   "file": {
     "select": {
-      "selectImageInfo": "SELECT file_name as fileName, upload_date as uploadDate, server_file_name as serverFileName FROM vg_uploaded_files WHERE id = :id"
+      "selectImageInfo": "SELECT file_name as fileName, upload_date as uploadDate, server_file_name as serverFileName, thumbnail FROM vg_uploaded_files WHERE id = :id"
     },
-    "uploadFile": "INSERT INTO vg_uploaded_files (file_name, server_file_name, mime, upload_date, user_id) VALUES (:file_name, :server_file_name, :mime, :upload_date, :user_id)"
+    "uploadFile": "INSERT INTO vg_uploaded_files (file_name, server_file_name, mime, upload_date, user_id, thumbnail) VALUES (:file_name, :server_file_name, :mime, :upload_date, :user_id, :thumbnail)"
+  },
+  "settings": {
+    "select": {
+      "all": "SELECT (SELECT meta_value FROM vg_options_meta WHERE meta_key='copyright') as copyright, (SELECT meta_value FROM vg_options_meta WHERE meta_key='site_name') as siteName, (SELECT meta_value FROM vg_options_meta WHERE meta_key='about_us') as aboutUs, (SELECT meta_value FROM vg_options_meta WHERE meta_key='site_image') as siteImage"
+    },
+    "insert": {
+      "copyright": "INSERT INTO vg_options_meta (meta_key, meta_value) VALUES ('copyright', :copyright)",
+      "siteName": "INSERT INTO vg_options_meta (meta_key, meta_value) VALUES ('site_name', :siteName)",
+      "aboutUs": "INSERT INTO vg_options_meta (meta_key, meta_value) VALUES ('about_us', :aboutUs)",
+      "siteImage": "INSERT INTO vg_options_meta (meta_key, meta_value) VALUES ('site_image', :siteImage)"
+    },
+    "update": {
+      "copyright": "UPDATE vg_options_meta SET meta_value = :copyright WHERE meta_key = 'copyright'",
+      "siteName": "UPDATE vg_options_meta SET meta_value = :siteName WHERE meta_key = 'site_name'",
+      "aboutUs": "UPDATE vg_options_meta SET meta_value = :aboutUs WHERE meta_key = 'about_us'",
+      "siteImage": "UPDATE vg_options_meta SET meta_value = :siteImage WHERE meta_key = 'site_image'"
+    }
+  },
+  "news": {
+    "select": {
+      "lastNews" : "SELECT id, title, content, creation_date as creationDate FROM vg_news ORDER BY creation_date DESC ",
+      "news": "SELECT id, title, content, creation_date as creationDate FROM vg_news WHERE id=:id"
+    },
+    "insert": {
+      "new": "INSERT INTO vg_news (title, content, creation_date) VALUES (:title, :content, :creationDate)"
+    },
+    "delete": {
+      "news": "DELETE FROM vg_news WHERE id=:id"
+    },
+    "update": {
+      "content": "UPDATE vg_news SET content = :content WHERE id=:id",
+      "title": "UPDATE vg_news SET title = :title WHERE id=:id"
+    }
   }
 }

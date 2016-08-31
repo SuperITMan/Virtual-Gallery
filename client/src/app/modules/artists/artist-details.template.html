@@ -1,0 +1,70 @@
+<div class="page-content artists">
+    <div flex layout="row" layout-wrap>
+        <h1 class="artists-header md-display-1" md-colors="{color:'primary'}" flex="100" translate>ARTISTS.ARTIST_DETAILS</h1>
+        <div layout="row" layout-xs="column" flex="100">
+            <div flex="60" flex-sm="60" flex-xs="100">
+                <md-card flex="100">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate>COMMONS.INFORMATION</span>
+                            <div class="md-subhead">
+                                <strong translate>COMMONS.NAME</strong> : {{vm.artist.displayedName}}
+                                <br/>
+                                <div ng-if="vm.artist.firstName">
+                                    <strong translate>COMMONS.FIRST_NAME</strong> : {{vm.artist.firstName}}
+                                    <br/>
+                                </div>
+                                <div ng-if="vm.artist.lastName">
+                                    <strong translate>COMMONS.LAST_NAME</strong> : {{vm.artist.lastName}}
+                                    <br/>
+                                </div>
+                                <div ng-if="vm.artist.city">
+                                    <strong translate>COMMONS.CITY</strong> : {{vm.artist.city}}
+                                    <br/>
+                                </div>
+                                <div ng-if="vm.artist.country">
+                                    <strong translate>COMMONS.COUNTRY</strong> : {{vm.artist.country}}
+                                    <br/>
+                                </div>
+                                <div ng-if="vm.artist.description">
+                                    <strong translate>COMMONS.DESCRIPTION</strong> : {{vm.artist.description}}
+                                    <br/>
+                                </div>
+                            </div>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media">
+                                <img ng-if="vm.product.images != false"
+                                     ng-repeat="image in vm.creation.images track by $index"
+                                     ng-src="/uploads/{{image.serverFileName}}"
+                                     alt="{{image.fileName}}"
+                                     ng-click="vm.changeImage($index)"
+                                     flex="20">
+                            </div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button><span translate>COMMONS.CONTACT</span></md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <md-divider></md-divider>
+    <div flex layout="row" layout-xs="column" layout-wrap>
+
+            <div class="" flex="100">
+            <h1 class="artists-sub-header md-display-1" md-colors="{color:'accent'}" flex translate>
+                ARTISTS.CREATIONS_OF_THE_ARTIST
+            </h1>
+            <virtual-gallery-creations-list see-artist="false" creations-list-config="vm.creationsListConfig"></virtual-gallery-creations-list>
+                </div>
+            <!--<div>-->
+                <!--<virtual-gallery-creations-list creations-list-config="vm.creationsListConfig"></virtual-gallery-creations-list>-->
+            <!--</div>-->
+            <!--<div class="" flex="100">-->
+                <!--<virtual-gallery-creations-list creations-list-config="vm.creationsListConfig"></virtual-gallery-creations-list>-->
+            <!--</div>-->
+
+    </div>
+</div>

@@ -3,6 +3,23 @@ session_start();
 if (empty($_SESSION["token"])) {
     header("Location: login.php");
 }
+/* ------------------------------------------------------------------------------
+   ------- Chargement des fichiers nécessaires au fonctionnement du site --------
+   ------------------------------------------------------------------------------ */
+$ini = parse_ini_file("../assets/config/conf.ini.php", true);
+$iniMsg = parse_ini_file($ini['path']['confMsgFR'], true);
+$iniLang = json_decode(file_get_contents("../assets/translations/fr.json"), true);
+$sql = json_decode(file_get_contents("../assets/config/sqlRequests.json"), true);
+
+include_once("../config/config.php");
+
+include($ini["path"]["functions"]);
+include($ini["path"]["functionsSQL"]);
+include($ini["path"]["functions.html"]);
+$db = connectDB(DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD);
+if (!fetchSQLReq($db, $sql["user"]["select"]["firstUser"])) {
+    header("Location: install.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,19 +91,7 @@ if (empty($_SESSION["token"])) {
 
 
         <?php
-        /* ------------------------------------------------------------------------------
-           ------- Chargement des fichiers nécessaires au fonctionnement du site --------
-           ------------------------------------------------------------------------------ */
-        $ini = parse_ini_file("../assets/config/conf.ini.php", true);
-        $iniMsg = parse_ini_file($ini['path']['confMsgFR'], true);
-        $iniLang = json_decode(file_get_contents("../assets/translations/fr.json"), true);
-        $sql = json_decode(file_get_contents("../assets/config/sqlRequests.json"), true);
 
-        include_once("../config/config.php");
-
-        include($ini["path"]["functions"]);
-        include($ini["path"]["functionsSQL"]);
-        include($ini["path"]["functions.html"]);
         require "../vendor/autoload.php";
 
 
@@ -131,11 +136,6 @@ if (empty($_SESSION["token"])) {
             define("USER_IS_SUPER_ADMIN", false);
             displayErrorMessage($iniLang["ERROR_MESSAGES"]["INVALID_TOKEN_DISCONNECTED"]);
         }
-
-        $db = connectDB(DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD);
-
-
-
             /* ------------------------------------------------------------------------------ */
             ?>
 
@@ -162,6 +162,12 @@ if (empty($_SESSION["token"])) {
                     break;
                 case strcasecmp(htmlspecialchars($_GET["p"]), "settings") == 0:
                     include $ini["path"]["settings"];
+                    break;
+                case strcasecmp(htmlspecialchars($_GET["p"]), "news") == 0:
+                    include $ini["path"]["news"];
+                    break;
+                default:
+                    include $ini["path"]["dashboard"];
                     break;
             }
         } else

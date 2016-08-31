@@ -98,7 +98,28 @@ function fetchSQLReq ($db, $req, $params=NULL, $isOneArg=false, $isOneRow=false)
 
     $stmt = $db -> prepare($req);
     $stmt -> execute();
-    return $stmt -> fetchAll();
+    if ($result = $stmt -> fetchAll()) {
+        if (isset($isOneArg)){
+            if ($isOneArg){
+                if (count($result) == 1){
+                    $keys = array_keys($result[0]);
+                    if (count($keys)){
+                        return $result[0][$keys[0]];
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+        if (isset($isOneRow)){
+            if ($isOneRow)
+                return $result[0];
+        }
+        return $result;
+    }
+    else {
+        return false;
+    }
 }
 
 ?>

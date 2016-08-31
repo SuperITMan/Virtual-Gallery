@@ -11,6 +11,8 @@ require "../includes/functions.sql.php";
 
 require "../includes/classes/FileController.php";
 require "../includes/classes/CreationController.php";
+require "../includes/classes/OptionsController.php";
+require "../includes/classes/NewsController.php";
 require "../includes/classes/UserController.php";
 
 $sql = json_decode(file_get_contents("../assets/config/sqlRequests.json"), true);
@@ -29,6 +31,14 @@ $container["sql"] = $sql;
 
 $container["CreationController"] = function($c) {
     return new CreationController($c["db"], $c["sql"]);
+};
+
+$container["OptionsController"] = function($c) {
+    return new OptionsController($c["db"], $c["sql"]);
+};
+
+$container["NewsController"] = function($c) {
+    return new NewsController($c["db"], $c["sql"]);
 };
 
 $container["UserController"] = function($c) {
@@ -84,12 +94,21 @@ $app->group("/v1", function() {
         $this->post("", "UserController:createUser");
 
         $this->group("/{id:[0-9]+}", function () {
-            $this->get("", "ProductController:getProduct");
+            $this->get("", "UserController:getUser");
+            $this->get("/creations", "CreationController:getAuthorCreations");
         });
     });
 
     $this->group("/auth", function () {
        $this->post("/login", "UserController:authenticateUser");
+    });
+
+    $this->group("/options", function () {
+        $this->get("", "OptionsController:getDefaultOptions");
+    });
+
+    $this->group("/news", function () {
+        $this->get("", "NewsController:getLastNews");
     });
 
 

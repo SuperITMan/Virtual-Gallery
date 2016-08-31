@@ -139,21 +139,20 @@ class UserController {
      *     }
      */
     public function getUser (Request $request, Response $response, Array $args) {
-        $id = htmlspecialchars($args["id"]);
-        $sqlReq = $this->sql["user"]["select"]["allUsersBasicInfos"];
-        $reqParams = $request->getQueryParams();
-        if (array_key_exists ("limit",$reqParams))
-            $sqlReq = $sqlReq . " LIMIT " . htmlspecialchars($reqParams["limit"]);
+        if (!empty($args["id"])) {
+            $id = htmlspecialchars($args["id"]);
 
-        try {
-            $stmt = $this->db->prepare();
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $response->getBody()->write(json_encode($result));
-            $response = $response->withStatus(200);
-        } catch (Exception $e) {
-            $response->getBody()->write("");
-            $response = $response->withStatus(409);
+            $params = array(":userId" => $id);
+            if ($data = fetchSQLReq($this->db, $this->sql["user"]["select"]["userStandardInfos"], $params, false, true)) {
+                $response->getBody()->write(json_encode($data));
+                $response = $response->withStatus(200);
+            } else {
+                $response->getBody()->write("Invalid id");
+                $response = $response->withStatus(400);
+            }
+        } else {
+            $response = $response->withStatus(500);
+            $response->getBody()->write(json_encode(array("error" => "ServerError")));
         }
 
         return $response;

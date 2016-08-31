@@ -1,5 +1,5 @@
 <div class="all-content">
-<virtual-gallery-app-header site-image="{{vm.manifest.icons[0].src}}" site-title="{{vm.siteTitle}}"></virtual-gallery-app-header>
+<virtual-gallery-app-header home-state="home" site-image="{{vm.manifest.icons[0].src}}" site-title="{{vm.siteTitle}}"></virtual-gallery-app-header>
 
 <div class="wrapper">
 
@@ -29,6 +29,6 @@
     </div>
 </div>
 
-<virtual-gallery-app-footer></virtual-gallery-app-footer>
+<virtual-gallery-app-footer content="{{vm.options['copyright']}}"></virtual-gallery-app-footer>
 
 </div>

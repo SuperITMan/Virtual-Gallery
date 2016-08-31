@@ -22,10 +22,10 @@ export class CreationsController extends AbstractStateController {
     public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "creationsApiService"];
 
     public constructor(logger:ILogService, $state:IStateService, $scope:IScope, $rootScope:IRootScopeService,
-                       $timeout:ITimeoutService, productsApiService:ICreationsApiService) {
+                       $timeout:ITimeoutService, creationsApiService:ICreationsApiService) {
         super(logger, $state, $scope, $rootScope);
 
-        this.creationsApiService = productsApiService;
+        this.creationsApiService = creationsApiService;
         this.$timeout = $timeout;
     }
 
@@ -102,7 +102,7 @@ export class CreationsController extends AbstractStateController {
     public getCreations ():any {
         let getCreationsCallback:any = () => {
             this.creationsApiService.getCreations().$promise.then((response:any) => {
-                this.logger.debug("getProducts() -> Products loaded");
+                this.logger.debug("getCreations() -> Creations loaded");
                 this.creationsListConfig = {
                     creations: response as Array<ICreationList>
                 };

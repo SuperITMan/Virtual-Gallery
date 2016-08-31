@@ -14,6 +14,7 @@ export interface IMenuEntry {
     label:string;
     targetState:string;
     targetStateParams:any;
+    visible:string;
 }
 
 export interface IMenuConfig {

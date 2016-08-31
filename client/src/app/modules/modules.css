@@ -3,6 +3,7 @@
 @import "home/home.css";
 @import "test/test.css";
 @import "creations/creations.css";
+@import "artists/artists.css";
 
 /* import the styles of all components */
 @import "commons/components/app-footer/app-footer.css";

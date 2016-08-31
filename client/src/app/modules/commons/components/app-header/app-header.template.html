@@ -6,10 +6,10 @@
             <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
         </md-button>
 
-        <a ui-state="home" href="#" class="logo">
-            <span class="logo-image">NBB</span>
+        <a ui-sref="{{vm.homeState}}" href="#" class="logo">
+            <span class="logo-image">{{vm.siteTitle}}</span>
         </a>
 
-        <div class="md-title">{{vm.siteTitle}}</div>
+        <a ui-sref="{{vm.homeState}}"><div class="md-title">{{vm.siteTitle}}</div></a>
     </div>
 </md-toolbar>

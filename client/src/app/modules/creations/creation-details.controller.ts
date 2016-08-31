@@ -13,10 +13,12 @@ export class CreationDetailsController extends AbstractStateController {
     public $timeout:ITimeoutService;
     public creationsApiService:ICreationsApiService;
 
+    public currentImage:String;
+
     public loadProgressTask:any;
 
     public id:string;
-    public product:any;
+    public creation:any;
 
     public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "creationsApiService"];
 
@@ -34,17 +36,22 @@ export class CreationDetailsController extends AbstractStateController {
     private $onInit():void {
         this.id = this.$state.params["creationId"];
         this.logger.debug("Products controller loaded...");
-        this.getProduct();
+        this.getCreation();
     }
 
-    public getProduct ():any {
-        let getProductsCallback:any = () => {
+    public getCreation ():void {
+        let getCreationsCallback:any = () => {
             this.creationsApiService.getCreation(+this.id).$promise.then((response:any) => {
-                this.logger.debug("getProducts() -> Products loaded");
-                this.product = response;
+                this.logger.debug("getCreation() -> Creations loaded");
+                this.creation = response;
+                this.currentImage = this.creation["images"][0];
             });
         };
 
-        this.loadProgressTask = this.$timeout(getProductsCallback) as Promise<any>;
+        this.loadProgressTask = this.$timeout(getCreationsCallback) as Promise<any>;
+    }
+
+    public changeImage(index:number):void {
+        this.currentImage = this.creation["images"][index];
     }
 }

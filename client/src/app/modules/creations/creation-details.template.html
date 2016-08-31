@@ -3,13 +3,14 @@
         <h1 class="creations-header md-display-1" md-colors="{color:'primary'}" flex="100" translate>CREATIONS.CREATION_DETAILS</h1>
         <div layout="row" layout-xs="column" flex="100">
             <div flex="40" flex-sm="50" flex-xs="100">
-                <img ng-if="vm.product.images != false" ng-src="/uploads/{{vm.product.images[0].serverFileName}}" alt="{{vm.product.images[0].fileName}}"/>
+                <img ng-if="vm.creation.images != false" ng-src="/uploads/{{vm.currentImage.serverFileName}}" alt="{{vm.currentImage.fileName}}"/>
                 <md-divider></md-divider>
                 <md-content flex="100">
                     <img ng-if="vm.product.images != false"
-                         ng-repeat="image in vm.product.images"
+                         ng-repeat="image in vm.creation.images track by $index"
                          ng-src="/uploads/{{image.serverFileName}}"
                          alt="{{image.fileName}}"
+                         ng-click="vm.changeImage($index)"
                          flex="20">
                 </md-content>
             </div>
@@ -20,13 +21,14 @@
                         <md-card-title-text>
                             <span class="md-headline" translate>COMMONS.INFORMATION</span>
                             <span class="md-subhead">
-                                <strong translate>COMMONS.NAME</strong> : {{vm.product.name}}
+                                <strong translate>COMMONS.NAME</strong> : {{vm.creation.name}}
                                 <br/>
-                                <strong translate>COMMONS.DESCRIPTION</strong> : {{vm.product.longDescription}}
+                                <strong translate>COMMONS.DESCRIPTION</strong> : {{vm.creation.longDescription}}
                                 <br/>
-                                <strong translate>CREATIONS.CREATION_TYPE</strong> : {{vm.product.creationType}}
+                                <strong translate>CREATIONS.CREATION_TYPE</strong> :
+                                <span ng-show="vm.creation" translate="CREATIONS.TYPES.{{vm.creation.creationType}}"></span>
                                 <br/>
-                                <strong translate>CREATIONS.CREATION_DATE</strong> : 1000
+                                <strong translate>CREATIONS.CREATION_DATE</strong> : {{vm.creation.dateAdded}}
 
                                 <md-chips ng-model="vm.product.creationType" readonly="true" md-removable="false"></md-chips>
                             </span>
@@ -38,9 +40,9 @@
                         <md-card-title-text>
                             <span class="md-headline" translate>ARTISTS.ARTIST</span>
                             <span class="md-subhead">
-                                <strong translate>COMMONS.NAME</strong>{{vm.product.author}}
+                                <strong translate>COMMONS.NAME</strong>{{vm.creation.author}}
                                 <br/>
-                                <strong translate>COMMONS.NAME</strong>{{vm.product.author}}
+                                <strong translate>COMMONS.NAME</strong>{{vm.creation.author}}
                             </span>
                         </md-card-title-text>
                         <md-card-title-media>

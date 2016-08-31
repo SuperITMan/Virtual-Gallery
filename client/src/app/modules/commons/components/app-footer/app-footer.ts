@@ -18,7 +18,7 @@ let templateUrl:string = require("./app-footer.template.html");
  */
 commonsModule.component("virtualGalleryAppFooter", {
     bindings: {
-
+        content: "@"
     },
     controller: AppFooterController,
     controllerAs: "vm",

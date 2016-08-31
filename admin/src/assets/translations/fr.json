@@ -8,10 +8,12 @@
     "VERBS": {
       "ADD": "Ajouter",
       "EDIT": "Modifier",
+      "LOGOUT": "Déconnexion",
       "REMOVE": "Supprimer"
     },
     "WORDS": {
-
+      "CONTENT": "Contenu",
+      "TITLE": "Titre"
     }
   },
   "ERROR_MESSAGES": {
@@ -19,12 +21,14 @@
     "INVALID_TOKEN_DISCONNECTED": "Une erreur s'est produite, votre session n'est plus valide.\nVeuillez rafraîchir la page.",
     "CREATION_TO_DELETE_NOT_EXISTS": "Erreur: La création que vous désirez supprimer n'existe pas.",
     "NO_RIGHT_TO_DELETE_CREATION": "Vous n'avez pas les droits nécessaires pour supprimer cette création.",
+    "NOT_ENOUGH_RIGHTS_TO_ACCESS_THIS_PAGE": "Vous n'avez pas les droits nécessaires pour accéder à cette page.",
     "NO_ID_IN_URL": "Aucun id présent. Veuillez préciser un identifiant pour éditer un élément.",
     "PASSED_ID_INCORRECT": "L'id fourni dans l'url n'existe pas. Veuillez le vérifier."
   },
   "FORMS": {
     "ASK_CONFIRMATION": "Demande de confirmation",
     "ASK_CONFIRMATION_DELETE": "Etes-vous certain de vouloir effectuer la suppression ?",
+    "FORMATS_IMAGE_SUPPORTED": "Actuellement, seuls les formats \"JPG\", \"PNG\" et \"GIF\" sont supportés.",
     "PASSWORD_CONFIRM": "Confirmation du mot de passe",
     "PUT_COMMA_TO_SEPARATE": "Placez une \",\" pour séparer les éléments",
     "YES_I_CONFIRM": "Oui, je confirme"
@@ -51,6 +55,9 @@
       "PAINT": "Peinture",
       "SCULPTURE": "Sculpture"
     }
+  },
+  "DASHBOARD": {
+    "DASHBOARD": "Tableau de bord"
   },
   "CREATIONS": {
     "ADD_A_CREATION": "Ajouter une création",
@@ -79,6 +86,9 @@
     "DELETED_OK": "La suppression s'est effectuée avec succès !\nCliquer <a href=\"%href%\">ici</a> pour voir %all_things%"
   },
   "SETTINGS": {
+    "ABOUT_US": "A propos de nous",
+    "COPYRIGHT": "Copyright",
+    "SITE_NAME": "Nom du site",
     "SITE_SETTINGS": "Paramètres du site",
     "TITLE": "Paramètres"
   },
@@ -99,5 +109,16 @@
     "USERNAME": "Nom d'utilisateur",
     "USERS": "Utilisateurs",
     "USER_PROFILE": "Profil utilisateur"
+  },
+  "NEWS": {
+    "ALL_NEWS": "Toutes les actualités",
+    "ADD_NEWS": "Ajouter une actualité",
+    "ADD_A_NEWS": "Ajouter une actualité",
+    "ADDING_OF_A_NEWS_ON_YOUR_WEBSITE": "Ajout d'une actualité sur votre site",
+    "CREATION_DATE": "Date de création",
+    "EDIT_A_NEWS": "Editer une actualité",
+    "EDITING_A_NEWS_OF_YOUR_WEBSITE": "Edition d'une actualité de votre site",
+    "NEWS": "Actualités"
+
   }
 }

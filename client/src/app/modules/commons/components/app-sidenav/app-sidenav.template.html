@@ -50,7 +50,7 @@
             <li ng-repeat="menuGroup in vm.menuConfig.menuGroups track by $index" id="{{menuGroup.id}}">
                 <h2 translate>{{menuGroup.label}}</h2>
                 <ul ng-if="menuGroup.entries">
-                    <li ng-repeat="menuEntry in menuGroup.entries track by $index" id="{{menuEntry.id}}">
+                    <li ng-repeat="menuEntry in menuGroup.entries track by $index" ng-if="menuEntry.visible=='true'" id="{{menuEntry.id}}">
                         <a ui-state="'{{menuEntry.targetState}}'"
                            ui-state-params="{{menuEntry.targetStateParams}}"
                            ui-sref-active="active"

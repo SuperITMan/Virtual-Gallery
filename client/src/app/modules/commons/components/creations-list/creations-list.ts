@@ -31,7 +31,8 @@ let templateUrl:string = require("./creations-list.template.html");
  */
 commonsModule.component("virtualGalleryCreationsList", {
     bindings: {
-        creationsListConfig: "<"
+        creationsListConfig: "<",
+        seeArtist: "@"
     },
     controller: CreationsListController,
     controllerAs: "vm",

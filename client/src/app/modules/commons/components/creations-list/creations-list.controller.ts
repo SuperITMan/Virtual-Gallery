@@ -9,6 +9,7 @@ import {ICreationsListConfig} from "./creations-list";
 // controller
 export class CreationsListController extends AbstractController {
     public creationsListConfig:ICreationsListConfig;
+    public seeArtist:string;
 
     public static $inject:Array<string> = ["$log", "$scope"];
 
@@ -22,6 +23,14 @@ export class CreationsListController extends AbstractController {
     private $onInit():void {
         this.logger.debug("This is the Creations List controller!");
 
+        if (typeof this.seeArtist === "undefined") {
+            this.seeArtist = "true";
+        }
+
         this.logger.debug(this.creationsListConfig);
     };
+
+    public isSeeArtist():boolean {
+        return this.seeArtist === "true";
+    }
 }

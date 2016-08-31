@@ -109,7 +109,8 @@ if (!empty($_SESSION["token"])) {
                                     ":server_file_name" => $tempName.".".$ext,
                                     ":mime" => $ext,
                                     ":upload_date" => date('Y-m-d H:i:s'),
-                                    ":user_id" => USER_USERID))) {
+                                    ":user_id" => USER_USERID,
+                                    ":thumbnail" => "thumb.".$tempName.".".$ext))) {
 
                                 header("HTTP/1.1 200 OK");
                                 echo json_encode(
@@ -200,7 +201,8 @@ if (!empty($_SESSION["token"])) {
                                 ":server_file_name" => $tempName.".".$ext,
                                 ":mime" => $ext,
                                 ":upload_date" => date('Y-m-d H:i:s'),
-                                ":user_id" => USER_USERID))) {
+                                ":user_id" => USER_USERID,
+                                ":thumbnail" => "thumb.".$tempName.".".$ext))) {
 
                             header("HTTP/1.1 200 OK");
 

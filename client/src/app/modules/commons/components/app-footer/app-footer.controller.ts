@@ -7,8 +7,7 @@ import ILogService = angular.ILogService;
 
 // controller
 export class AppFooterController extends AbstractController {
-    public legalInfoUrl:string;
-    public helpPageUrl:string;
+    public content:string;
 
     public static $inject:Array<string> = ["$log", "$scope"];
 

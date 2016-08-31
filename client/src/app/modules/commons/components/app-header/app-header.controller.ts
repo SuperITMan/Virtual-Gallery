@@ -10,6 +10,7 @@ import ISidenavService = angular.material.ISidenavService;
 export class AppHeaderController extends AbstractController {
     public siteTitle:string;
     public siteImage:string;
+    public homeState:string;
     public $mdSidenav:ISidenavService;
 
     public static $inject:Array<string> = ["$log", "$scope", "$mdSidenav"];

@@ -8,6 +8,7 @@ import {AbstractStateController} from "../commons/controllers/abstract.state.con
 import ITimeoutService = angular.ITimeoutService;
 import {IUsersApiService} from "../api/services/users-api.service";
 import IRootScopeService = angular.IRootScopeService;
+import {ICreationsListConfig, ICreationList} from "../commons/components/creations-list/creations-list";
 
 export class ArtistDetailsController extends AbstractStateController {
     public $timeout:ITimeoutService;
@@ -17,6 +18,7 @@ export class ArtistDetailsController extends AbstractStateController {
 
     public id:string;
     public artist:any;
+    public creationsListConfig:ICreationsListConfig;
 
     public static $inject: Array<string> = ["$log", "$state", "$scope", "$rootScope", "$timeout", "usersApiService"];
 
@@ -33,8 +35,9 @@ export class ArtistDetailsController extends AbstractStateController {
      */
     private $onInit():void {
         this.id = this.$state.params["artistId"];
-        this.logger.debug("Products controller loaded...");
+        this.logger.debug("Artists controller loaded...");
         this.getArtist();
+        this.getArtistCreations();
     }
 
     public getArtist ():any {
@@ -42,6 +45,20 @@ export class ArtistDetailsController extends AbstractStateController {
             this.usersApiService.getUser(+this.id).$promise.then((response:any) => {
                 this.logger.debug("getUser() -> User loaded");
                 this.artist = response;
+            });
+        };
+
+        this.loadProgressTask = this.$timeout(getArtistsCallback) as Promise<any>;
+    }
+
+    public getArtistCreations ():any {
+        let getArtistsCallback:any = () => {
+            this.usersApiService.getUserCreations(+this.id).$promise.then((response:any) => {
+                this.logger.debug("getUserCreations() -> User loaded");
+
+                this.creationsListConfig = {
+                    creations: response as Array<ICreationList>
+                };
             });
         };
 

@@ -220,7 +220,62 @@ class CreationController {
      *
      */
     public function getAuthorCreations(Request $request, Response $response, Array $args) {
+        if (!empty($args["id"])) {
+            $id = htmlspecialchars($args["id"]);
 
+            $sqlReq = $this->sql["creation"]["select"]["lastUserCreations"];
+            $reqParams = $request->getQueryParams();
+            if (array_key_exists ("limit",$reqParams))
+                $sqlReq = $sqlReq . " LIMIT " . htmlspecialchars($reqParams["limit"]);
+
+            try {
+                $params = array(":userId" => $id);
+                if (substr_count($sqlReq, ":") == count($params)) {
+                    $stmt = $this->db -> prepare($sqlReq);
+                    $stmt->execute($params);
+                    $result = $stmt->fetchAll();
+
+                    $data = array();
+
+                    if (!empty($result)) {
+                        $i = 0;
+                        foreach ($result as $content) {
+                            $data[$i]["name"] = $content["name"];
+                            $data[$i]["shortDescription"] = $content["shortDescription"];
+                            $data[$i]["author"] = $content["author"];
+                            $data[$i]["id"] = $content["id"];
+                            $data[$i]["authorId"] = $content["authorId"];
+                            $data[$i]["usedMaterials"] = $content["usedMaterials"];
+
+                            if (!empty($content["imageIds"][0])) {
+                                $imageId = json_decode(htmlspecialchars_decode($content["imageIds"]))[0];
+                                $data[$i]["image"] = fetchSQLReq($this->db, $this->sql["file"]["select"]["selectImageInfo"],
+                                    array(":id"=>$imageId), false,true);
+                            }
+
+                            $i++;
+                        }
+//            $data = array("data"=>$result);
+                        $response->getBody()->write(json_encode($data));
+                        $response = $response->withStatus(200);
+                    } else {
+                        $response->getBody()->write(json_encode(array()));
+                        $response = $response->withStatus(200);
+                    }
+                } else {
+                    $response = $response->withStatus(400);
+                    $response->getBody()->write("Invalid id");
+                }
+            } catch (Exception $e) {
+                $response = $response->withStatus(409);
+                $response->getBody()->write("");
+            }
+        } else {
+            $response = $response->withStatus(500);
+            $response->getBody()->write(json_encode(array("error" => "ServerError")));
+        }
+
+        return $response;
     }
 
     /**

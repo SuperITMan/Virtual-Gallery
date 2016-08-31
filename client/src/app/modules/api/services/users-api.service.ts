@@ -11,6 +11,8 @@ export interface IUsersApiService {
     getUsers():IResource<any>;
     getUsers(limit:number):IResource<any>;
     getUser(id:number):IResource<any>;
+    getUserCreations(id:number):any;
+    getUserCreations(id:number, limit:number):any;
 }
 
 export class UsersApiService {
@@ -25,22 +27,32 @@ export class UsersApiService {
         this.logger = logger;
         this.$timeout = $timeout;
 
-        logger.debug("Rest Resource Service loaded...");
+        logger.debug("Rest Resource Users Service loaded...");
     }
 
     public getUser(id:number):IResource<any> {
         id = id || 0;
 
-        return this.$resource(manifest.api_url + "/users/"+id).get();
+        return this.$resource(manifest.api_url + "/users/" + id).get();
     }
 
-    public getUsers(limit:number):any {
+    public getUsers(limit:number):IResource<any> {
         limit = limit || 0;
 
         if (limit > 0) {
             return this.$resource(manifest.api_url + "/users?limit="+limit).get();
         } else {
             return this.$resource(manifest.api_url + "/users").get();
+        }
+    }
+
+    public getUserCreations(id:number, limit:number):any {
+        limit = limit || 0;
+
+        if (limit > 0) {
+            return this.$resource(manifest.api_url + "/users/" + id + "/creations?limit=" + limit).query();
+        } else {
+            return this.$resource(manifest.api_url + "/users/" + id + "/creations").query();
         }
     }
 

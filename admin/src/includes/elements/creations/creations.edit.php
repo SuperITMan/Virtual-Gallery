@@ -136,12 +136,13 @@
 
                         <div class="form-group">
                             <label for="images" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
-                                <?php echo $iniLang["CREATIONS"]["IMAGES"];?>
+                                <?php echo $iniLang["CREATIONS"]["IMAGES"];?> *
                             </label>
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <button type="button" class="btn btn-primary" id="buttonUpload">
                                     <?php echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?>
                                 </button>
+                                <span class="help-block"><?php echo $iniLang["FORMS"]["FORMATS_IMAGE_SUPPORTED"];?></span>
                                 <div id="progress-wrp" class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
                                         0%

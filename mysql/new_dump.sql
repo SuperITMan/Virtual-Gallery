@@ -162,6 +162,36 @@ CREATE TABLE IF NOT EXISTS vg_categories_meta (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `vg_news`
+--
+
+CREATE TABLE IF NOT EXISTS vg_news (
+  id INTEGER AUTO_INCREMENT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  content MEDIUMTEXT NOT NULL,
+  creation_date DATETIME NOT NULL,
+  PRIMARY KEY (id)
+);
+
+-- --------------------------------------------------------
+
+# --
+# -- Structure de la table `vg_options`
+# --
+#
+# CREATE TABLE IF NOT EXISTS vg_options (
+#   id INTEGER AUTO_INCREMENT NOT NULL,
+#   copyright VARCHAR(254) NOT NULL,
+#   site_name VARCHAR(254) NOT NULL,
+#   site_image_id INTEGER NULL,
+#   about_us_page TEXT NULL,
+#   FOREIGN KEY (site_image_id) REFERENCES vg_uploaded_files(id),
+#   PRIMARY KEY (id)
+# );
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `vg_options_meta`
 --
 
@@ -187,6 +217,7 @@ CREATE TABLE IF NOT EXISTS vg_uploaded_files (
   mime VARCHAR(50) NOT NULL,
   upload_date DATETIME NULL,
   user_id INTEGER NOT NULL,
+  thumbnail VARCHAR(254) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES vg_users(id),
   PRIMARY KEY (id)
 );

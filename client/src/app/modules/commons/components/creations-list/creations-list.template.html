@@ -1,9 +1,9 @@
 <md-content class="md-padding" layout-xs="column" layout="row" flex>
     <div flex="100" layout="row" layout-wrap>
-        <md-card ng-repeat="creation in vm.creationsListConfig.creations" flex-gt-md="20" flex-md="30" flex-sm="45" flex-xs="100">
+        <md-card ng-repeat="creation in vm.creationsListConfig.creations track by $index" flex-gt-lg="20" flex-lg="30" flex-md="30" flex-sm="45" flex-xs="100">
         <!--<md-card ng-repeat="product in vm.productsListConfig.products">-->
             <md-card-header>
-                <img ng-if="creation.image != false" ng-src="/uploads/{{creation.image.serverFileName}}" class="md-card-image" alt="Washed Out"/>
+                <img ng-if="creation.image != false" ng-src="/uploads/{{creation.image.thumbnail}}" class="md-card-image" alt="{{creation.image.fileName}}"/>
             </md-card-header>
             <md-card-title>
                 <md-card-title-text>
@@ -14,8 +14,15 @@
                 <h3>Auteur : {{creation.author}}</h3>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ui-state="'creationDetails'" ui-state-params="({creationId: '{{creation.id}}'})" translate="CREATIONS.SEE_THE_CREATION"></md-button>
-                <md-button translate="ARTISTS.SEE_THE_ARTIST"></md-button>
+                <md-button ui-state="'creationDetails'"
+                           ui-state-params="({creationId: '{{creation.id}}'})"
+                           aria-label="{{ 'CREATIONS.SEE_THE_CREATION' | translate }}"
+                           translate="CREATIONS.SEE_THE_CREATION"></md-button>
+                <md-button ui-state="'artistDetails'"
+                           ui-state-params="({artistId: '{{creation.authorId}}'})"
+                           ng-if="vm.isSeeArtist()"
+                           aria-label="{{ 'ARTISTS.SEE_THE_ARTIST' | translate }}"
+                           translate="ARTISTS.SEE_THE_ARTIST"></md-button>
             </md-card-actions>
         </md-card>
     </div>

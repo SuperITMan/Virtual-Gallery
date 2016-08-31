@@ -18,6 +18,7 @@ let templateUrl:string = require("./app-header.template.html");
  */
 commonsModule.component("virtualGalleryAppHeader", {
     bindings: {
+        homeState: "@",
         siteImage: "@",
         siteTitle: "@"
     },

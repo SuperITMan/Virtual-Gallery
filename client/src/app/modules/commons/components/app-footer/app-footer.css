@@ -6,6 +6,10 @@ virtual-gallery-app-footer {
 		background-color : grey;
   		width: 100%;
   		height: var(--footer-height);
+		text-align: center;
+		vertical-align: middle;
+		
+	  	font-weight: 700;
   		/*height: 50px;*/
   		/*margin-top: -50px;*/
   		bottom: 0;

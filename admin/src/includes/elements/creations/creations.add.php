@@ -1,4 +1,4 @@
-<!-- Add user page -->
+<!-- Add creation page -->
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -9,9 +9,10 @@
 
 <?php
 if (isset($_POST["creationName"], $_POST["creationType"])) {
-    if($creationId = addCreation($_POST))
-        displaySuccessMessage("L'ajout s'est passé avec succès !! id:".$creationId);
-//        echo "<script>window.location = \"index.php?p=creations&c=all&id=".$creationId."\";</script>";
+    if($creationId = addCreation($_POST)) {
+        displaySuccessMessage("L'ajout s'est passé avec succès ! id:".$creationId);
+        $_POST = array();
+    }
     else
         displayErrorMessage("Il y a eu un problème...");
 }
@@ -81,19 +82,28 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <div class="radio">
                                     <label>
-                                        <input value="BEJEWELD" type="radio" name="creationType" required>
+                                        <input value="BEJEWELED" type="radio" name="creationType"
+                                            <?php echo !empty($_POST["creationType"])
+                                            && strcmp("BEJEWELED",htmlspecialchars($_POST["creationType"]))==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["BEJEWELED"];?>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input value="PAINT" type="radio" name="creationType" required>
+                                        <input value="PAINT" type="radio" name="creationType"
+                                            <?php echo !empty($_POST["creationType"])
+                                            && strcmp("PAINT",htmlspecialchars($_POST["creationType"]))==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["PAINT"];?>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input value="SCULPTURE" type="radio" name="creationType" required>
+                                        <input value="SCULPTURE" type="radio" name="creationType"
+                                            <?php echo !empty($_POST["creationType"])
+                                            && strcmp("SCULPTURE",htmlspecialchars($_POST["creationType"]))==0?"checked":"";?>
+                                               required>
                                         <?php echo $iniLang["CREATIONS"]["TYPES"]["SCULPTURE"];?>
                                     </label>
                                 </div>
@@ -119,12 +129,13 @@ if (isset($_POST["creationName"], $_POST["creationType"])) {
 
                         <div class="form-group">
                             <label for="images" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
-                                <?php echo $iniLang["CREATIONS"]["IMAGES"];?>
+                                <?php echo $iniLang["CREATIONS"]["IMAGES"];?> *
                             </label>
                             <div class="col-xs-12 col-sm-9 col-md-7 col-lg-7">
                                 <button type="button" class="btn btn-primary" id="buttonUpload">
                                     <?php echo $iniLang["CREATIONS"]["UPLOAD_IMAGES"];?>
                                 </button>
+                                <span class="help-block"><?php echo $iniLang["FORMS"]["FORMATS_IMAGE_SUPPORTED"];?></span>
                                 <div id="progress-wrp" class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
                                         0%

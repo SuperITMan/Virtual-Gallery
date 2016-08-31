@@ -357,6 +357,182 @@ function isPage ($pageName) {
 
 }
 
+function getAllSettings() {
+    global $db;
+    global $sql;
+
+    if (isSuperAdmin()) {
+        return fetchSQLReq($db, $sql["settings"]["select"]["all"], NULL, false, true);
+    } else {
+        return false;
+    }
+}
+
+function editSettings($post) {
+    global $db;
+    global $sql;
+
+    if (isSuperAdmin()) {
+        $settings = getAllSettings();
+
+        if ($settings) {
+            $siteName = empty($post["siteName"])?"":htmlspecialchars($post["siteName"]);
+            if (!empty($siteName)) {
+                if ($settings["siteName"] === NULL) {
+                    if (sendSQLReq($db, $sql["settings"]["insert"]["siteName"], array(":siteName"=>$siteName))) {
+                        displaySuccessMessage("Site modifié avec succès");
+                    } else {
+                        displayErrorMessage("Site modifié avec erreur");
+                    }
+                } elseif (strcmp($siteName, $settings["siteName"]) != 0) {
+                    if (sendSQLReq($db, $sql["settings"]["update"]["siteName"], array(":siteName"=>$siteName))) {
+                        displaySuccessMessage("Site modifié avec succès");
+                    } else {
+                        displayErrorMessage("Site modifié avec erreur");
+                    }
+                }
+            }
+
+            $copyright = empty($post["copyright"])?"":htmlspecialchars($post["copyright"]);
+            if (!empty($copyright)) {
+                if ($settings["copyright"] === NULL) {
+                    if (sendSQLReq($db, $sql["settings"]["insert"]["copyright"], array(":copyright"=>$copyright))) {
+                        displaySuccessMessage("Copyright modifié avec succès");
+                    } else {
+                        displayErrorMessage("Copyright modifié avec erreur");
+                    }
+                } elseif (strcmp($copyright, $settings["copyright"]) != 0) {
+                    if (sendSQLReq($db, $sql["settings"]["update"]["copyright"], array(":copyright"=>$copyright))) {
+                        displaySuccessMessage("Copyright modifié avec succès");
+                    } else {
+                        displayErrorMessage("Copyright modifié avec erreur");
+                    }
+                }
+            }
+
+            $aboutUs = empty($post["aboutUs"])?"":htmlspecialchars($post["aboutUs"]);
+            if (!empty($aboutUs)) {
+                if ($settings["aboutUs"] === NULL) {
+                    if (sendSQLReq($db, $sql["settings"]["insert"]["aboutUs"], array(":aboutUs"=>$aboutUs))) {
+                        displaySuccessMessage("A propos de nous modifié avec succès");
+                    } else {
+                        displayErrorMessage("A propos de nous modifié avec erreur");
+                    }
+                } elseif (strcmp($aboutUs, $settings["aboutUs"]) != 0) {
+                    if (sendSQLReq($db, $sql["settings"]["update"]["aboutUs"], array(":aboutUs"=>$aboutUs))) {
+                        displaySuccessMessage("A propos de nous modifié avec succès");
+                    } else {
+                        displayErrorMessage("A propos de nous modifié avec erreur");
+                    }
+                }
+            } elseif (!empty($settings["aboutUs"])) {
+                if (sendSQLReq($db, $sql["settings"]["update"]["aboutUs"], array(":aboutUs"=>""))) {
+                    displaySuccessMessage("A propos de nous modifié avec succès");
+                } else {
+                    displayErrorMessage("A propos de nous modifié avec erreur");
+                }
+            }
+
+            $siteImage = empty($post["siteImage"])?"":htmlspecialchars($post["siteImage"]);
+            if (!empty($siteImage)) {
+                if ($settings["aboutUs"] === NULL) {
+                    if (sendSQLReq($db, $sql["settings"]["insert"]["siteImage"], array(":siteImage"=>$siteImage))) {
+                        displaySuccessMessage("Image du site modifié avec succès");
+                    } else {
+                        displayErrorMessage("Image du site modifié avec erreur");
+                    }
+                } elseif (strcmp($siteImage, $settings["siteImage"]) != 0) {
+                    if (sendSQLReq($db, $sql["settings"]["update"]["siteImage"], array(":siteImage"=>$siteImage))) {
+                        displaySuccessMessage("Image du site modifié avec succès");
+                    } else {
+                        displayErrorMessage("Image du site modifié avec erreur");
+                    }
+                }
+            }
+        }
+    } else {
+        echo "Vous n'avez pas les droits.";
+    }
+}
+
+function addNews($post) {
+    global $db;
+    global $sql;
+
+    $title = empty($post["title"])?"":htmlspecialchars($post["title"]);
+    $content = empty($post["content"])?"":htmlspecialchars($post["content"]);
+
+    if (!empty($title) && !empty($content)) {
+        if(sendSQLReq($db, $sql["news"]["insert"]["new"],
+            array(":title" => $title,
+                ":content" => $content,
+                ":creationDate" => date("Y-m-d h:i:s")))) {
+            return $db->lastInsertId();
+        } else {
+            return false;
+        }
+    }
+}
+
+function getAllNews() {
+    global $db;
+    global $sql;
+
+    if (isSuperAdmin()) {
+        return fetchSQLReq($db, $sql["news"]["select"]["lastNews"]);
+    }
+}
+
+function getNews($id) {
+    global $db;
+    global $sql;
+
+    $id = htmlspecialchars($id);
+
+    if (!empty($id)) {
+        return fetchSQLReq($db, $sql["news"]["select"]["news"], array(":id"=>$id), false, true);
+    } else {
+        return false;
+    }
+}
+
+function editNews($post = [], $newsId) {
+    global $db;
+    global $sql;
+
+    $news = getNews($newsId);
+
+    $title = empty($post["title"])?"":htmlspecialchars($post["title"]);
+    $content = empty($post["content"])?"":htmlspecialchars($post["content"]);
+
+    if (strcmp($title, $news["title"]) != 0) {
+        if (sendSQLReq($db, $sql["news"]["update"]["title"], array(":title"=>$title, ":id"=>$newsId))) {
+            displaySuccessMessage("Titre de l'actualité modifié avec succès");
+        } else {
+            displayErrorMessage("Titre de l'actualité modifié avec erreur");
+        }
+    }
+
+    if (strcmp($content, $news["content"]) != 0) {
+        if (sendSQLReq($db, $sql["news"]["update"]["content"], array(":content"=>$content, ":id"=>$newsId))) {
+            displaySuccessMessage("Contenu de l'actualité modifié avec succès");
+        } else {
+            displayErrorMessage("Contenu de l'actualité modifié avec erreur");
+        }
+    }
+}
+
+function deleteNews ($newsId) {
+    global $db;
+    global $sql;
+
+    if (isSuperAdmin()) {
+        return sendSQLReq($db, $sql["news"]["delete"]["news"], array(":id"=>$newsId));
+    } else {
+        return false;
+    }
+}
+
 /**
  * @param $recipient array like this (user@mail.address => "User Full Name")
  * @param $subject

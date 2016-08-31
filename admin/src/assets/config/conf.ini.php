@@ -23,6 +23,10 @@ creations = "../includes/elements/creations/creations.php"
 creations.all = "../includes/elements/creations/creations.all.php"
 creations.add = "../includes/elements/creations/creations.add.php"
 creations.edit = "../includes/elements/creations/creations.edit.php"
+news = "../includes/elements/news/news.php"
+news.all = "../includes/elements/news/news.all.php"
+news.add = "../includes/elements/news/news.add.php"
+news.edit = "../includes/elements/news/news.edit.php"
 
 [cookies]
 usernameLife = "31"

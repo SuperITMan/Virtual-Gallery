@@ -16,13 +16,24 @@
                 <i class="fa fa-user fa-fw"></i> <?php echo USER_DISPLAYED_NAME;?> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li>
+                    <a href="index.php?p=users&c=me">
+                        <i class="fa fa-user fa-fw"></i> <?php echo $iniLang["USERS"]["MY_PROFILE"];?>
+                    </a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li>
+                    <a href="index.php?p=settings">
+                        <i class="fa fa-cog fa-fw"></i> <?php echo $iniLang["SETTINGS"]["TITLE"];?>
+                    </a>
                 </li>
+                <?php if(isSuperAdmin()):?>
                 <li class="divider"></li>
-                <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li>
+                    <a href="logout.php">
+                        <i class="fa fa-sign-out fa-fw"></i> <?php echo $iniLang["COMMON"]["VERBS"]["LOGOUT"];?>
+                    </a>
                 </li>
+                <?php endif;?>
             </ul>
             <!-- /.dropdown-user -->
         </li>
@@ -35,6 +46,7 @@
                 <li class="<?php echo isPage("dashboard")?"active":"";?>">
                     <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
+
                 <li class="<?php echo isPage("creations")?"active":"";?>">
                     <a href="#"><i class="fa fa-book fa-fw"></i>
                         <?php echo $iniLang["CREATIONS"]["CREATIONS"];?><span class="fa arrow"></span></a>
@@ -48,7 +60,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li><a href="#"><i class="fa fa-file-image-o fa-fw"></i> Images</a></li>
+
                 <li class="<?php echo isPage("users")?"active":"";?>">
                     <a href="#"><i class="fa fa-users fa-fw"></i>
                         <?php echo $iniLang["USERS"]["USERS"];?><span class="fa arrow"></span>
@@ -60,11 +72,31 @@
                         <li>
                             <a href="index.php?p=users&c=add"><?php echo $iniLang["USERS"]["ADD_A_USER"];?></a>
                         </li>
+                        <li>
+                            <a href="index.php?p=users&c=me"><?php echo $iniLang["USERS"]["MY_PROFILE"];?></a>
+                        </li>
                     </ul>
                 </li>
+
+                <li class="<?php echo isPage("news")?"active":"";?>">
+                    <a href="#"><i class="fa fa-newspaper-o fa-fw"></i>
+                        <?php echo $iniLang["NEWS"]["NEWS"];?><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="index.php?p=news&c=all"><?php echo $iniLang["NEWS"]["ALL_NEWS"];?></a>
+                        </li>
+                        <li>
+                            <a href="index.php?p=news&c=add"><?php echo $iniLang["NEWS"]["ADD_A_NEWS"];?></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <?php if(isSuperAdmin()):?>
                 <li class="<?php echo isPage("settings")?"active":"";?>">
                     <a href="index.php?p=settings"><i class="fa fa-cog fa-fw"></i> <?php echo $iniLang["SETTINGS"]["TITLE"];?></a>
                 </li>
+                <?php endif;?>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
